@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+        id="incent_deduct_report"
+        model="hr.payroll.incen_deduc.report"
+        string="Incentive/Deduction Report"
+        report_type="qweb-html"
+        name="hr_payroll_ezra_report.Incentive_deduction"
+        file="hr_payroll_ezra_report.Incentive_deduction"
+        attachment_use="True"
+        attachment="object.name+'.pdf'"/>
+
+        <template id="Incentive_deduction">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class ="Page">
+                            <div>
+                                <h1> Incentive/Deduction Report </h1>
+                            </div>
+                            <t t-if = "o.employee_id">
+                                <div>
+                                    <b>Employee :</b> <span t-field="o.employee_id.name" />
+                                </div>
+                            </t>
+                            <div>
+                                <b>Payroll Release Date :</b> <span t-field="o.payroll_releasedate_from" t-field-options='{"format": "MMMM d,yyyy"}'/> - <span t-field="o.payroll_releasedate_to" t-field-options='{"format": "MMMM d,yyyy"}'/>
+                            </div>
+
+                            <div>
+                                <b>Payroll Status : </b> <span t-field="o.payroll_status"/>
+                            </div>
+                            <br/>
+                            <t t-if = "o.payroll_incent_deduc_id">
+                                    <table cellspacing="0" style="width:100%;border-collapse:collapse">
+                                        <thead style ="border-bottom: 1px solid black;">
+                                            <tr>
+                                                <th></th>
+                                                <th>Incentives</th>
+                                                <th>Deductions</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Release Date</th>
+                                                <t t-if = "not o.employee_id">
+                                                    <th>Employee</th>
+                                                </t>
+                                                <th>Incentive Leave/s</th>
+                                                <th>SSS Contribution</th>
+                                                <th>SSS Loan</th>
+                                                <th>Paigibig Contribution</th>
+                                                <th>Paigibig Salary Loan</th>
+                                                <th>Paigibig Calamity Loan</th>
+                                                <th>Philhealth Contribution</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style ="border-bottom: 1px solid black;">
+                                            <t t-foreach="o.payroll_incent_deduc_id" t-as="detInc_Ded">
+                                                <t t-foreach="detInc_Ded.payroll_detail_id" t-as="detP">
+                                                    <tr >
+                                                        <td><span t-field="detP.payroll_detail_id.payroll_releasedate"
+                                                                  t-field-options='{"format": "MMMM d,yyyy"}'/></td>
+                                                        <t t-if = "not o.employee_id">
+                                                            <td><span t-field="detP.employee_id.name"/></td>
+                                                        </t>
+                                                        <td><span t-field="detP.basic_pay_leaves_amount"/></td>
+                                                        <td><span t-field="detP.sss_premium"/></td>
+                                                        <td><span t-field="detP.sss_loan"/></td>
+                                                        <td><span t-field="detP.hdmf_premium"/></td>
+                                                        <td><span t-field="detP.hdmf_salary_loan"/></td>
+                                                        <td><span t-field="detP.hdmf_calamity_loan"/></td>
+                                                        <td><span t-field="detP.hmo_premium"/></td>
+                                                    </tr>
+                                                </t>
+
+                                            </t>
+                                        </tbody>
+                                    </table>
+                            </t>
+                            <t t-if = "not o.payroll_incent_deduc_id">
+                                <p  style = "text-align:center;">
+                                    <b>
+                                        No Record/s Found.
+                                    </b>
+                                </p>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>

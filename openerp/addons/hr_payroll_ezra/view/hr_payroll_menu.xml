@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Root Menus
+        <menuitem id="payroll_configure" parent="hr.menu_hr_configuration" name="Payroll" groups="base.group_hr_manager" sequence="45"/>
+        <menuitem id="menu_hr_root_payroll" parent="hr.menu_hr_root" name="Payroll" sequence="30"/>
+        -->
+        <!-- ROOT -->
+                <!-- Top menu item
+        <menuitem name="Invoicing"
+            id="menu_invoice_genx_root"
+            groups="base.group_hr_manager,base.group_hr_user,base.group_user"
+            sequence="90"/>
+            -->
+
+        <menuitem id="menu_hr_payroll_configuration" parent="hr_payroll.menu_hr_root_payroll" name="Configuration" sequence="5"/>
+
+        <menuitem id="menu_hr_payroll_incentive_deductions" parent="hr_payroll_ezra.menu_hr_payroll_configuration" name="Incentive/Deductions" sequence="6"/>
+
+        <!-- Creation of Groups -->
+        <record id="group_invisible_menus" model="res.groups">
+            <field name="name">Group Invisible</field>
+            <field name="comment">To Hide a selected menu</field>
+        </record>
+
+        <!-- My Current Timesheet -->
+        <menuitem name="My Current Timesheet" id="hr_attendance.menu_act_hr_timesheet_sheet_form_my_current" parent="hr_attendance.menu_hr_time_tracking" sequence="1" groups="group_invisible_menus"/>
+        <!-- Timesheets to Validate -->
+        <menuitem id="hr_timesheet.menu_act_hr_timesheet_sheet_form" parent="hr_attendance.menu_hr_time_tracking" sequence="2" groups="group_invisible_menus"/>
+        <!-- Timesheet Activities -->
+        <menuitem id="hr_timesheet.menu_hr_working_hours" parent="hr_attendance.menu_hr_time_tracking" groups="group_invisible_menus"/>
+
+    </data>
+</openerp>

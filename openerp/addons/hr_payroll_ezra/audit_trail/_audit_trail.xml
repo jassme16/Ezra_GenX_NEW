@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- vim:fdn=3:
+-->
+<openerp>
+    <data>
+        <record id="view_audittrail_form" model="ir.ui.view">
+            <field name="name">sys.genx.audit.form</field>
+            <field name="model">sys.genx.audit</field>
+            <field name="arch" type="xml">
+                <form string="Audit Trail" create ="false" edit="false" delete ="false">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                                <field name="user_id_trigger"  readonly="1"/>
+                                <field name="menu_triggered" readonly="1"/>
+                                <field name="menu_information" readonly="1"/>
+                                <field name="event_happened" readonly="1"/>
+                                <field name="old_value" readonly="1"/>
+                                <field name="new_value" readonly="1"/>
+                                <field name="count" readonly="1"/>
+                                <field name="description" readonly="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_audittrail_tree" model="ir.ui.view">
+            <field name="name">sys.genx.audit.tree</field>
+            <field name="model">sys.genx.audit</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Audit Trail" create = "false" edit = "false"  delete ="false">
+                    <field name="name" readonly="1"/>
+                    <field name="user_id_trigger"  readonly="1"/>
+                    <field name="menu_triggered" readonly="1"/>
+                    <field name="menu_information" readonly="1"/>
+                    <field name="event_happened" readonly="1"/>
+                    <field name="description" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_audittrail_filter" model="ir.ui.view">
+            <field name="name">sys.genx.audit.filter</field>
+            <field name="model">sys.genx.audit</field>
+            <field name="arch" type="xml">
+                <search string="Audit Trail">
+                    <field name="name" readonly="1"/>
+                    <field name="user_id_trigger"  readonly="1"/>
+                    <field name="menu_triggered" readonly="1"/>
+                    <field name="menu_information" readonly="1"/>
+                    <field name="event_happened" readonly="1"/>
+                    <field name="old_value" readonly="1"/>
+                    <field name="new_value" readonly="1"/>
+                    <field name="count" readonly="1"/>
+                    <field name="description" readonly="1"/>
+                </search>
+             </field>
+        </record>
+
+        <record id="open_audittrail_main" model="ir.actions.act_window">
+            <field name="name">Audit Trail</field>
+            <field name="res_model">sys.genx.audit</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_audittrail_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create an Migration.
+              </p>
+            </field>
+        </record>
+
+        <menuitem action="open_audittrail_main" id="menu_audittrail_main" parent="base.menu_security" sequence="6"/>
+    </data>
+</openerp>

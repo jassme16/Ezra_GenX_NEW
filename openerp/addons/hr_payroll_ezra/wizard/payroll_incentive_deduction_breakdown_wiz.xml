@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="hr ezra assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/hr_payroll_ezra/static/src/css/ezra.css"/>
+                <script type="text/javascript" src="/hr_payroll_ezra/static/src/js/ezra.js"></script>
+                <script type="text/javascript" src="/hr_payroll_ezra/static/src/js/attendance.js"></script>
+            </xpath>
+        </template>
+
+         <record id="view_incentive_wiz_breakdown" model="ir.ui.view">
+            <field name="name">payroll.incentive.main.wiz.form</field>
+            <field name="model">payroll.incentive.main.wiz</field>
+            <field name="arch" type="xml">
+            <form string="Incentive Breakdown" create="false" edit="false">
+                <sheet>
+                    <group string ="Information">
+                        <field name="other_type" readonly="1" invisible="1"/>
+                        <field name="payroll_detail_id" readonly="1" invisible="1"/>
+                        <field name="name" readonly="1"/>
+                        <field name="state" invisible="1"/>
+                    </group>
+                    <notebook>
+                        <page string ="Breakdown">
+                            <data>
+                                <field name="incentive_ids" attrs="{'readonly':[('state', '!=', 1)]}">
+                                    <tree create = "false" editable="bottom/top">
+                                        <field name="type" invisible="1"/>
+                                        <field name="breakdown_id" invisible="1"/>
+                                        <field name="name" attrs="{'invisible':[('type', '=', 2)]}" readonly="1"/>
+                                        <field name="name_deduction" attrs="{'invisible':[('type', '=', 1)]}" readonly="1"/>
+                                        <field name="amount"/>
+                                    </tree>
+                                </field>
+                            </data>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer attrs="{'invisible':[('state', '!=', 1)]}">
+                    <button name="updateReliever" string="Save" type="object" class="oe_highlight" attrs="{'invisible':[('state', '!=', 1)]}"/> or
+                    <button string="Cancel" special="cancel" class="oe_link"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_incentive_wiz_breakdown" model="ir.actions.act_window">
+            <field name="name">Reliever Attendance</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">payroll.incentive.main.wiz</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="nodestroy">True</field>
+        </record>
+    </data>
+</openerp>

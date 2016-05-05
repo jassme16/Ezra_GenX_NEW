@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+        id="payroll_13th_month"
+        model="payroll.incentive.13thmonth"
+        string="13th Month"
+        report_type="qweb-html"
+        name="hr_payroll_ezra.thirteenth_month_rpt"
+        file="hr_payroll_ezra.thirteenth_month_rpt"
+        attachment_use="True"
+        attachment="object.name+'.pdf'"/>
+
+        <template id="report_13thMonth">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <!--<t t-call="report.external_layout"> -->
+                        <t t-foreach="o.incentive_detail_id" t-as="detP">
+                            <div class="row mt32 mb32">
+                                <!--<div style="font-size:15px;font-family:calibri;padding-left: 260px" ><strong><span t-field="detP.company_name"/></strong></div>
+                                <div style="font-size:12px;font-family:calibri;padding-left: 175px" ><span t-field="detP.company_address"/></div>
+                                <div style="font-size:12px;font-family:calibri;padding-left: 225px; padding-bottom: 10px" ><span t-field="detP.company_contact"/></div>
+                                <div class = "Page" style ="border-style: solid;border-width: 1px;float:left;width:680px">-->
+                                    <t t-foreach="o.incentive_id" t-as="detEmp">
+                                        <table cellpadding="5" cellspacing="0" width="100%" style="border: 1px;" rules="none">
+                                        <tbody id ="Details">
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding-left:10px; padding-bottom: 40px;font-family:calibri;font-size:15px">
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th></th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>EMPLOYEE</td>
+                                                                <td style="padding-left: 20px">:</td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.employee_id.name"/></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Payroll Period</td>
+                                                                <td style="padding-left: 20px">:</td>
+                                                                <td style="padding-left: 20px"><span t-field="o.payroll_attendance.schedule_datefrom" t-field-options='{"format": "MMMM d,yyyy"}'/>-<span t-field="o.payroll_attendance.schedule_dateto" t-field-options='{"format": "MMMM d,yyyy"}'/></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Assignment</td>
+                                                                <td style="padding-left: 20px">:</td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.employee_id.assignto"/></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody id ="Details" width="100%" style ="border-style: solid;border-width: 1px" >
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                            <tr style="padding-left:20px">
+                                                <td style="padding-left:10px;font-family:calibri;font-size:15px">
+                                                    <table>
+                                                        <thead>
+                                                            <tr style="padding-top: 20px">
+                                                                <th style="padding-left: 20px"></th>
+                                                                <th style="padding-left: 20px"></th>
+                                                                <th style="padding-left: 20px"></th>
+                                                                <th style="padding-left: 20px"></th>
+                                                                <th style="padding-left: 20px"></th>
+                                                                <th style="padding-left: 20px"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><strong>EARNINGS</strong></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>No. of Days/Rate</td>
+                                                                <td style="padding-left: 20px">: </td>
+                                                                <td style="align: left;padding-left: 20px"><span t-field="detP.basic_pay_perday"/></td>
+                                                                <td style="border-right:  1px solid;"></td>
+                                                                <td></td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.basic_pay_perday_rate" /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Basic Pay</td>
+                                                                <td style="padding-left: 20px">: </td>
+                                                                <td></td>
+                                                                <td style="border-right:  1px solid;"></td>
+                                                                <td></td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.basic_pay_amount" /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>COLA</td>
+                                                                <td style="padding-left: 20px">: </td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.cola_rate_perday" /></td>
+                                                                <td style="border-right: 1px solid;"></td>
+                                                                <td></td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.cola_amount" /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Legal Holiday</td>
+                                                                <td style="padding-left: 20px">: </td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.cola_rate_perday" /></td>
+                                                                <td style="border-right:  1px solid;"></td>
+                                                                <td></td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.cola_amount" /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>&#160;&#160;&#160;Regular Pay</td>
+                                                                <td style="padding-left: 20px">: </td>
+                                                                <td  style="padding-left: 20px" ><span t-field="detP.reg_hol_pay_perday" /></td>
+                                                                <td style="border-right:  1px solid;"></td>
+                                                                <td></td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.reg_hol_pay_amount" /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>&#160;&#160;&#160;Worked</td>
+                                                                <td style="padding-left: 20px">: </td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.reg_hol_work_pay_perhour" /></td>
+                                                                <td style="border-right:  1px solid;"></td>
+                                                                <td></td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.reg_hol_work_pay_amount" /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>&#160;&#160;&#160;Overtime</td>
+                                                                <td style="padding-left: 20px">: </td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.reg_hol_otpay_perhour" /></td>
+                                                                <td style="border-right:  1px solid;"></td>
+                                                                <td></td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.reg_hol_otpay_amount" /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Special Holiday</td>
+                                                                <td style="padding-left: 20px">: </td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.reg_spechol_perhour" /></td>
+                                                                <td style="border-right:  1px solid;"></td>
+                                                                <td></td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.reg_spechol_amount" /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>&#160;&#160;&#160;Overtime</td>
+                                                                <td style="padding-left: 20px">: </td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.reg_spechol_otpay_perhour" /></td>
+                                                                <td style="border-right:  1px solid;"></td>
+                                                                <td></td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.reg_spechol_otpay_amount" /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Tardiness</td>
+                                                                <td style="padding-left: 20px">: </td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.reg_spechol_otpay_perhour" /></td>
+                                                                <td style="border-right:  1px solid;"></td>
+                                                                <td></td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.reg_spechol_otpay_amount" /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Regular Overtime</td>
+                                                                <td style="padding-left: 20px">: </td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.reg_otpay_perhour" /></td>
+                                                                <td style="border-right:  1px solid;"></td>
+                                                                <td></td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.reg_otpay_amount" /></td>
+                                                            </tr>
+                                                            <t t-if="reg_nightdiffy_amount > 0">
+                                                                <tr>
+                                                                    <td>Regular Overtime</td>
+                                                                    <td style="padding-left: 20px">: </td>
+                                                                    <td style="padding-left: 20px"><span t-field="detP.reg_nightdiff_perhour"/></td>
+                                                                    <td style="border-right:  1px solid;"></td>
+                                                                    <td></td>
+                                                                    <td style="padding-left: 20px"><span t-field="detP.reg_nightdiffy_amount"/></td>
+                                                                </tr>
+                                                            </t>
+                                                            <tr>
+                                                                <td>Sunday/Rest Day</td>
+                                                                <td style="padding-left: 20px">: </td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.basic_pay_restday_perhour" /></td>
+                                                                <td style="border-right:  1px solid;"></td>
+                                                                <td></td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.basic_pay_restday_amount" /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>&#160;&#160;&#160;Overtime</td>
+                                                                <td style="padding-left: 20px">: </td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.basic_pay_restday_ot_perhour" /></td>
+                                                                <td style="border-right:  1px solid;"></td>
+                                                                <td></td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.basic_pay_restday_ot_amount"  t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}' /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Uniform All.</td>
+                                                                <td style="padding-left: 20px">: </td>
+                                                                <td></td>
+                                                                <td style="border-right:  1px solid;padding-left: 20px"></td>
+                                                                <td></td>
+                                                                <td>-</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Incentive Leave</td>
+                                                                <td style="padding-left: 20px">: </td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td style="border-bottom:  1px solid;"></td>
+                                                                <td style="border-bottom:  1px solid;padding-left: 20px"><span t-field="detP.basic_pay_leaves_amount" /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>TOTAL</strong></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td style="padding-left: 20px"><span t-field="detP.gross_salary" /></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                                <td style="padding-left: 30px; padding-bottom: 150px;font-family:calibri;font-size:15px">
+                                                    <table>
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="padding-left: 10px"></th>
+                                                                <th style="padding-left: 10px"></th>
+                                                                <th style="padding-left: 10px"/>
+                                                                <th style="padding-left: 10px" />
+                                                                <th style="padding-left: 10px" />
+                                                                <th style="padding-left: 10px"/>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><strong>DEDUCTIONS</strong></td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>SSS Contribution</td>
+                                                                <td style="padding-left: 20px">:</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td style="padding-left: 5px"><span t-field="detP.sss_premium" /></td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>SSS Loan</td>
+                                                                <td style="padding-left: 20px">:</td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td style="padding-left: 10px"><span t-field="detP.sss_loan" /></td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>Pag-ibig Premium</td>
+                                                                <td style="padding-left: 20px">:</td>
+                                                                <td style="padding-left: 10px" ><span t-field="detP.hdmf_premium" /></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Pag-ibig Loan</td>
+                                                                <td style="padding-left: 20px">:</td>
+                                                                <td style="padding-left: 10px"><span t-field="detP.hdmf_salary_loan" /></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td style="padding-left: 10px"><span t-field="detP.hdmf_calamity_loan" /></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Phil Health</td>
+                                                                <td style="padding-left: 20px">:</td>
+                                                                <td style="padding-left: 10px"><span t-field="detP.hmo_premium" /></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Others</td>
+                                                                <td style="padding-left: 20px">:</td>
+                                                                <td style="padding-left: 10px"><span t-field="detP.other_deductions" /></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                 <td><span t-field="detP.deductions" /></td>
+                                                            </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+
+
+                                    </t>
+
+
+                                </div>
+                            </div>
+                        </t>
+                    <!--</t> -->
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>

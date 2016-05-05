@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+        id="hr_personnel_withremrks_report"
+        model="hr.personnel.withremrks.report"
+        string="Crew List Active on Board with Remarks"
+        report_type="qweb-html"
+        name="hr_recruitment_2.hr_personnel_withremrks_report"
+        file="hr_payroll_13thmonth_pay.hr_personnel_withremrks_report"
+        attachment_use="True"
+        attachment="object.name+'.pdf'"/>
+
+        <template id="hr_personnel_withremrks_report">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class ="Page">
+                            <div>
+                                <h1> Crew List Active on Board with Remarks </h1>
+                            </div>
+                            <br/>
+                            <table cellspacing="0" style="width:100%;border-collapse:collapse">
+                                <thead style ="border-bottom: 1px solid black;">
+                                    <tr>
+                                        <th colspan="4">Employee Number</th>
+                                        <th>CCL Number</th>
+                                        <th>Rank</th>
+                                        <th>Last Name</th>
+                                        <th>First Name</th>
+                                        <th>Birth Date</th>
+                                        <th>Status</th>
+                                        <th>Service from</th>
+                                        <th>Service to</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody style ="border-bottom: 1px solid black;">
+                                    <tr style ="outline: thin solid black;">
+                                        <td><span t-field="o.amount_paid"/></td>
+                                        <td><span t-field="o.amount_paid"/></td>
+                                        <td><span t-field="o.amount_paid"/></td>
+                                        <td><span t-field="o.amount_paid"/></td>
+                                        <td><span t-field="o.amount_paid"/></td>
+                                        <td><span t-field="o.amount_paid"/></td>
+                                        <td><span t-field="o.amount_paid"/></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>

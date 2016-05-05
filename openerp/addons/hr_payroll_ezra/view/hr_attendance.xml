@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- vim:fdn=3:
+-->
+<openerp>
+    <data>
+
+        <template id="assets_backend" name="hr ezra assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/hr_payroll_ezra/static/src/css/ezra.css"/>
+            </xpath>
+        </template>
+
+
+        <record id="hr_payroll_attendance_main" model="ir.actions.act_window">
+            <field name="name">Attendance Detail</field>
+            <field name="res_model">hr.payroll.attendance</field>
+            <field name="view_type">tree</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="limit">200</field>
+        </record>
+
+
+        <!-- Attendance -->
+        <record id="view_hr_attendance_main_form" model="ir.ui.view">
+            <field name="name">hr.attendance.main.form</field>
+            <field name="model">hr.attendance.main</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <header >
+                        <button name="generateAttendance" string="Generate"
+                                class="oe_highlight" type="object"
+                                attrs="{'invisible':[('attendance_status', '!=', 'draft')]}"
+                                invisible="1"
+                                icon ="partner"
+                                confirm="Generating Employee Attendance will remove the Added Reliever, are you sure to proceed?"/>
+                        <button name="generateAttendance_per_Company"
+                                string="Generate"
+                                class="oe_highlight"
+                                type="object"
+                                attrs="{'invisible':[('attendance_status', '!=', 'draft')]}"
+                                icon ="STOCK_EXECUTE"
+                                confirm="Generating Employee Attendance will remove the added reliever, are you sure you want to proceed?"/>
+                        <button name="generateExcelFile_New" string="Generate Report" class="oe_highlight" type="object"/>
+                        <button name="generateExcelFile_perCompany" string="Generate Report per Branch" class="oe_highlight" type="object"/>
+
+                        <button name="postapproved" string="Approved" type="object" attrs="{'invisible':[('attendance_status', '!=', 'draft')]}" confirm = "Are you sure to Approved this Attendance?"/>
+                        <button name="posttoPayroll" string="Post to Payroll" class="oe_highlight"  type="object"  attrs="{'invisible':[('attendance_status', '!=', 'approved')]}" confirm = "Are you sure to Change the Status?"/>
+
+                        <button name="backtoDraft" string="Back to Draft" class="oe_highlight"  type="object"  attrs="{'invisible':[('attendance_status', '!=', 'post')]}" confirm = "Are you sure to Change the Status?"/>
+                        <button name="reCheck" string="Re-Check"  type="object" class="oe_highlight"  attrs="{'invisible':[('attendance_status', '!=', 'approved')]}" confirm = "Are you sure to Edit this Attendance?"/>
+                        <field name="attendance_status" widget="statusbar" statusbar_visible="draft,approved,post" statusbar_colors='{"approved":"blue","post":"red"}'/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <label string="Draft Attendance" attrs="{'invisible': [('attendance_status','!=','draft')]}"/>
+                                <label string="Approved Attendace" attrs="{'invisible': [('attendance_status','!=','approved')]}"/>
+                                <label string="Attendance ready for Payroll" attrs="{'invisible': [('attendance_status', '!=', 'post')]}"/>
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="name" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                                <field name="company_assign"  options="{'no_create': True}"  attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                                <field name="assign_projects"  options="{'no_create': True}" domain = "[('customer', '=', True )]"  attrs="{'readonly':[('attendance_status', '!=', 'draft')]}" invisible="1"/>
+                                <field name="attendance_file" readonly="1" filename="filename" style = "width:500px"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                        <group col="4" string ="Attendance Date Settings">
+                            <field name="month_of" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                            <field name="month_quarter" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                            <field name="schedule_datefrom" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                            <field name="schedule_dateto" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                        </group>
+                    </sheet>
+                    <sheet class ="oe_form_sheet_width_1">
+                        <header >
+                                <button name="recompute" string="Regenerate" class="oe_highlight" type="object"  attrs="{'invisible':[('attendance_status', '!=', 'draft')]}" icon ="STOCK_REFRESH"/>
+                                <button name="addEmployee" string="Add Employee" class="oe_highlight" type="object"  attrs="{'invisible':[('attendance_status', '!=', 'draft')]}"/>
+                        </header>
+                        <!--
+                         <div class="oe_title">
+                            <h1>
+                                <button name="recompute" string="Regenerate" class="oe_highlight" type="object"  attrs="{'invisible':[('attendance_status', '!=', 'draft')]}" />
+                                <button name="addEmployee" string="Add Employee" class="oe_highlight" type="object"  attrs="{'invisible':[('attendance_status', '!=', 'draft')]}" />
+                            </h1>
+                        </div>
+                        editable="bottom"
+                        -->
+                        <notebook>
+                            <page string ="Employee's Attendance">
+                                <field name="employee_ids" string ="Employee Attendance Information" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}">
+                                    <tree  create = "false"  colors="red:has_a_reliever==True;blue:is_reliever==True;green:is_additional_employee ==True" limit="10">
+                                        <field name="attendance_status" invisible="1"/>
+                                        <field name="id" invisible ="1"/>
+                                        <field name="name" readonly ="1" invisible ="1"/>
+                                        <field name="employee_id" readonly ="1"/>
+                                        <field name="employee_branches" readonly ="1"/>
+                                        <field name="employee_reliever" readonly ="1"/>
+                                        <button name = "getValueID"
+                                            string ="Add Reliever"
+                                            type = "object"
+                                            attrs="{'invisible':['|',('is_reliever', '=', True),
+                                                                     ('attendance_status', '!=', 'draft')]}"/>
+
+                                        <field name="is_reliever" readonly ="1"  invisible ="1"/>
+                                        <field name="has_a_reliever" readonly ="1"  invisible ="1"/>
+                                        <field name="is_additional_employee" readonly ="1"  invisible ="1"/>
+                                        <field name="employee_assign" string ="Assignment" readonly ="1"  invisible ="1"/>
+                                        <field name="schedule_datefrom" readonly ="1" invisible ="1"/>
+                                        <field name="schedule_dateto" readonly ="1" invisible ="1"/>
+                                        <field name="regular_days_work" />
+                                        <field name="absent"/>
+                                        <field name="leaves"/>
+                                        <field name="tardiness"/>
+                                        <field name="straight_duty" widget="float_time"/>
+                                        <field name="night_differential" widget="float_time"/>
+                                        <field name="regular_overtime"  widget="float_time"/>
+                                        <field name="rest_day_work" widget="float_time"/>
+                                        <field name="restday_overtime" widget="float_time"/>
+                                        <field name="special_day_work" widget="float_time"/>
+                                        <field name="special_overtime" widget="float_time"/>
+                                        <field name="legal_holiday_day" widget="float_time"/>
+                                        <field name="holiday_day_work" widget="float_time"/>
+                                        <field name="holiday_overtime" widget="float_time"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers" />
+                            <field name="message_ids" widget="mail_thread" />
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_attendance_main_tree" model="ir.ui.view">
+            <field name="name">hr.attendance.main</field>
+            <field name="model">hr.attendance.main</field>
+            <field name="field_parent">child_ids</field>
+
+            <field name="arch" type="xml">
+                <tree string="Attendance Information" colors="red:attendance_status=='post';green:attendance_status=='approved'">
+                    <field name="name"/>
+                    <field name="assign_projects" invisible="1"/>
+                    <field name="company_assign"/>
+                    <field name="month_of"/>
+                    <field name="month_quarter"/>
+                    <field name="schedule_datefrom"/>
+                    <field name="schedule_dateto"/>
+                    <field name="attendance_status"/>
+                    <field name = "filename" invisible="1"/>
+                    <field name="attendance_file" filename="filename" string ="Attendance Summary Report"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_attendance_main_filter" model="ir.ui.view">
+            <field name="name">Attendances</field>
+            <field name="model">hr.attendance.main</field>
+            <field name="arch" type="xml">
+                <search string="Attendance">
+                    <filter name="status_payroll" string="Draft" domain="[('attendance_status','=','draft')]" help="Draft Status"/>
+                    <filter name="status_payroll_02" string="Approved" domain="[('attendance_status','=','approved')]" help="Approved Status"/>
+                    <filter name="status_payroll_03" string="Post" domain="[('attendance_status','=','post')]" help="Post Status"/>
+                    <field name="name"/>
+                    <field name="assign_projects"/>
+                    <field name="month_of"/>
+                    <field name="month_quarter"/>
+
+                </search>
+             </field>
+        </record>
+        <record id="open_module_hr_attendance_main" model="ir.actions.act_window">
+            <field name="name">Attendances</field>
+            <field name="res_model">hr.attendance.main</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_attendance_main_filter"/>
+            <field name="context">{"search_default_status_payroll":True}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create an Attendance.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_hr_attendance_main" id="menu_hr_attendance_main" parent="hr_attendance.menu_hr_time_tracking" sequence="5"
+                groups="base.group_hr_user,base.group_hr_manager"/>
+
+        <!--Employee Attendance -->
+        <record id="view_hr_attendance_emp_tree" model="ir.ui.view">
+            <field name="name">hr.payroll.attendance.form</field>
+            <field name="model">hr.payroll.attendance</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Attendance Information per Employee" editable = "bottom"
+                      colors="red:attendance_status=='post';green:attendance_status=='approved'">
+                    <field name="name" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                    <field name="employee_id" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                    <field name="employee_assign" string ="Assignment" readonly ="1"/>
+                    <field name="schedule_datefrom" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                    <field name="schedule_dateto" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                    <field name="regular_days_work" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                    <field name="regular_overtime" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                    <field name="night_differential" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                    <field name="rest_day_work" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                    <field name="restday_overtime" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                    <field name="special_day_work" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                    <field name="special_overtime" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                    <field name="holiday_day_work" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                    <field name="holiday_overtime" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                    <field name="straight_duty" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                    <field name="absent" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                    <field name="tardiness" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                    <field name="undertime" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                    <field name="leaves" attrs="{'readonly':[('attendance_status', '!=', 'draft')]}"/>
+                    <field name="attendance_status" readonly="1"/>
+
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_attendance_emp_filter" model="ir.ui.view">
+            <field name="name">Attendance per Employee</field>
+            <field name="model">hr.payroll.attendance</field>
+            <field name="arch" type="xml">
+                <search string="Attendance per Employee">
+                    <field name="name"/>
+                    <field name="attendance_status"/>
+                    <field name="employee_id"/>
+                    <field name="schedule_datefrom"/>
+                    <field name="schedule_dateto"/>
+                    <separator/>
+                    <filter string="With Absent" domain="[('absent', '>=', 0)]"/>
+                    <separator/>
+                    <filter string="Late Employee" domain="[('tardiness', '>=', 0)]"/>
+                    <separator/>
+                    <filter string="With Undertime" domain="[('undertime', '>=', 0)]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                       <filter string="Employee" name='Employee' context="{'group_by':'employee_id'}"/>
+                    </group>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_hr_attendance_emp" model="ir.actions.act_window">
+            <field name="name">Attendance per Employee</field>
+            <field name="res_model">hr.payroll.attendance</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_attendance_emp_filter"/>
+        </record>
+
+        <record id="open_module_hr_attendance_emp2" model="ir.actions.act_window">
+            <field name="name">Attendance per Employee</field>
+            <field name="res_model">hr.payroll.attendance</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_attendance_emp_filter"/>
+            <field name="context">{'search_default_employee_id': [active_id], 'default_employee_id': active_id}</field>
+            <!--<field name="context">{'search_default_employee_id': [active_id], 'default_employee_id': active_id}</field>-->
+        </record>
+
+        <menuitem action="open_module_hr_attendance_emp" id="menu_hr_attendance_emp" parent="hr_attendance.menu_hr_time_tracking" sequence="6"
+                 groups="base.group_hr_user,base.group_hr_manager"/>
+    </data>
+</openerp>

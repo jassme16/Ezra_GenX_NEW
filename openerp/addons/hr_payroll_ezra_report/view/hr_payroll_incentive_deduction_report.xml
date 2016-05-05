@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Report Menu -->
+        <record id="view_hr_payroll_incen_ded_report_form" model="ir.ui.view">
+            <field name="name">hr.payroll.incen_deduc.report.form</field>
+            <field name="model">hr.payroll.incen_deduc.report</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <header>
+                        <button name="generateReport" string="Generate Report" class="oe_highlight" type="object"  />
+                    </header>
+                    <sheet>
+                        <group>
+                            <group string ="Report Parameter">
+                                <field name="employee_id" />
+                                <field name="report_type" />
+                                <field name="payroll_status" />
+                            </group>
+                            <group string = "Payroll Release Date">
+                                <field name="payroll_releasedate_from" />
+                                <field name="payroll_releasedate_to" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_payroll_incen_ded_report_tree" model="ir.ui.view">
+            <field name="name">hr.payroll.incen_deduc.report.tree</field>
+            <field name="model">hr.payroll.incen_deduc.report</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Generated Report">
+                    <field name="name"/>
+                    <field name="report_type" />
+                    <field name="payroll_status" />
+                    <field name="payroll_releasedate_from" />
+                    <field name="payroll_releasedate_to" />
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_payroll_incen_ded_report_filter" model="ir.ui.view">
+            <field name="name">Incentive/Deduction Report</field>
+            <field name="model">hr.payroll.incen_deduc.report</field>
+            <field name="arch" type="xml">
+                <search string="Search">
+                    <field name="name"/>
+                    <field name="report_type" />
+                    <field name="payroll_status" />
+                    <field name="payroll_releasedate_from" />
+                    <field name="payroll_releasedate_to" />
+                </search>
+             </field>
+        </record>
+        <record id="open_module_hr_payroll_incen_ded_report" model="ir.actions.act_window">
+            <field name="name">Incentive/Deduction Report</field>
+            <field name="res_model">hr.payroll.incen_deduc.report</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_payroll_incen_ded_report_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click a Report.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_hr_payroll_incen_ded_report" id="menu_hr_payroll_incen_ded_report" parent="hr.menu_hr_reporting_timesheet" string = "Incentive/Deduction Report" sequence="56"/>
+
+    </data>
+</openerp>

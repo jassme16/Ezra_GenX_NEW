@@ -1,0 +1,213 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="view_hr_employee_education_form" model="ir.ui.view">
+            <field name="name">hr.employeducation.form</field>
+            <field name="model">hr.employeducation</field>
+            <field name="arch" type="xml">
+                <form string="Add School">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="schooltype"/>
+                                <field name="name_school"/>
+                                <field name="date_from"/>
+                                <field name="date_to"/>
+                                <field name="school_address"/>
+                                <field name="description"/>
+                            </group>
+                            <group></group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hr_employee_address_form" model="ir.ui.view">
+            <field name="name">hr.employeeaddress.form</field>
+            <field name="model">hr.employeeaddress</field>
+            <field name="arch" type="xml">
+                <form string="Add School Records">
+                    <sheet>
+                        <group>
+                            <group string = "Address Information">
+                                <field name="addresstype"/>
+                                <field name="address_1"/>
+                                <field name="address_2"/>
+                                <field name="address_3"/>
+                                <field name="country"/>
+                                <field name="province"/>
+                                <field name="city"/>
+                            </group>
+                            <group string ="Address Contact">
+                                <field name="telephone_number"/>
+                                <field name="mobile_number"/>
+                                <field name="email_number"/>
+                            </group>
+                            <group></group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hr_employee_documents_form" model="ir.ui.view">
+            <field name="name">hr.employee_documents.form</field>
+            <field name="model">hr.employee_documents</field>
+            <field name="arch" type="xml">
+                <form string="Add Documents Records">
+                    <sheet>
+                        <group>
+                            <group string = "Information">
+                                <field name="document"/>
+                                <field name="document_number"/>
+                                <field name="date_issued"/>
+                                <field name="date_expiry"/>
+                                <field name="issuing_authority"/>
+                                <field name="place_ofissue"/>
+                            </group>
+                            <group></group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hr_employee_medical_form" model="ir.ui.view">
+            <field name="name">hr.employee_medical_records.form</field>
+            <field name="model">hr.employee_medical_records</field>
+            <field name="arch" type="xml">
+                <form string="Add Medical Records">
+                    <sheet>
+                        <group>
+                            <group string = "Information">
+                                <field name="medical_type"/>
+                                <field name="medical_clinic"/>
+                                <field name="date_from"/>
+                                <field name="date_to"/>
+                            </group>
+                            <group></group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hr_employee_families_form" model="ir.ui.view">
+            <field name="name">hr.employee_families.form</field>
+            <field name="model">hr.employee_families</field>
+            <field name="arch" type="xml">
+                <form string="Add Family Records">
+                    <sheet>
+                        <group>
+                            <group string = "Information">
+                                <field name="relationship"/>
+                                <field name="last_name"/>
+                                <field name="first_name"/>
+                                <field name="middle_name"/>
+                                <field name="birthday"/>
+                                <field name="placeof_birth"/>
+                                <field name="gender"/>
+                            </group>
+                            <group string ="Address">
+                                <field name="address_1"/>
+                                <field name="address_2"/>
+                                <field name="address_3"/>
+                                <field name="country_id"/>
+                                <field name="city"/>
+                                <field name="province"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string = "Contacts">
+                                <field name="telephone_number"/>
+                                <field name="mobile_number"/>
+                                <field name="email_number"/>
+                            </group>
+                            <group string ="Miscellaneous">
+                                <field name="occupation"/>
+                                <field name="bank_details"/>
+                                <field name="is_living"/>
+                                <field name="is_beneficiary"/>
+                                <field name="is_allottee"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hr_employee_medical_form" model="ir.ui.view">
+            <field name="name">hr.employee_medical_records.form</field>
+            <field name="model">hr.employee_medical_records</field>
+            <field name="arch" type="xml">
+                <form string="Add Medical Records">
+                    <sheet>
+                        <group>
+                            <group string = "Information">
+                                <field name="medical_type"/>
+                                <field name="medical_clinic"/>
+                                <field name="date_from"/>
+                                <field name="date_to"/>
+                            </group>
+                            <group></group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hr_employeelicenses_form" model="ir.ui.view">
+            <field name="name">hr.employeelicenses.form</field>
+            <field name="model">hr.employeelicenses</field>
+            <field name="arch" type="xml">
+                <form string="License">
+                    <sheet>
+                        <group>
+                            <group string = "Information">
+                                <field name="licensetype"/>
+                                <field name="license" domain="[('license_name','=',licensetype)]"/>
+                                <field name="country"/>
+                                <field name="doc_number"/>
+                                <field name="date_issued"/>
+                                <field name="date_expiry"/>
+                                <field name="place_issue"/>
+                                <field name="authority_issue"/>
+                                <field name="remarks"/>
+                            </group>
+                            <group></group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hr_employmenthistory_form" model="ir.ui.view">
+            <field name="name">hr.employmenthistory.form</field>
+            <field name="model">hr.employmenthistory</field>
+            <field name="arch" type="xml">
+                <form string="Add Emplpyment Records">
+                    <sheet>
+                        <group>
+                            <group string = "Information">
+                                <field name="date_departure"/>
+                                <field name="date_servicefrom"/>
+                                <field name="date_serviceto"/>
+                                <field name="object_code"/>
+                                <field name="employment_dept_code"/>
+                                <field name="employment_rank"/>
+                                <field name="employment_status"/>
+                                <field name="remarks"/>
+                                <field name="place_signOn"/>
+                                <field name="place_signOff"/>
+                                <field name="service_range"/>
+                            </group>
+                            <group></group>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>

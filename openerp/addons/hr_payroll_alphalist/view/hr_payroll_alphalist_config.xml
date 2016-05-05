@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data>
+        <!-- Alphalist Config -->
+        <record id="view_alphalist_config_form" model="ir.ui.view">
+            <field name="name">payroll.alphalist.config.form</field>
+            <field name="model">payroll.alphalist.config</field>
+            <field name="arch" type="xml">
+                <form string="Company">
+                    <sheet>
+                        <group string = "Information">
+                            <field name="code"/>
+                            <field name="name"/>
+                            <field name="amount"/>
+
+                        </group>
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_alphalist_config_tree" model="ir.ui.view">
+            <field name="name">payroll.alphalist.config</field>
+            <field name="model">payroll.alphalist.config</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Alphalist Configuration">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="amount"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_alphalist_config_filter" model="ir.ui.view">
+            <field name="name">Alphalist Configuration</field>
+            <field name="model">payroll.alphalist.config</field>
+            <field name="arch" type="xml">
+                <search string="Alphalist">
+                    <field name="code"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_alphalist_config" model="ir.actions.act_window">
+            <field name="name">Alphalist Configuration</field>
+            <field name="res_model">payroll.alphalist.config</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_alphalist_config_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Alphalist Configuration.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_alphalist_config" id="menu_hr_alphalist_config" parent="hr.menu_hr_configuration" groups="base.group_hr_manager" string = "Company Setup" sequence="62"/>
+
+        <!-- Annual Tax Table -->
+        <record id="view_annual_taxtable_tree" model="ir.ui.view">
+            <field name="name">payroll.annual.tax.table.form</field>
+            <field name="model">payroll.annual.tax.table</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Tax Table" create = "true" editable = "bottom">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="amount_rangefrom"/>
+                    <field name="amount_rangeto"/>
+                    <field name="tax_amount"/>
+                    <field name="rate_in_excess"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_annual_taxtable_filter" model="ir.ui.view">
+            <field name="name">Annual Tax Table</field>
+            <field name="model">payroll.annual.tax.table</field>
+            <field name="arch" type="xml">
+                <search string="Tax Table">
+                     <field name="code"/>
+                    <field name="name"/>
+                    <field name="amount_rangefrom"/>
+                    <field name="amount_rangeto"/>
+                    <field name="tax_amount"/>
+                    <field name="rate_in_excess"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_annual_taxtable" model="ir.actions.act_window">
+            <field name="name">Annual Tax Table</field>
+            <field name="res_model">payroll.annual.tax.table</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_annual_taxtable_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create a Tax Table
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_annual_taxtable" id="menu_annual_taxtable" parent="hr_payroll_ezra.menu_hr_payroll_configuration" sequence="0"/>
+    </data>
+</openerp>

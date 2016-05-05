@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+        id="payroll_payslip_employee_ezra"
+        model="hr.payroll.detail.temp"
+        string="Employee Payslip"
+        report_type="qweb-html"
+        name="hr_payroll_ezra.report_payslip_employee"
+        file="hr_payroll_ezra.report_payslip_employee"
+        attachment_use="True"
+        attachment="object.name+'.pdf'"/>
+
+        <template id="report_payslip_employee">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                        <div class="row mt32 mb32">
+                            <div style="font-size:15px;font-family:calibri;padding-left: 200px" ><strong><span t-field="o.company_name"/></strong></div>
+                            <div style="font-size:12px;font-family:calibri;padding-left: 125px" ><span t-field="o.company_address"/></div>
+                            <div style="font-size:12px;font-family:calibri;padding-left: 175px; padding-bottom: 10px" ><span t-field="o.company_contact"/></div>
+                            <div class = "Page" style ="border-style: solid;border-width: 1px;float:left;width:600px">
+                                <table cellpadding="5" cellspacing="0" width="100%" style="border: 1px;" rules="none">
+                                    <tbody id ="Header">
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-left:10px; font-family:calibri;font-size:10px">
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th></th>
+                                                            <th></th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>EMPLOYEE</td>
+                                                            <td style="padding-left: 20px">:</td>
+                                                            <td style="padding-left: 20px"><span t-field="o.employee_id.name"/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Payroll Period</td>
+                                                            <td style="padding-left: 20px">:</td>
+                                                            <td style="padding-left: 20px"><span t-field="o.payroll_detail_id.payroll_attendance.schedule_datefrom" t-field-options='{"format": "MMMM d,yyyy"}'/>-<span t-field="o.payroll_detail_id.payroll_attendance.schedule_dateto" t-field-options='{"format": "MMMM d,yyyy"}'/></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Assignment</td>
+                                                            <td style="padding-left: 20px">:</td>
+                                                            <td style="padding-left: 20px"><span t-field="o.employee_id.assignto"/></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                            <td style="padding-left: 30px;font-family:calibri;font-size:10px">
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th></th>
+                                                            <th></th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Date</td>
+                                                            <td style="padding-left: 72px">:</td>
+                                                            <td style="padding-left: 10px">
+                                                                <span t-field="o.payroll_detail_id.payroll_releasedate"  t-field-options='{"format": "d-MMM-yy"}'/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>I.D. No.</td>
+                                                            <td style="padding-left: 72px">: </td>
+                                                            <td style="padding-left: 10px">
+                                                                    <span t-field="o.employee_id.employee_number" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>SSS No.</td>
+                                                            <td style="padding-left: 72px">: </td>
+                                                            <td style="padding-left: 10px">
+                                                                <span t-field="o.employee_id.sss_no" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>TIN No.</td>
+                                                            <td style="padding-left: 72px">:</td>
+                                                            <td style="padding-left: 10px">
+                                                                <span t-field="o.employee_id.tin_no" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Pag-ibig#</td>
+                                                            <td style="padding-left: 72px">:</td>
+                                                            <td style="padding-left: 10px">
+                                                                <span t-field="o.employee_id.hdmf_no"/>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody id ="Details" width="100%" style ="border-style: solid;border-width: 1px" >
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-left:10px;font-family:calibri;font-size:10px">
+                                                <table>
+                                                    <thead>
+                                                        <tr> <!-- style="padding-top: 20px"-->
+                                                            <th style="padding-left: 20px"></th>
+                                                            <th style="padding-left: 20px"></th>
+                                                            <th style="padding-left: 20px"></th>
+                                                            <th style="padding-left: 20px"></th>
+                                                            <th style="padding-left: 20px"></th>
+                                                            <th style="padding-left: 20px"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><strong>EARNINGS</strong></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>No. of Days/Rate</td>
+                                                            <td style="padding-left: 20px">: </td>
+                                                            <td style="align: left;padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.basic_pay_perday"/>
+                                                                </div>
+                                                            </td>
+                                                            <td style="border-right:  1px solid;"></td>
+                                                            <td></td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.basic_pay_perday_rate"/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Basic Pay</td>
+                                                            <td style="padding-left: 20px">: </td>
+                                                            <td></td>
+                                                            <td style="border-right:  1px solid;"></td>
+                                                            <td></td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.basic_pay_amount"/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>COLA</td>
+                                                            <td style="padding-left: 20px">: </td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.cola_rate_perday"/>
+                                                                </div>
+                                                            </td>
+                                                            <td style="border-right: 1px solid;"></td>
+                                                            <td></td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.cola_amount"/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Legal Holiday</td>
+                                                            <td style="padding-left: 20px">: </td>
+                                                            <td style="padding-left: 20px"></td>
+                                                            <td style="border-right:  1px solid;"></td>
+                                                            <td></td>
+                                                            <td style="padding-left: 20px"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>&#160;&#160;&#160;Regular Pay</td>
+                                                            <td style="padding-left: 20px">: </td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.reg_hol_pay_perday"/>
+                                                                </div>
+                                                            </td>
+                                                            <td style="border-right:  1px solid;"></td>
+                                                            <td></td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.reg_hol_pay_amount"/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>&#160;&#160;&#160;Worked</td>
+                                                            <td style="padding-left: 20px">: </td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.reg_hol_work_pay_perhour"/>
+                                                                </div>
+                                                            </td>
+                                                            <td style="border-right:  1px solid;"></td>
+                                                            <td></td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.reg_hol_work_pay_amount"/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>&#160;&#160;&#160;Overtime</td>
+                                                            <td style="padding-left: 20px">: </td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.reg_hol_otpay_perhour"/>
+                                                                </div>
+                                                            </td>
+                                                            <td style="border-right:  1px solid;"></td>
+                                                            <td></td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.reg_hol_otpay_amount"/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Special Holiday</td>
+                                                            <td style="padding-left: 20px">: </td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.reg_spechol_perhour"/>
+                                                                </div>
+                                                            </td>
+                                                            <td style="border-right:  1px solid;"></td>
+                                                            <td></td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.reg_spechol_amount"/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>&#160;&#160;&#160;Overtime</td>
+                                                            <td style="padding-left: 20px">: </td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.reg_spechol_otpay_perhour"/>
+                                                                </div>
+                                                            </td>
+                                                            <td style="border-right:  1px solid;"></td>
+                                                            <td></td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.reg_spechol_otpay_amount"/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Tardiness</td>
+                                                            <td style="padding-left: 20px">: </td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.reg_spechol_otpay_perhour"/>
+                                                                </div>
+                                                            </td>
+                                                            <td style="border-right:  1px solid;"></td>
+                                                            <td></td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.reg_spechol_otpay_amount" />
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Regular Overtime</td>
+                                                            <td style="padding-left: 20px">: </td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.reg_otpay_perhour"/>
+                                                                </div>
+                                                            </td>
+                                                            <td style="border-right:  1px solid;"></td>
+                                                            <td></td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.reg_otpay_amount"/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <t t-if="detP.reg_nightdiffy_amount > 0">
+                                                            <tr>
+                                                                <td>Night Diff.</td>
+                                                                <td style="padding-left: 20px">: </td>
+                                                                <td style="padding-left: 20px">
+                                                                    <div align="right">
+                                                                        <span t-field="detP.reg_nightdiff_perhour"/>
+                                                                    </div>
+                                                                </td>
+                                                                <td style="border-right:  1px solid;"></td>
+                                                                <td></td>
+                                                                <td style="padding-left: 20px">
+                                                                    <div align="right">
+                                                                        <span t-field="detP.reg_nightdiffy_amount"/>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </t>
+                                                        <t t-if="detP.reg_straightduty_amount > 0">
+                                                            <tr>
+                                                                <td>Straight Duty</td>
+                                                                <td style="padding-left: 20px">: </td>
+                                                                <td style="padding-left: 20px">
+                                                                    <div align="right">
+                                                                        <span t-field="detP.reg_straightduty_perhour"/>
+                                                                    </div>
+                                                                </td>
+                                                                <td style="border-right:  1px solid;"></td>
+                                                                <td></td>
+                                                                <td style="padding-left: 20px">
+                                                                    <div align="right">
+                                                                        <span t-field="detP.reg_straightduty_amount"/>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </t>
+                                                        <tr>
+                                                            <td>Sunday/Rest Day</td>
+                                                            <td style="padding-left: 20px">: </td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.basic_pay_restday_perhour"/>
+                                                                </div>
+                                                            </td>
+                                                            <td style="border-right:  1px solid;"></td>
+                                                            <td></td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.basic_pay_restday_amount"/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>&#160;&#160;&#160;Overtime</td>
+                                                            <td style="padding-left: 20px">: </td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.basic_pay_restday_ot_perhour"/>
+                                                                </div>
+                                                            </td>
+                                                            <td style="border-right:  1px solid;"></td>
+                                                            <td></td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.basic_pay_restday_ot_amount"  t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <t t-foreach="o.incentive_id" t-as="detInc">
+                                                            <t t-if="detInc.amount>0">
+                                                                <tr>
+                                                                    <td><span t-field="detInc.name" /></td>
+                                                                    <td style="padding-left: 20px">: </td>
+                                                                    <td></td>
+                                                                    <td style="border-right:  1px solid;"></td>
+                                                                    <td></td>
+                                                                    <td style="padding-left: 20px">
+                                                                        <div align="right">
+                                                                            <span t-field="detInc.amount" />
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </t>
+                                                        </t>
+
+                                                        <tr>
+                                                            <td>Incentive Leave</td>
+                                                            <td style="padding-left: 20px">: </td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td style="border-bottom:  1px solid;"></td>
+                                                            <td style="border-bottom:  1px solid;padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.basic_pay_leaves_amount"/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td><strong>TOTAL</strong></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td style="padding-left: 20px">
+                                                                <div align="right">
+                                                                    <span t-field="o.gross_salary"/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                            <td style="padding-left: 30px; font-family:calibri;font-size:10px"> <!-- padding-bottom: 150px; -->
+                                                <table>
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="padding-left: 10px"></th>
+                                                            <th style="padding-left: 10px"></th>
+                                                            <th style="padding-left: 10px"/>
+                                                            <th style="padding-left: 10px" />
+                                                            <th style="padding-left: 10px" />
+                                                            <th style="padding-left: 10px"/>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><strong>DEDUCTIONS</strong></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>SSS Contribution</td>
+                                                            <td style="padding-left: 20px">:</td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td style="padding-left: 5px">
+                                                                <div align="right">
+                                                                    <span t-field="o.sss_premium"/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>SSS Loan</td>
+                                                            <td style="padding-left: 20px">:</td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td style="padding-left: 10px">
+                                                                <div align="right">
+                                                                    <span t-field="o.sss_loan"/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>Pag-ibig Premium</td>
+                                                            <td style="padding-left: 20px">:</td>
+                                                            <td style="padding-left: 10px">
+                                                                <div align="right">
+                                                                    <span t-field="o.hdmf_premium"/>
+                                                                </div>
+                                                            </td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Pag-ibig Loan</td>
+                                                            <td style="padding-left: 20px">:</td>
+                                                            <td style="padding-left: 10px">
+                                                            </td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td style="padding-left: 10px">
+                                                                <div align="right">
+                                                                    <span t-field="o.hdmf_calamity_loan"/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Phil Health</td>
+                                                            <td style="padding-left: 20px">:</td>
+                                                            <td style="padding-left: 10px">
+                                                                <div align="right">
+                                                                    <span t-field="o.hmo_premium"/>
+                                                                </div>
+                                                            </td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+
+                                                        <t t-foreach="o.deduction_id" t-as="detDed">
+                                                            <t t-if="detDed.amount>0">
+                                                                <tr>
+                                                                    <td><span t-field="detDed.name"/></td>
+                                                                    <td style="padding-left: 20px">: </td>
+                                                                    <td style="padding-left: 10px">
+                                                                        <div align="right">
+                                                                            <span t-field="detDed.amount" />
+                                                                        </div>
+                                                                    </td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </t>
+                                                        </t>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                             <td>
+                                                                 <div align="right">
+                                                                    <span t-field="o.deductions" />
+                                                                 </div>
+                                                             </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table cellpadding="5" cellspacing="0" width="100%" style="border: 1px;" rules="none">
+                                    <tbody id ="Denomination" width="100%" style ="border-style: solid;border-width: 1px;font-family:calibri;font-size:10px" >
+                                        <tr>
+                                            <th align="center"></th>
+                                            <th style="padding-left: 150px" align="center"><strong>DENOMINATION</strong></th>
+                                            <th align="center"></th>
+                                        </tr>
+                                    </tbody>
+                                    <tbody id ="Summary" width="100%" style ="border-style: solid;border-width: 1px;font-family:calibri;font-size:10px">
+                                        <tr>
+                                            <th style="padding-left: 10px;padding-top:10px"><strong>GROSS PAY</strong></th>
+                                            <th style="padding-left: 138px;padding-top:10px" ><strong>TOTAL DEDUCTION</strong></th>
+                                            <th style = "padding-top:10px"><strong>NET PAY</strong></th>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-left: 10px"><span t-field="o.gross_salary" /></td>
+                                            <td style="padding-left: 185px"><span t-field="o.deductions" /></td>
+                                            <td style="border-bottom:  1px solid;"><span t-field="o.net_pay" /></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>

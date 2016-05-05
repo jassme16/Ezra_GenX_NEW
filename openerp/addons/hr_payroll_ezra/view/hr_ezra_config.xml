@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_company_setup_ezra_form" model="ir.ui.view">
+            <field name="name">res.company.setup.form</field>
+            <field name="model">res.company.setup</field>
+            <field name="arch" type="xml">
+                <form string="Company">
+                    <header> <!--style = "width:2995px"-->
+                        <button name="ChangeMWEAmount" string="Update Salary Amount" type="object"  confirm = "Are you sure to update the MWE Amount?" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <group string = "Company Information">
+                            <field name="name"/>
+                            <field name="company_id"/>
+                        </group>
+                        <group string = "Identification">
+                            <field name="sss_no"/>
+                            <field name="hdmf_no"/>
+                            <field name="phic_no"/>
+                            <field name="tin_no"/>
+                        </group>
+                        <group string = "Salary Amount Setup">
+                            <field name="old_minimum_wage" string = "Old Amount"/>
+                            <field name="latest_minimum_wage" string = "Latest Amount" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_company_setup_ezra_tree" model="ir.ui.view">
+            <field name="name">res.company.setup</field>
+            <field name="model">res.company.setup</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Company Additional Information">
+                    <field name="company_id"/>
+                    <field name="sss_no"/>
+                    <field name="hdmf_no"/>
+                    <field name="phic_no"/>
+                    <field name="tin_no"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_company_setup_ezra_filter" model="ir.ui.view">
+            <field name="name">Company Additional Information</field>
+            <field name="model">res.company.setup</field>
+            <field name="arch" type="xml">
+                <search string="Personnel">
+                    <field name="company_id" string="Company"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_company_setup_ezra" model="ir.actions.act_window">
+            <field name="name">Company Additional Information</field>
+            <field name="res_model">res.company.setup</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_company_setup_ezra_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Company Additional Information.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_company_setup_ezra" id="menu_hr_company_setup_ezra" parent="hr.menu_hr_configuration" groups="base.group_hr_manager" string = "Company Setup" sequence="60"/>
+    </data>
+</openerp>

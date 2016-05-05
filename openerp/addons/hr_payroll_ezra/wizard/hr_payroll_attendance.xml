@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="view_hr_payroll_attendance_form" model="ir.ui.view">
+            <field name="name">hr.payroll.attendance.form</field>
+            <field name="model">hr.payroll.attendance</field>
+            <field name="arch" type="xml">
+                <form string="Employee Attendance Information">
+                    <sheet>
+                        <group>
+                            <field name="attendance_status" invisible="1"/>
+                            <field name="id" invisible ="1"/>
+                            <field name="name" readonly ="1" invisible ="1"/>
+                            <group string = "Employee Information">
+                                <field name="employee_id" readonly ="1"/>
+                                <field name="employee_reliever" readonly ="1"/>
+                                <field name="employee_branches" readonly ="1"/>
+                            <button name = "getValueID"
+                                string ="Add Reliever"
+                                type = "object"
+                                attrs="{'invisible':['|',('is_reliever', '=', True),
+                                                         ('attendance_status', '!=', 'draft')]}"/>
+                            </group>
+                            <group string ="Attendance">
+                                <field name="is_reliever" readonly ="1"  invisible ="1"/>
+                                <field name="has_a_reliever" readonly ="1"  invisible ="1"/>
+                                <field name="is_additional_employee" readonly ="1"  invisible ="1"/>
+                                <field name="employee_assign" string ="Assignment" readonly ="1"  invisible ="1"/>
+                                <field name="schedule_datefrom" readonly ="1" invisible ="1"/>
+                                <field name="schedule_dateto" readonly ="1" invisible ="1"/>
+                                <field name="regular_days_work" />
+                                <field name="absent"/>
+                                <field name="leaves"/>
+                                <field name="tardiness"/>
+                                <field name="straight_duty" widget="float_time"/>
+                                <field name="night_differential" widget="float_time"/>
+                                <field name="regular_overtime"  widget="float_time"/>
+                                <field name="rest_day_work" widget="float_time"/>
+                                <field name="restday_overtime" widget="float_time"/>
+                                <field name="special_day_work" widget="float_time"/>
+                                <field name="special_overtime" widget="float_time"/>
+                                <field name="legal_holiday_day" widget="float_time"/>
+                                <field name="holiday_day_work" widget="float_time"/>
+                                <field name="holiday_overtime" widget="float_time"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

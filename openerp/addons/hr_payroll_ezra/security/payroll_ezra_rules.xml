@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <record id="employee_attendance_user_rule" model="ir.rule">
+            <field name="name">Employee Groups cant view Attendance form</field>
+                <field name="model_id" ref="model_hr_attendance_main"/>
+            <field name="groups" eval="[(4,ref('base.group_hr_user')),(4,ref('base.group_hr_manager'))]"/>
+            <field name="comment">Limit viewing of Employee Group.</field>
+        </record>
+
+        <record id="employee_payroll_user_rule" model="ir.rule">
+            <field name="name">Employee Groups cant view Payroll Form</field>
+                <field name="model_id" ref="model_hr_payroll_main"/>
+            <field name="groups" eval="[(4,ref('base.group_hr_user')),(4,ref('base.group_hr_manager'))]"/>
+            <field name="comment">Limit viewing of Employee Group.</field>
+        </record>
+    </data>
+</openerp>

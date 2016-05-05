@@ -1,0 +1,58 @@
+in class hrServiceRecordperDepartment
+
+                   CREATE OR REPLACE VIEW hr_service_record_report AS (
+                            SELECT
+                                ID,
+                                EMPLOYEE_NUMBER,
+                                NAME,
+                                EMPLOYMENT_RANK,
+                                CODE EMPLOYMENT_RANKTYPE,
+                                RATE INCENTIVE_RATE,
+                                0 AS SERVICE_LENGHT,
+                                0 AS EARNED_INCENTIVE,
+                                CASE WHEN ((((SERVICE_LENGTH /60)/60)/24)/30)/365 >=3 THEN 1 ELSE 0 END YEAR_3,
+                                CASE WHEN ((((SERVICE_LENGTH /60)/60)/24)/30)/365 >=5 THEN 1 ELSE 0 END YEAR_5,
+                                CASE WHEN ((((SERVICE_LENGTH /60)/60)/24)/30)/365 >=7 THEN 1 ELSE 0 END YEAR_7,
+                                CASE WHEN ((((SERVICE_LENGTH /60)/60)/24)/30)/365 >=10 THEN 1 ELSE 0 END YEAR_10,
+                                CASE WHEN ((((SERVICE_LENGTH /60)/60)/24)/30)/365 >=15 THEN 1 ELSE 0 END YEAR_15,
+                                CASE WHEN ((((SERVICE_LENGTH /60)/60)/24)/30)/365 >=20 THEN 1 ELSE 0 END YEAR_20,
+                                CASE WHEN ((((SERVICE_LENGTH /60)/60)/24)/30)/365 >=25 THEN 1 ELSE 0 END YEAR_25,
+                                0 AS SERVICE_INCENTIVE	,
+                                EMPLOYMENT_STATUS,
+                                EMPLOYMENT_DEPT_CODE,
+                                DATE_SERVICEFROM,
+                                DATE_SERVICETO,
+                                OBJECT_CODE,
+                                MAX_SERVICEFROM,
+                                MAX_SERVICETO	,
+                                ((((SERVICE_LENGTH /60)/60)/24)/30)/365 years_of_service,
+                                SERVICE_LENGTH days_of_service,
+                                INCENTIVE_LENGTH,
+                                SERVICE_LENGTH
+                            FROM (
+                                SELECT
+                                    EMPH.ID AS ID,
+                                    EMPLOYEE_NUMBER,
+                                    LAST_NAME || ', ' || FIRST_NAME AS NAME,
+                                    EMPLOYMENT_RANK,
+                                    RANKS.CODE,
+                                    RATE,
+                                    INCENTIVE_LENGTH,
+                                    SERVICE_LENGTH,
+                                    EMPLOYMENT_STATUS,
+                                    EMPLOYMENT_DEPT_CODE,
+                                    DATE_SERVICEFROM,
+                                    DATE_SERVICETO,
+                                    OBJECT_CODE,
+                                    (SELECT MIN(DATE_SERVICEFROM) FROM HR_EMPLOYMENTHISTORY
+                                     WHERE EMPLOYEE_EMPLOYMENT_ID = EMP.ID) MAX_SERVICEFROM,
+                                    (SELECT MAX(DATE_SERVICETO) FROM HR_EMPLOYMENTHISTORY
+                                     WHERE EMPLOYEE_EMPLOYMENT_ID = EMP.ID) MAX_SERVICETO
+                                FROM HR_EMPLOYEE EMP
+                                INNER JOIN HR_EMPLOYMENTHISTORY EMPH
+                                    ON EMP.ID = EMPH.EMPLOYEE_EMPLOYMENT_ID
+                                LEFT OUTER JOIN (SELECT CODE,HRT.ID, RATE
+                                         FROM  HR_RANK HR,hr_ranktype HRT
+                                         WHERE HR.RANK_TYPE = HRT.ID) RANKS
+                                    ON EMPLOYMENT_RANK = RANKS.ID) A
+                        )

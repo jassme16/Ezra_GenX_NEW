@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- vim:fdn=3:
+-->
+<openerp>
+    <data>
+
+        <record id="view_migration_form" model="ir.ui.view">
+            <field name="name">migrate.employee.acctnumber.form</field>
+            <field name="model">migrate.employee.acctnumber</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <header >
+                        <button name="Generate" string="Generate" class="oe_highlight" type="object"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                                <field name="employee_id"  readonly="1"/>
+                                <field name="employee_account_number" readonly="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_migration_tree" model="ir.ui.view">
+            <field name="name">migrate.employee.acctnumber</field>
+            <field name="model">migrate.employee.acctnumber</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Attendance Information">
+                    <field name="name" readonly="1"/>
+                    <field name="employee_id"  readonly="1"/>
+                    <field name="employee_account_number" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_migration_filter" model="ir.ui.view">
+            <field name="name">Migration</field>
+            <field name="model">migrate.employee.acctnumber</field>
+            <field name="arch" type="xml">
+                <search string="Attendance">
+                    <field name="name" readonly="1"/>
+                    <field name="employee_id"  readonly="1"/>
+                    <field name="employee_account_number" readonly="1"/>
+                </search>
+             </field>
+        </record>
+
+        <record id="open_module_migration_main" model="ir.actions.act_window">
+            <field name="name">Migration</field>
+            <field name="res_model">migrate.employee.acctnumber</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_migration_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create an Attendance.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_migration_main" id="menu_migration" parent="hr.menu_hr_reporting_timesheet" string = "Acct Number Migration" sequence="56"/>
+    </data>
+</openerp>

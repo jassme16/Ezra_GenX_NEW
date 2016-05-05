@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+      	<template id="assets_backend" name="mymodule css assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/hr_recruitment_extend_application/static/src/js/applicant.js"></script>
+            </xpath>
+        </template>
+
+        <!-- Applicants -->
+        <record id="view_form_rec_ext_inherited" model="ir.ui.view">
+            <field name="name">Jobs - Recruitment Form</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="replace" >
+                    <sheet>
+                        <div class="oe_right oe_button_box">
+                            <button name="action_makeMeeting" class="oe_stat_button" icon="fa-calendar" type="object"
+                                 help="Schedule interview with this applicant">
+                                 <div>Schedule<br/>Meeting</div>
+                            </button>
+                            <button name="action_start_survey"
+                                class="oe_stat_button"
+                                icon="fa-user"
+                                type="object"
+                                help="Answer related job question"
+                                context="{'survey_id': survey}"
+                                attrs="{'invisible':[('survey','=',False)]}">
+                                <div>Start<br/>Interview</div>
+                            </button>
+                            <button name="action_print_survey"
+                                class="oe_stat_button"
+                                icon="fa-print"
+                                type="object"
+                                help="Print interview report"
+                                attrs="{'invisible':[('survey','=',False)]}">
+                                <div>Print<br/>Interview</div>
+                            </button>
+                            <button name="action_get_attachment_tree_view"
+                                class="oe_stat_button"
+                                icon="fa-book"
+                                type="object">
+                                <field name="attachment_number" widget="statinfo" string="Documents"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1><field name="name"/></h1>
+                            <label for="partner_name" class="oe_edit_only"/>
+                            <h2 style="display: inline-block;">
+                                <field name="partner_name" class="oe_inline" style="margin-left: 12px;"/>
+                            </h2>
+                            <h3 style="display: inline-block;">
+                                <field name="last_name" class="oe_inline oe_edit_only" placeholder="Last name.."/>
+                                <field name="first_name" class="oe_inline oe_edit_only" placeholder="First name.."/>
+                                <field name="middle_name" class="oe_inline oe_edit_only" placeholder="Middle name.."/>
+                                <button string="Create Employee" name="create_employee_from_applicant" type="object"
+                                            class="oe_link oe_inline" style="margin-left: 8px;"
+                                            attrs="{'invisible': [('emp_id', '!=', False)]}"/>
+                            </h3>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id"
+                                        on_change="onchange_partner_id(partner_id)"/>
+                                <field name="email_from" widget="email"/>
+                                <field name="partner_phone"/>
+                                <field name="partner_mobile"/>
+                                <field name="type_id" placeholder="Degree"/>
+                            </group>
+                            <group>
+                                <field name="user_id"
+                                    context="{'default_groups_ref': ['base.group_user', 'base.group_partner_manager', 'base.group_hr_manager']}"/>
+                                <label for="title_action"/>
+                                <div>
+                                    <field name="date_action"/>
+                                    <field name="title_action" class="oe_inline" placeholder="e.g. Call for interview"/>
+                                </div>
+                                <field name="priority" widget="priority"/>
+                                <field name="source_id"/>
+                                <field name="reference"/>
+                            </group>
+                            <group string="Job">
+                                <field name="survey" invisible="1"/>
+                                <field name="response_id" invisible="1"/>
+                                <field name="job_id" on_change="onchange_job(job_id)"/>
+                                <field name="department_id" on_change="onchange_department_id(department_id, stage_id)"/>
+                                <field name="company_id" />
+                                <label for="availability"/>
+                                <div>
+                                    <field name="availability" class="oe_inline"/> <label string="Day(s)" class="oe_inline"/>
+                                </div>
+                            </group>
+                            <group string="Contract">
+                                <label for="salary_expected"/>
+                                <div>
+                                    <field name="salary_expected" class="oe_inline"/>
+                                    <span class="oe_inline" attrs="{'invisible':[('salary_expected_extra','=',False)]}"> + </span>
+                                    <field name="salary_expected_extra" class="oe_inline" placeholder="Extra advantages..."/>
+                                </div>
+                                <label for="salary_proposed"/>
+                                <div>
+                                    <field name="salary_proposed" class="oe_inline"/>
+                                    <span class="oe_inline" attrs="{'invisible':[('salary_proposed_extra','=',False)]}"> + </span>
+                                    <field name="salary_proposed_extra" class="oe_inline" placeholder="Extra advantages..."/>
+                                </div>
+                                <field name="emp_id" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="categ_ids" widget="many2many_tags"/>
+                        </group>
+                        <notebook>
+                            <page string = "Application Summary">
+                                <field name="description" placeholder="Feedback of interviews..."/>
+                            </page>
+                        </notebook>
+                        <!--<separator string="Application Summary"/>-->
+                    </sheet>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

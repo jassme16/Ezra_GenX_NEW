@@ -1,0 +1,310 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+      	<template id="assets_backend" name="mymodule css assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/hr_recruitment_2/static/src/css/hr.css"/>
+            </xpath>
+        </template>
+
+        <!-- Added new place of Birth-->
+        <record id="view_form_todo_task_inherited" model="ir.ui.view">
+            <field name="name">Employee – User extension</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <!--<xpath expr="//h1" position="replace" >
+                    <field name="full_name"/>
+                </xpath>-->
+                <xpath expr="//page[@string='Public Information']" position="replace" >
+                    <page string="Public Information">
+						<group>
+							<group string = "Fullname">
+								<!--<field name="documents_status"/>
+								<field name="employee_id" readonly = "1"/>
+								<field name="id"/>-->
+								<field name="employee_number" readonly = "1"/>
+								<field name="first_name"/>
+								<field name="middle_name"/>
+								<field name="last_name"/>
+							</group>
+							<group string = "Position">
+								<field name="department_id" on_change="onchange_department_id(department_id)"/>
+								<field name="job_id"/>
+							</group>
+						</group>
+						<group>
+							<group string = "Identification">
+								<field name="ccl_number"/>
+								<field name="pcn"/>
+							</group>
+							<group string = "Birth">
+								<field name="birthday"/>
+								<field name="placeof_birth"/>
+							</group>
+							<group>
+								<field name="gender"/>
+								<field name="marital"/>
+								<field name="religion"/>
+								<field name="country_id"/>
+								<field name="height"/>
+								<field name="weight"/>
+							</group>
+						</group>
+                    </page>
+                </xpath>
+
+                <xpath expr="//page[@string='Personal Information']" position="replace" >
+                    <page string="Other information">
+						<group>
+							<group string ="Government ID">
+								<field name="sss_no"/>
+								<field name="hdmf_no"/>
+								<field name="philhealth_no"/>
+								<field name="tin_no"/>
+							</group>
+							<group>
+								<group string ="Numbers">
+									<field name="aa_reg_no"/>
+									<field name="service_length"/>
+									<field name="focllength"/>
+									<field name="incentive_length"/>
+									<field name="booking_id"/>
+									<field name="checklistID"/>
+								</group>
+							</group>
+						</group>
+                        <group string ="Bank Information">
+                            <field name="bankacctno"/>
+                        </group>
+                    </page>
+                    <page string="Legacy Documents">
+                        <group>
+							<field name="filename" readonly="1" invisible="1"/>
+							<field name="filename2" readonly="1" invisible="1"/>
+							<field name="filename3" readonly="1" invisible="1"/>
+                            <field name="legacy_doc_1" filename="filename"/>
+                            <field name="legacy_doc_2" filename="filename2"/>
+                            <field name="legacy_doc_3" filename="filename3"/>
+                        </group>
+                    </page>
+					<page string="Seafarer's Account">
+						<group>
+							<group>
+								<field name="user_id" string="Employee User name"/>
+							</group>
+							<group></group>
+						</group>
+					</page>
+                </xpath>
+				<sheet position = "inside">
+					<notebook>
+						<page string ="Address">	
+							<group>
+								<data>
+									<field name="employee_addresses" string ="" >
+										<tree>
+											<field name="addresstype"/>
+											<field name="address_1"/>
+											<field name="address_2"/>
+											<field name="address_3"/>
+											<field name="city"/>
+											<field name="province"/>
+											<field name="country"/>
+											<field name="telephone_number"/>
+											<field name="mobile_number"/>
+											<field name="email_number"/>
+										</tree>
+									</field>
+								</data>
+							</group>
+						</page>	
+						<page string ="Education">	
+							<group>
+								<data>
+									<field name="employee_education" string ="">
+										<tree>
+											<field name="schooltype"/>
+											<field name="name_school"/>
+											<field name="date_from"/>
+											<field name="date_to"/>
+											<field name="school_address"/>
+											<field name="description"/>
+										</tree>									
+									</field>
+								</data>
+							</group>
+						</page>
+						<page string ="Families">
+							<group>
+								<data>
+									<field name="employee_families" string ="">
+										<tree>
+											<field name="relationship"/>
+                                            <field name="first_name"/>
+                                            <field name="middle_name"/>
+                                            <field name="last_name"/>
+											<field name="is_beneficiary"/>
+											<field name="is_allottee"/>
+											<field name="is_living"/>
+										</tree>
+									</field>
+								</data>
+							</group>
+						</page>
+
+						<page string ="Document">
+							<group>
+								<data>
+									<field name="employee_documents" string ="">
+										<tree colors = "red:expired=='EXP'">
+											<field name="document"/>
+											<field name="document_number"/>
+											<field name="date_issued"/>
+											<field name="date_expiry"/>
+											<field name="issuing_authority"/>
+											<field name="place_ofissue"/>
+											<field name="expired" invisible="1" />
+										</tree>									
+									</field>
+								</data>
+							</group>							
+						</page>		
+						<page string ="Medical">	
+							<group>
+								<data>
+									<field name="emloyee_medical" string ="">
+										<tree colors = "red:expired=='EXP'">
+											<field name="medical_type"/>
+											<field name="medical_clinic"/>
+											<field name="date_from"/>
+											<field name="date_to"/>
+											<field name="expired" invisible="1" />
+										</tree>									
+									</field>
+								</data>
+							</group>					
+						</page>		
+
+						<page string ="License">	
+							<group>
+								<data>
+									<field name="employee_licenses" string ="">
+										<tree>
+											<field name="licensetype"/>
+											<field name="license"/>
+											<field name="doc_number"/>
+											<field name="country"/>
+											<field name="date_issued"/>
+											<field name="date_expiry"/>
+											<field name="place_issue"/>
+											<field name="authority_issue"/>
+											<field name="remarks"/>
+										</tree>									
+									</field>
+								</data>
+							</group>					
+						</page>							
+						<page string ="Employment">	
+							<group>
+								<data>
+									<field name="employee_employment" string ="">
+										<tree>
+											<field name="date_departure"/>
+											<field name="date_servicefrom"/>
+											<field name="date_serviceto"/>
+											<field name="employment_dept_code"/>
+											<field name="employment_rank"/>
+											<field name="employment_status"/>
+											<field name="remarks"/>
+											<field name="place_signOn"/>
+											<field name="place_signOff"/>
+											<field name="service_range"/>
+										</tree>									
+									</field>
+								</data>
+							</group>					
+						</page>													
+					</notebook>
+					<notebook>
+						<page string = "Check List">
+							<group>
+								<data>
+									<field name="employee_checklists" string =""  widget="one2many_list">
+										<tree editable="top/bottom" create = "false">
+											<field name="param_name_1" string ="" readonly = "True"/>
+											<field name="param_name_1_value" string ="" attrs="{'invisible': [('param_name_1_value_visible', '=', False)]}"/>
+											<field name="param_name_1_check" string ="" attrs="{'invisible': [('param_name_1_value_visible', '=', False)]}"/>
+
+											<field name="param_name_2" string ="" readonly = "True"/>
+											<field name="param_name_2_value" string ="" attrs="{'invisible': [('param_name_2_value_visible', '=', False)]}"/>
+											<field name="param_name_2_check" string ="" attrs="{'invisible': [('param_name_2_value_visible', '=', False)]}"/>
+
+											<field name="param_name_3" string ="" readonly = "True"/>
+											<field name="param_name_3_value" string ="" attrs="{'invisible': [('param_name_3_value_visible', '=', False)]}"/>
+											<field name="param_name_3_check" string ="" attrs="{'invisible': [('param_name_3_value_visible', '=', False)]}"/>
+											<field name="issued_at" string ="Issued at"/>
+											<field name="date_issued"/>
+											<field name="date_expiry"/>
+											<field name="param_name_1_value_visible" invisible="1"/>
+											<field name="param_name_2_value_visible" invisible="1"/>
+											<field name="param_name_3_value_visible" invisible="1"/>
+										</tree>
+									</field>
+								</data>
+							</group>
+						</page>
+					</notebook>
+				</sheet>
+            </field>
+        </record>
+
+       <record model="ir.ui.view" id="hr_kanban_view_employees_recruitment_kanban">
+            <field name="name">HR - Employees Kanban Document Status</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+            <field name="arch" type="xml">
+                <xpath expr="//templates" position="before">
+                    <field name="documents_status"/>
+					<field name="medical_status"/>
+
+                </xpath>
+                <xpath expr="//div[@class='oe_employee_details']/ul/li[@id='last_login']" position="inside">
+                    <span t-if="record.documents_status.value == true" style="font-size: 100%%"
+						  t-att-class="'oe_kanban_button oe_kanban_color_3'">
+						<label for="Docs">Expired Documents</label>
+
+                    </span>
+					<br />
+                    <span t-if="record.medical_status.value == true" style="font-size: 100%%"
+						  t-att-class="'oe_kanban_button oe_kanban_color_3'">
+						<label for="MedDocs">Expired Medical Documents </label>
+
+                    </span>
+                </xpath>
+            </field>
+        </record>
+
+		<!--
+        <record id="view_employee_filter" model="ir.ui.view">
+            <field name="name">Employees</field>
+            <field name="model">hr.employee</field>
+            <field name="arch" type="xml">
+                <search string="Employees">
+                    <field name="name" string="Employees" filter_domain="['|',('work_email','ilike',self),('name','ilike',self)]"/>
+                    <field name="department_id" />
+                    <field name="category_ids" groups="base.group_hr_user"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Manager" icon="terp-personal" domain="[]" context="{'group_by':'parent_id'}"/>
+                        <filter string="Coach" icon="terp-personal" domain="[]" context="{'group_by':'coach_id'}"/>
+                        <filter string="Department" icon="terp-personal+" domain="[]" context="{'group_by':'department_id'}"/>
+                        <filter string="Job" icon="terp-gtk-select-all" domain="[]" context="{'group_by':'job_id'}"/>
+                        <filter string="Company" icon="terp-go-home" domain="[]" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                    </group>
+                </search>
+             </field>
+         </record>
+         -->
+    </data>
+</openerp>

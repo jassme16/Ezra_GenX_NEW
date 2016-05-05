@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+        id="payroll_13th_month"
+        model="payroll.incentive.13thmonth"
+        string="13th Month"
+        report_type="qweb-html"
+        name="hr_payroll_13thmonth_pay.report_13thMonth"
+        file="hr_payroll_13thmonth_pay.report_13thMonth"
+        attachment_use="True"
+        attachment="object.name+'.pdf'"/>
+
+        <template id="report_13thMonth">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <!--<t t-call="report.external_layout"> -->
+
+                        <t t-foreach="o.incentive_detail_id" t-as="detP">
+                            <div class="row mt32 mb32">
+                                <div style="padding-top:25px"></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div style="font-size:15px;font-family:calibri;padding-left: 260px" ><strong><span t-field="detP.company_name"/></strong></div>
+                                <div style="font-size:12px;font-family:calibri;padding-left: 175px" ><span t-field="detP.company_address"/></div>
+                                <div style="font-size:12px;font-family:calibri;padding-left: 225px; padding-bottom: 10px" ><span t-field="detP.company_contact"/></div>
+                                <div class = "Page" style ="border-style: solid;border-width: 1px;float:left;width:680px">
+                                    <table cellpadding="5" cellspacing="0" width="100%" style="border: 1px;" rules="none">
+                                         <tbody id ="Details" width="100%" style ="border-style: solid;border-width: 1px">
+                                             <tr>
+                                                <th style="padding-left:20px"></th>
+                                                <th></th>
+                                             </tr>
+                                             <tr style="padding-left:20px">
+                                                 <td style="padding-left:20px">
+                                                     <b>EMPLOYEE</b>
+                                                 </td>
+                                                 <td style="padding-left: 20px">:</td>
+                                                 <td style="padding-left: 20px"><b><span t-field="detP.employee_id.name"/></b></td>
+                                             </tr>
+                                             <tr style="padding-left:20px">
+                                                 <td style="padding-left:20px">
+                                                     Project Assign
+                                                 </td>
+                                                 <td style="padding-left: 20px">:</td>
+                                                 <td style="padding-left: 20px"><span t-field="detP.employee_id.assignto"/></td>
+                                             </tr >
+                                             <tr style="padding-left:20px">
+                                                 <td style="padding-left:20px">
+                                                     Inclusive Dates
+                                                 </td>
+                                                 <td style="padding-left: 20px">:</td>
+                                                 <td style="padding-left: 20px"><span t-field="o.month_range_from"/>/<span t-field="o.year_from"/> - <span t-field="o.month_range_to"/>/<span t-field="o.year_to"/></td>
+                                             </tr>
+                                         </tbody>
+                                    </table>
+                                    <table cellpadding="5" cellspacing="0" width="100%" style="border-style: solid;border-width: 1px" rules="none">
+                                        <thead>
+                                             <tr>
+                                                <th style="padding-left:20px">Month</th>
+                                                <th>Year</th>
+                                                <th style="padding-right:20px"><div align="right">Amount</div></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id ="Details"  width="100%" style ="border-style: solid;border-width: 1px">
+                                            <t t-foreach="detP.incentive_id" t-as="detEmp">
+                                                    <tr>
+                                                        <td style="padding-left:20px">
+                                                            <span t-field="detEmp.month"/>
+                                                        </td>
+                                                        <td>
+                                                            <span t-field="detEmp.year"/>
+                                                        </td>
+                                                        <td style="padding-right:20px">
+                                                            <div align="right">
+                                                                <span t-field="detEmp.amount"/>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                     <table cellpadding="5" cellspacing="0" width="100%" style="border-style: solid;border-width: 1px" rules="none">
+                                         <tbody id ="Details" width="100%" style ="border-style: solid;border-width: 1px">
+                                             <tr>
+                                                <th style="padding-left:20px"></th>
+                                                <th></th>
+                                             </tr>
+                                             <tr style="padding-left:20px">
+                                                 <td style="padding-left:20px">
+                                                     <b>Yearly Income
+                                                     <span style="padding-left: 20px">:</span>
+                                                     <span style="padding-left: 20px" t-field="detP.total_amount"/></b>
+                                                 </td>
+                                                 <td style="padding-right:20px">
+                                                     <div align="right">
+                                                         <b>Total 13th Month
+                                                             <span style="padding-left: 20px">:</span>
+                                                             <span style="padding-left: 20px" t-field="detP.amount"/></b>
+                                                     </div>
+                                                 </td>
+                                             </tr>
+                                         </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>

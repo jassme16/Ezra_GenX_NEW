@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- 13th Month -->
+        <record id="view_hr_thirteenth_month_form" model="ir.ui.view">
+            <field name="name">payroll.incentive.13thmonth.form</field>
+            <field name="model">payroll.incentive.13thmonth</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <header>
+                        <button name="generate13thMonth" string="Generate 13th Month" class="oe_highlight" type="object"  attrs="{'invisible':[('state', '!=', 'draft')]}" />
+                        <button name="generate13thMonthSummary" string="13th Month Report Summary" class="oe_highlight" type="object"  attrs="{'invisible':[('state', '!=', 'draft')]}" />
+                        <button name="postApproved" string="Approved" type="object" attrs="{'invisible':[('state', '!=', 'draft')]}" confirm = "Are you sure to Approved this 13th Month?"/>
+                        <button name="post" string="Paid" class="oe_highlight"  type="object"  attrs="{'invisible':[('state', '!=', 'approved')]}" confirm = "Are you sure to finalize this payroll?"/>
+                        <button name="postDraft" string="Re-Check"  type="object" class="oe_highlight"  attrs="{'invisible':[('state', '!=', 'approved')]}" confirm = "Are you sure to edit this generated 13th Month?"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,approved,post" statusbar_colors='{"approved":"blue","post":"red"}'/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                                <field name="month_range_from" attrs="{'readonly':[('state', '!=', 'draft')]}" />
+                                <field name="year_from" attrs="{'readonly':[('state', '!=', 'draft')]}" />
+                                <field name="month_range_to" attrs="{'readonly':[('state', '!=', 'draft')]}" />
+                                <field name="year_to" attrs="{'readonly':[('state', '!=', 'draft')]}" />
+                                <field name="release_date" attrs="{'readonly':[('state', '!=', 'draft')]}" />
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                        <group col="4" string ="Additional Information">
+                            <group string = "Resigned Employee">
+                                <field name="resigned_employee_id" domain="[('active','=',0)]" />
+                            </group>
+                            <group string = "Bank Payroll">
+                                <field name="filename" readonly="1" invisible="1"/>
+                                <field name="payroll_file" readonly="1" filename="filename"/>
+                            </group>
+
+                        </group>
+                        <notebook>
+                            <page string = "Employee's 13th Month Pay">
+                                <data>
+                                    <field name="incentive_detail_id" string ="" create="false">
+                                        <tree create = "false" editable="bottom/top" colors="red:is_paid==True">
+                                            <field name ="name" readonly="1"/>
+                                            <field name ="employee_number" readonly="1"/>
+                                            <field name ="amount" readonly="1" />
+                                            <field name ="is_paid" invisible="1" />
+                                        </tree>
+                                    </field>
+                                    <group class="oe_subtotal_footer oe_right" >
+                                        <field name="total_amount"  class="oe_subtotal_footer_separator" readonly="1"/>
+                                    </group>
+                                    <div class="oe_clear">
+                                    </div>
+                                </data>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers" />
+                            <field name="message_ids" widget="mail_thread" />
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_thirteenth_month_tree" model="ir.ui.view">
+            <field name="name">payroll.incentive.13thmonth</field>
+            <field name="model">payroll.incentive.13thmonth</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="13th Month Information">
+                    <field name="name"/>
+                    <field name="month_range_from"/>
+                    <field name="year_from"/>
+                    <field name="month_range_to"/>
+                    <field name="year_to"/>
+                    <field name="release_date"/>
+                    <field name="state"/>
+                    <field name="total_amount"/>
+                    <field name="resigned_employee_id"/>
+                    <field name="filename" readonly="1" invisible="1"/>
+                    <field name="payroll_file" readonly="1" filename="filename"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_thirteenth_month_filter" model="ir.ui.view">
+            <field name="name">13th Month</field>
+            <field name="model">payroll.incentive.13thmonth</field>
+            <field name="arch" type="xml">
+                <search string="Payroll">
+                    <field name="name"/>
+                    <field name="month_range_from"/>
+                    <field name="year_from"/>
+                    <field name="month_range_to"/>
+                    <field name="year_to"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_hr_thirteenth_month" model="ir.actions.act_window">
+            <field name="name">13th Month</field>
+            <field name="res_model">payroll.incentive.13thmonth</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_thirteenth_month_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create 13th Month.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_hr_thirteenth_month" id="menu_hr_thirteenth_month" parent="hr_payroll.menu_hr_root_payroll" string = "Pagibig Contribution" sequence="56"/>
+    </data>
+</openerp>

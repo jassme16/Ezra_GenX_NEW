@@ -1,0 +1,2 @@
+access_hr_employeeaddress_emp,hr.employeeaddress.emp,hr.employeeaddress,base.group_user,1,0,0,0
+access_hr_employeeaddress_user,hr.employeeaddress.user,hr.employeeaddress,base.group_hr_user,1,1,1,1

@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_payroll_sss_contribution_manager,payroll.sss.contribution.manager,hr_payroll_sss.model_payroll_sss_contribution,base.group_hr_manager,1,1,1,1
+access_payroll_sss_contribution_detail_manager,payroll.sss.contribution.detail.manager,hr_payroll_sss.model_payroll_sss_contribution_detail,base.group_hr_manager,1,1,1,1
+access_payroll_sss_loan_manager,payroll.sss.loan.manager,hr_payroll_sss.model_payroll_sss_loan,base.group_hr_manager,1,1,1,1
+access_payroll_sss_loan_detail_manager,payroll.sss.loan.detail.manager,hr_payroll_sss.model_payroll_sss_loan_detail,base.group_hr_manager,1,1,1,1
+access_payroll_sss_contribution_user,payroll.sss.contribution.hr_user,hr_payroll_sss.model_payroll_sss_contribution,base.group_hr_user,1,1,1,1
+access_payroll_sss_contribution_detail_user,payroll.sss.contribution.detail.hr_user,hr_payroll_sss.model_payroll_sss_contribution_detail,base.group_hr_user,1,1,1,1
+access_payroll_sss_loan_user,payroll.sss.loan.hr_user,hr_payroll_sss.model_payroll_sss_loan,base.group_hr_user,1,1,1,1
+access_payroll_sss_loan_detail_user,payroll.sss.loan.detail.hr_user,hr_payroll_sss.model_payroll_sss_loan_detail,base.group_hr_user,1,1,1,1

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Pag-ibig Contributions -->
+        <record id="view_hr_hdmf_contri_form" model="ir.ui.view">
+            <field name="name">payroll.hdmf.premium.form</field>
+            <field name="model">payroll.hdmf.premium</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <header>
+                        <button name="generateExcelFile" string="Generate Pag-ibig Contributions" class="oe_highlight" type="object"  attrs="{'invisible':[('state', '!=', 'draft')]}" />
+                        <button name="postApproved" string="Approved" type="object" attrs="{'invisible':[('state', '!=', 'draft')]}" confirm = "Are you sure to Approved this Pag-ibig Contributions?"/>
+                        <button name="post" string="Paid" class="oe_highlight"  type="object"  attrs="{'invisible':[('state', '!=', 'approved')]}" confirm = "Are you sure to finalize this payroll?"/>
+                        <button name="postDraft" string="Re-Check"  type="object" class="oe_highlight"  attrs="{'invisible':[('state', '!=', 'approved')]}" confirm = "Are you sure to edit this generated Pag-ibig Contributions?"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,approved,post" statusbar_colors='{"approved":"blue","post":"red"}'/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                                <field name="for_the_month_of" attrs="{'readonly':[('state', '!=', 'draft')]}" />
+                                <field name="for_the_year" attrs="{'readonly':[('state', '!=', 'draft')]}" />
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                        <group col="4" string ="Pag-ibig Contributions Additional Information">
+                            <field name="employee_name" attrs="{'readonly':[('state', '!=', 'draft')]}" invisible="1"/>
+                            <field name="filename" readonly="1" invisible="1"/>
+                            <field name="hdmf_file" readonly="1" filename="filename"/>
+                        </group>
+                        <notebook>
+                            <page string = "Employee's Pag-ibig Contribution">
+                                <data>
+                                    <field name="hdmf_detail_id" string ="" readonly="1" >
+                                        <tree create = "false" editable="bottom/top">
+                                            <field name ="name" readonly="1"/>
+                                            <field name ="last_name" readonly="1" />
+                                            <field name ="first_name" readonly="1" />
+                                            <field name ="middle_name" readonly="1" />
+                                            <field name ="monthly_compensation" readonly="1" />
+                                            <field name ="employee_share" readonly="1" />
+                                            <field name ="employer_share" readonly="1" />
+                                            <field name ="total_contribution" readonly="1" />
+                                            <field name ="remarks" readonly="1" />
+                                        </tree>
+                                    </field>
+                                    <group class="oe_subtotal_footer oe_right" >
+                                        <field name="total_amount" readonly="1"/>
+                                        <field name="total_employer_share" readonly="1"/>
+                                        <field name="grandTotal"  class="oe_subtotal_footer_separator" readonly="1"/>
+                                    </group>
+                                    <div class="oe_clear">
+                                    </div>
+                                </data>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers" />
+                            <field name="message_ids" widget="mail_thread" />
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_hdmf_contri_tree" model="ir.ui.view">
+            <field name="name">payroll.hdmf.premium</field>
+            <field name="model">payroll.hdmf.premium</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Pag-ibig Contributions Information">
+                    <field name="name"/>
+                    <field name="state"/>
+                    <field name="for_the_month_of"/>
+                    <field name="for_the_year"/>
+                    <field name="total_amount"/>
+                    <field name="total_employer_share"/>
+                    <field name="grandTotal"/>
+                    <field name="filename" readonly="1" invisible="1"/>
+                    <field name="hdmf_file" readonly="1" filename="filename"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_hdmf_contri_filter" model="ir.ui.view">
+            <field name="name">Pag-ibig Contributions</field>
+            <field name="model">payroll.hdmf.premium</field>
+            <field name="arch" type="xml">
+                <search string="Payroll">
+                    <field name="name"/>
+                    <field name="for_the_month_of"/>
+                    <field name="for_the_year"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_hr_hdmf_contri" model="ir.actions.act_window">
+            <field name="name">Pag-ibig Contributions</field>
+            <field name="res_model">payroll.hdmf.premium</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_hdmf_contri_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create Pag-ibig Contributions.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_hr_hdmf_contri" id="menu_hr_hdmf_contri" parent="hr_payroll.menu_hr_root_payroll" string = "Pagibig Contribution" sequence="53"/>
+    </data>
+</openerp>
+

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_payslip_per_employee" model="ir.ui.view">
+            <field name="name">payroll.payslip.employee.form</field>
+            <field name="model">payroll.payslip.employee.temp</field>
+            <field name="arch" type="xml">
+            <form string="Payslip Employee">
+
+                <group>
+                    <field name="employee_id" />
+                    <!--
+                    <field name="month_of_from"/>
+                    <field name="month_quarter_from"/>
+                    <field name="month_year_from"/>
+
+                    <field name="month_of_to"/>
+                    <field name="month_quarter_to"/>
+                    <field name="month_year_to"/>
+                    -->
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" class="oe_highlight"/>
+                    <button name="%(payroll_payslip_employee_ezra)d" string="Print Report" type="action" icon="gtk-print"
+                                    context = "{'default_employee_id': employee_id}"
+                            />
+                    or
+                    <button string="Cancel" special="cancel" class="oe_link"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_payslip_per_employee" model="ir.actions.act_window">
+            <field name="name">Payslip Employee</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">payroll.payslip.employee.temp</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            name="Payslip Employee"
+            parent="hr.menu_hr_reporting_timesheet"
+            action="action_payslip_per_employee"
+            id="menu_payslip_per_employee"
+            icon="STOCK_PRINT"/>
+
+        <!-- YAAAA -->
+        <record id="view_payslip_per_employee_temp" model="ir.ui.view">
+            <field name="name">hr.payroll.detail.temp.form</field>
+            <field name="model">hr.payroll.detail.temp</field>
+            <field name="arch" type="xml">
+            <form string="Payslip Employee" create="false" edit="false" class="oe_form_configuration">
+                <header>
+                    <button name="updateReport" string="Save" type="object" class="oe_highlight"/> or
+                    <button name="%(payroll_payslip_employee_ezra)d" string="Print Report" type="action" icon="gtk-print"/>
+                    <button string="Cancel" special="cancel" class="oe_link"/>
+                </header>
+                <group>
+                    <field name="employee_id" />
+                    <!--
+                    <field name="month_of_from"/>
+                    <field name="month_quarter_from"/>
+                    <field name="month_year_from"/>
+
+                    <field name="month_of_to"/>
+                    <field name="month_quarter_to"/>
+                    <field name="month_year_to"/>
+                    -->
+                </group>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_payslip_per_employee_temp" model="ir.actions.act_window">
+            <field name="name">Payslip Employee</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.payroll.detail.temp</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="create">false</field>
+            <field name="target">inline</field>
+        </record>
+
+        <menuitem
+            name="Payslip Employee"
+            parent="hr.menu_hr_reporting_timesheet"
+            action="action_payslip_per_employee_temp"
+            id="menu_payslip_per_employee_temp"
+            icon="STOCK_PRINT"/>
+
+    </data>
+</openerp>

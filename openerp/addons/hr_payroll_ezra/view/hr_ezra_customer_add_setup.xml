@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <template id="assets_backend" name="hr ezra assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/hr_payroll_ezra/static/src/css/ezra.css"/>
+                <script type="text/javascript" src="/hr_payroll_ezra/static/src/js/ezra.js"></script>
+                <script type="text/javascript" src="/hr_payroll_ezra/static/src/js/attendance.js"></script>
+            </xpath>
+        </template>
+
+        <record id="view_customer_setup_form" model="ir.ui.view">
+            <field name="name">res.customer.setup.form</field>
+            <field name="model">res.customer.setup</field>
+            <field name="arch" type="xml">
+                <form string="Company">
+                    <header> <!--style = "width:2995px"-->
+                        <button name="computeContract" string="Compute Contract" class="oe_highlight" type="object"/>
+                    </header>
+                    <sheet>
+                        <group string = "Customer Information">
+                            <field name="name"/>
+                            <field name="customer_id"/>
+                            <field name="job_id"/>
+                        </group>
+                        <group string = "Project Information">
+                            <field name="factor_days"/>
+                            <field name="daily_rate"/>
+                            <field name="thirteenth_month"/>
+                            <field name="incentive_leaves"/>
+                            <field name="allowance"/>
+                            <field name="total_labor_cost"/>
+                            <field name="due_to_government"/>
+                            <field name="supplies"/>
+                            <field name="uniform_allowance"/>
+                            <field name="equipment"/>
+                            <field name="overhead_cost"/>
+                            <field name="is_project_vatable"/>
+                            <field name="monthly_rate"/>
+                        </group>
+                    </sheet>
+                    <sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers" />
+                            <field name="message_ids" widget="mail_thread" />
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_customer_setup_tree" model="ir.ui.view">
+            <field name="name">res.customer.setup</field>
+            <field name="model">res.customer.setup</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Customer Projects">
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                    <field name="job_id"/>
+                    <field name="total_labor_cost"/>
+                    <field name="due_to_government"/>
+                    <field name="thirteenth_month"/>
+                    <field name="allowance"/>
+                    <field name="overhead_cost"/>
+                    <field name="uniform_allowance"/>
+                    <field name="supplies"/>
+                    <field name="equipment"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_customer_setup_filter" model="ir.ui.view">
+            <field name="name">Customer Projects</field>
+            <field name="model">res.customer.setup</field>
+            <field name="arch" type="xml">
+                <search string="Personnel">
+                    <field name="customer_id" string="Customer"/>
+                    <field name="job_id" string ="Project"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_customer_setup" model="ir.actions.act_window">
+            <field name="name">Customer Projects</field>
+            <field name="res_model">res.customer.setup</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_customer_setup_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Customer Projects.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_customer_setup" id="menu_hr_customer_setup" parent="account.menu_finance_receivables" groups="base.group_hr_manager" string = "Customer's Projects" sequence="99"/>
+
+        <record id="view_customer_setup_tree1" model="ir.ui.view">
+            <field name="name">res.customer.setup</field>
+            <field name="model">res.customer.setup</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Customer Projects">
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                    <field name="job_id"/>
+                    <field name="total_labor_cost"/>
+                    <field name="due_to_government"/>
+                    <field name="thirteenth_month"/>
+                    <field name="allowance"/>
+                    <field name="overhead_cost"/>
+                    <field name="uniform_allowance"/>
+                    <field name="supplies"/>
+                    <field name="equipment"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_customer_setup_filter1" model="ir.ui.view">
+            <field name="name">Customer Projects</field>
+            <field name="model">res.customer.setup</field>
+            <field name="arch" type="xml">
+                <search string="Personnel">
+                    <field name="customer_id" string="Customer"/>
+                    <field name="job_id" string ="Project"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_customer_setup1" model="ir.actions.act_window">
+            <field name="name">Customer Projects</field>
+            <field name="res_model">res.customer.setup</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_customer_setup_filter"/>
+            <!--<field name="target">new</field>-->
+            <field name="context">{'search_default_current':1,'search_default_customer_id': [active_id], 'default_customer_id': active_id}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Customer Projects.
+              </p>
+            </field>
+        </record>
+
+        <record id="act_module_customer_setup1" model="ir.actions.act_window">
+            <field name="res_model">res.customer.setup</field>
+            <field name="view_type">form</field>
+            <field name="name">Projects</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_current':1,'search_default_customer_id': [active_id], 'default_customer_id': active_id}</field>
+        </record>
+
+
+
+        <!-- Customer Main-->
+        <record id="view_customer_main_form" model="ir.ui.view">
+            <field name="name">res.customers.main.form</field>
+            <field name="model">res.customers.main</field>
+            <field name="arch" type="xml">
+                <form string="Customer Main">
+                    <sheet class ="oe_form_sheet_width_5">
+                        <group string = "Customer Information">
+                            <field name="code" invisible="1"/>
+                            <field name="name"/>
+                            <field name="customer_info" domain ="[('customer','=',True)]" invisible ="1"/>
+
+                        </group>
+                        <notebook>
+                            <page string ="Customer Branches">
+                                <data>
+                                    <field name="main_cust_id">
+                                        <tree edit ="true" editable="bottom/top">
+                                            <field name="code" invisible="1"/>
+                                            <field name="name"/>
+                                            <field name="customer_info" domain ="[('customer','=',True)]"/>
+                                            <!--
+                                            <field name="customer_info" domain ="[('customer','=',True)]"/>
+                                            <button name="getProjects" string ="Assignment/s" type="object" domain = "[('customer', '=', True )]" invisble="1"/>
+                                            <button name="%(act_module_customer_setup1)d"
+                                                    string ="Assignment/s"
+                                                    type="action"
+                                                    context="{'search_default_customer_id':	customer_info,
+                                                              'default_customer_id':	customer_info}" invisble="1"/>
+                                            -->
+                                        </tree>
+                                    </field>
+                                </data>
+                            </page>
+                            <page string ="Assignment">
+                                <div class="oe_title">
+                                    <field name="branches_id" domain ="[('main_detail_id','=',id)]" options="{'no_create_edit': True}"/>
+                                     <button name="getAssignments" string ="Search" type="object" class="oe_edit_only"/>
+                                </div>
+                                <data>
+                                    <field name="assignment_ids">
+                                        <tree edit ="true"  create = "false" editable="bottom/top">
+                                            <field name="job_id" readonly="1"/>
+                                            <field name="monthly_rate" readonly="1"/>
+                                            <field name="total_labor_cost" readonly="1"/>
+                                            <field name="due_to_government" readonly="1"/>
+                                            <field name="thirteenth_month" readonly="1"/>
+                                            <field name="incentive_leaves" readonly="1"/>
+                                            <field name="allowance" readonly="1"/>
+                                            <field name="overhead_cost" readonly="1"/>
+                                            <field name="uniform_allowance" readonly="1"/>
+                                            <field name="supplies" readonly="1"/>
+                                            <field name="equipment" readonly="1"/>
+                                            <field name="is_project_vatable" readonly="1"/>
+                                        </tree>
+                                    </field>
+                                </data>
+                                <!--
+                                <footer>
+                                    <button name="saveCustAssignment" string ="Save Assignments" type="object" domain = "[('customer', '=', True )]"/>
+                                </footer>\
+                                -->
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers" />
+                            <field name="message_ids" widget="mail_thread" />
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_customer_main_tree" model="ir.ui.view">
+            <field name="name">res.customers.main</field>
+            <field name="model">res.customers.main</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Customers">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="customer_info"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_customer_main_filter" model="ir.ui.view">
+            <field name="name">Customer Projects</field>
+            <field name="model">res.customers.main</field>
+            <field name="arch" type="xml">
+                <search string="Customers">
+                    <field name="customer_info" string="Customer"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_customer_main" model="ir.actions.act_window">
+            <field name="name">Customer Offices</field>
+            <field name="res_model">res.customers.main</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_customer_main_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Customer Offices.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_customer_main" id="menu_hr_customer_main" parent="account.menu_finance_receivables" groups="base.group_hr_manager" string = "Customer" sequence="99"/>
+
+        <!-- Customer Branches -->
+         <record id="act_module_customer_setup1" model="ir.actions.act_window">
+            <field name="res_model">res.customer.setup</field>
+            <field name="view_type">form</field>
+            <field name="name">Projects</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="view_customer_branches_form" model="ir.ui.view">
+            <field name="name">res.customer.branches.form</field>
+            <field name="model">res.customer.branches</field>
+            <field name="arch" type="xml">
+                <form string="Customer Branches">
+                    <sheet>
+                        <group string = "Customer Information">
+                            <field name="main_detail_id" string ="Client" domain ="[('customer','=',True)]" readonly ="1"/>
+                            <field name="customer_info" domain ="[('customer','=',True)]" string ="Client Branch"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>

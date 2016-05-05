@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_payroll_hdmf_loan_manager,payroll.hdmf.loan.manager,hr_payroll_pagibig.model_payroll_hdmf_loan,base.group_hr_manager,1,1,1,1
+access_payroll_hdmf_loan_detail_manager,payroll.hdmf.loan.detail.manager,hr_payroll_pagibig.model_payroll_hdmf_loan_detail,base.group_hr_manager,1,1,1,1
+access_payroll_hdmf_premium_manager,payroll.hdmf.premium.manager,hr_payroll_pagibig.model_payroll_hdmf_premium,base.group_hr_manager,1,1,1,1
+access_payroll_hdmf_premium_detail_manager,payroll.hdmf.premium.detail.manager,hr_payroll_pagibig.model_payroll_hdmf_premium_detail,base.group_hr_manager,1,1,1,1
+access_payroll_hdmf_loan_user,payroll.hdmf.loan.hr_user,hr_payroll_pagibig.model_payroll_hdmf_loan,base.group_hr_user,1,1,1,1
+access_payroll_hdmf_loan_detail_user,payroll.hdmf.loan.detail.hr_user,hr_payroll_pagibig.model_payroll_hdmf_loan_detail,base.group_hr_user,1,1,1,1
+access_payroll_hdmf_premium_user,payroll.hdmf.premium.hr_user,hr_payroll_pagibig.model_payroll_hdmf_premium,base.group_hr_user,1,1,1,1
+access_payroll_hdmf_premium_detail_user,payroll.hdmf.premium.detail.hr_user,hr_payroll_pagibig.model_payroll_hdmf_premium_detail,base.group_hr_user,1,1,1,1

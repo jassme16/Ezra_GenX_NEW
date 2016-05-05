@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+        id="payroll_13th_month_summary"
+        model="payroll.incentive.13thmonth"
+        string="13th Month Summary"
+        report_type="qweb-html"
+        name="hr_payroll_13thmonth_pay.report_13thMonth_summary"
+        file="hr_payroll_13thmonth_pay.report_13thMonth_summary"
+        attachment_use="True"
+        attachment="object.name+'.pdf'"/>
+
+        <template id="report_13thMonth_summary">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class ="Page">
+                            <div>
+                                <h1> 13th Month Summary </h1>
+                            </div>
+                            <div>
+                                <b>From :</b> <span t-field="o.month_range_from" /> - <span t-field="o.year_from" />
+                            </div>
+
+                            <div>
+                                <b>To : </b> <span t-field="o.month_range_to" /> - <span t-field="o.year_to" />
+                            </div>
+
+                            <div>
+                                <b>Release date :</b>
+                                <span t-field="o.release_date" />
+                            </div>
+                            <br/>
+                            <t t-if = "o.bonus_summary_id">
+                                <table cellspacing="0" style="width:100%;border-collapse:collapse">
+                                    <thead style ="border-bottom: 1px solid black;">
+                                        <tr>
+                                            <th colspan="4">Employee</th>
+                                            <th>Computed Amount</th>
+                                            <th>Amount Paid</th>
+                                            <th>Date Paid</th>
+                                            <th>13th Month</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style ="border-bottom: 1px solid black;">
+                                        <t t-foreach="o.bonus_summary_id" t-as="detP">
+                                            <tr >
+                                                <td colspan="4"><span t-field="detP.name.last_name"/>, <span t-field="detP.name.first_name"/></td>
+                                                <td><span t-field="detP.amount_paid"/></td>
+                                                <td><span t-field="detP.bonus_amount_paid"/></td>
+                                                <td><span t-field="detP.release_date"/></td>
+                                                <td><span t-field="detP.total_amount_paid"/></td>
+                                            </tr>
+                                        </t>
+
+                                        <tr style ="outline: thin solid black;">
+                                            <td colspan="4">
+                                                <b>
+                                                    TOTAL :
+                                                </b>
+                                            </td>
+                                            <td><span t-field="o.total_computed_amount"/></td>
+                                            <td><span t-field="o.total_amount_paid"/></td>
+                                            <td></td>
+                                            <td><span t-field="o.total_net_amount"/></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </t>
+                            <t t-if = "not o.bonus_summary_id">
+                                <p  style = "text-align:center;">
+                                    <b>
+                                        No Record/s Found.
+                                    </b>
+                                </p>
+                            </t>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</openerp>

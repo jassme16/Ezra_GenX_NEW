@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="0">
+        <record model="ir.sequence.type" id="hr_employee_code_sequence">
+            <field name="name">Code sequence hr employee</field>
+            <field name="code">hr.employee.sequence</field>
+        </record>
+        <record model="ir.sequence" id="hr_employee_sequence">
+            <field name="name">Sequence For employee</field>
+            <field name="code">hr.employee.sequence</field>
+            <field name="active">TRUE</field>
+            <field name="prefix"></field>
+            <field name="number_increment">1</field>
+            <field name="number_next">860</field>
+            <field name="implementation">standard</field>
+        </record>
+    </data>
+</openerp>

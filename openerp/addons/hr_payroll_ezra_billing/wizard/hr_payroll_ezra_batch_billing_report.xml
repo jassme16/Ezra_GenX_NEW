@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+<!--
+        <record id="view_hr_batch_billing_01" model="ir.ui.view">
+            <field name="name">billing.batch.report.form</field>
+            <field name="model">billing.batch.report</field>
+            <field name="arch" type="xml">
+            <form string="Batch Billing Report" create="false" edit="false">
+                <group>
+                    <field name="name" />
+                    <field name="absent" />
+                </group>
+                <footer>
+                    <button name="createReliever" string="Print" type="object" class="oe_highlight"/> or
+                    <button string="Cancel" special="cancel" class="oe_link"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_hr_batch_billing_01" model="ir.actions.act_window">
+            <field name="name">Batch Billing Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">billing.batch.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="nodestroy">True</field>
+        </record>
+
+        <menuitem
+            name="Batch Report Billing"
+            parent="hr.menu_hr_reporting_timesheet"
+            action="action_hr_batch_billing_01"
+            id="menu_account_central_journal"
+            icon="STOCK_PRINT"/>
+-->
+         <record id="view_billing_reliever_01" model="ir.ui.view">
+            <field name="name">billing.reliever.form</field>
+            <field name="model">billing.reliever</field>
+            <field name="arch" type="xml">
+            <form string="Batch Billing Report" create="false" edit="false">
+                <group>
+
+                    <field name="billing_detail_id" />
+                    <field name="employee" />
+                    <field name="name" />
+                    <field name="absent" />
+                </group>
+                <footer>
+                    <button name="createReliever" string="Save" type="object" class="oe_highlight"/> or
+                    <button string="Cancel" special="cancel" class="oe_link"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_billing_reliever_01" model="ir.actions.act_window">
+            <field name="name">Batch Billing Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">billing.reliever</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="nodestroy">True</field>
+        </record>
+<!--
+        <menuitem
+            name="Batch Report Billing"
+            parent="hr.menu_hr_reporting_timesheet"
+            action="action_billing_reliever_01"
+            id="menu_account_central_journal"
+            icon="STOCK_PRINT"/>
+-->
+    </data>
+</openerp>

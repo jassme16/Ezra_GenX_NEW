@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="hr ezra assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/hr_payroll_ezra/static/src/css/ezra.css"/>
+                <script type="text/javascript" src="/hr_payroll_ezra/static/src/js/ezra.js"></script>
+                <script type="text/javascript" src="/hr_payroll_ezra/static/src/js/attendance.js"></script>
+            </xpath>
+        </template>
+
+        <record id="view_attendance_reliever" model="ir.ui.view">
+            <field name="name">hr.attendance.detail.wiz.form</field>
+            <field name="model">hr.attendance.detail.wiz</field>
+            <field name="arch" type="xml">
+            <form string="Batch Billing Report" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <field name="attendance_detail_id" readonly="1"/>
+                        <field name="employee" readonly="1"/>
+                        <field name="name" />
+                        <field name="absent"/>
+                        <field name="regular_days_work"/>
+                        <field name="tardiness"/>
+                        <field name="night_differential"/>
+                        <field name="straight_duty"/>
+                        <field name="regular_overtime"/>
+                        <field name="rest_day_work"/>
+                        <field name="restday_overtime"/>
+                        <field name="holiday_day_work"/>
+                        <field name="holiday_overtime"/>
+                        <field name="special_day_work"/>
+                        <field name="special_overtime"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="createReliever" string="Save" type="object" class="oe_highlight"/> or
+                    <button string="Cancel" special="cancel" class="oe_link"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+        <record id="action_attendance_reliever" model="ir.actions.act_window">
+            <field name="name">Reliever Attendance</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.attendance.detail.wiz</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="nodestroy">True</field>
+        </record>
+
+        <record id="view_added_employee" model="ir.ui.view">
+            <field name="name">hr.attendance.employee.wiz.form</field>
+            <field name="model">hr.attendance.employee.wiz</field>
+            <field name="arch" type="xml">
+            <form string="Add Employee" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <field name="attendance_detail_id" readonly="1"/>
+                        <field name="name"/>
+                        <field name="regular_days_work"/>
+                        <field name="absent"/>
+                        <field name="tardiness"/>
+                        <field name="straight_duty"/>
+                        <field name="night_differential"/>
+                        <field name="regular_overtime"/>
+                        <field name="rest_day_work"/>
+                        <field name="restday_overtime"/>
+                        <field name="special_day_work"/>
+                        <field name="special_overtime"/>
+                        <field name="holiday_day_work"/>
+                        <field name="holiday_overtime"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="AddEmployee" string="Save" type="object" class="oe_highlight"/> or
+                    <button string="Cancel" special="cancel" class="oe_link"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+        <record id="action_added_employee" model="ir.actions.act_window">
+            <field name="name">Add Employee</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.attendance.employee.wiz</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="nodestroy">True</field>
+        </record>
+    </data>
+</openerp>

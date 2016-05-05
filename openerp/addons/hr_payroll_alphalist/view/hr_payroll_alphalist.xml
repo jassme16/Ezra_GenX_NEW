@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="hr ezra assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/hr_payroll_ezra/static/src/css/ezra.css"/>
+                <script type="text/javascript" src="/hr_payroll_ezra/static/src/js/ezra.js"></script>
+            </xpath>
+        </template>
+        <!-- Alphalist -->
+        <record id="view_payroll_alphalist_form" model="ir.ui.view">
+            <field name="name">payroll.alphalist.main.form</field>
+            <field name="model">payroll.alphalist.main</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <header>
+                        <button name="generateAlphalist" string="Generate Alphalist" class="oe_highlight" type="object"  attrs="{'invisible':[('state', '!=', 'draft')]}" />
+                        <button name="postApproved" string="Approved" type="object" attrs="{'invisible':[('state', '!=', 'draft')]}" confirm = "Are you sure to Approved this Alphalist?"/>
+                        <button name="post" string="Paid" class="oe_highlight"  type="object"  attrs="{'invisible':[('state', '!=', 'approved')]}" confirm = "Are you sure to finalize this payroll?"/>
+                        <button name="postDraft" string="Re-Check"  type="object" class="oe_highlight"  attrs="{'invisible':[('state', '!=', 'approved')]}" confirm = "Are you sure to edit this generated Alphalist?"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,approved,post" statusbar_colors='{"approved":"blue","post":"red"}'/>
+                    </header>
+                    <sheet class = "oe_form_sheet_width_alphalist">
+                        <group>
+                            <group>
+                                <field name="name" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                                <field name="payroll_date_from" attrs="{'readonly':[('state', '!=', 'draft')]}" />
+                                <field name="payroll_date_to" attrs="{'readonly':[('state', '!=', 'draft')]}" />
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                        <group col="4" string ="Additional Information">
+                            <field name="filename" readonly="1" invisible="1"/>
+                            <field name="alphalist_file" readonly="1" filename="filename"/>
+
+                        </group>
+                        <notebook>
+                            <page string = "Not Minimum Wage Earners">
+                                <data>
+                                    <field name="alphalist_detail_id" string ="" create="false"  attrs="{'readonly':[('state', '!=', 'draft')]}" >
+                                        <tree create = "false" editable="bottom/top">
+                                            <field name ="sequence_no" invisible="1"/>
+                                            <field name ="employee_id" readonly="1"/>
+                                            <field name ="tin_no" readonly="1"/>
+
+                                            <field name ="non_tax_gross_compensation_income" readonly="1"/>
+                                            <field name ="non_tax_thirteenth_month"/>
+                                            <field name ="non_tax_other_benefits"/>
+                                            <field name ="non_tax_de_minimis_benefits"/>
+                                            <field name ="non_tax_gov_contributions"/>
+                                            <field name ="non_tax_other_compensation"/>
+                                            <field name ="non_tax_total" readonly="1"/>
+
+                                            <field name ="tax_basic_pay"/>
+                                            <field name ="tax_thirteenth_month"/>
+                                            <field name ="tax_other_benefits"/>
+                                            <field name ="tax_other_compensation"/>
+                                            <field name ="tax_total_compensation_income"/>
+                                            <field name ="exemption_code" readonly="1" />
+                                            <field name ="exemption_amount" readonly="1" />
+                                            <field name ="paid_health_insurance"/>
+                                            <field name ="net_taxable_comp_income" readonly="1" />
+                                            <field name ="tax_due" readonly="1" />
+                                            <field name ="tax_withheld" readonly="1" />
+                                            <field name ="paid_amount_december" readonly="1" />
+                                            <field name ="overwithheld_tax" readonly="1" />
+                                            <field name ="amount_withheld_adjusted" readonly="1" />
+
+                                            <field name ="prev_non_tax_thirteenth_month"  attrs="{'readonly':[('with_previous_employer', '!=', True)]}" />
+                                            <field name ="prev_non_tax_other_benefits" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="prev_non_tax_de_minimis_benefits" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="prev_non_tax_gov_contributions" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="prev_non_tax_other_compensation" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="prev_non_tax_total" readonly="1" />
+                                            <field name ="prev_tax_basic_pay" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="prev_tax_thirteenth_month" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="prev_tax_other_benefits" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="prev_tax_other_compensation" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="prev_tax_total_compensation_income" readonly="1" />
+                                            <field name ="prev_taxable_comp_income" readonly="1" />
+                                            <field name ="prev_tax_withheld" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="with_previous_employer" invisible="1"/>
+                                            <field name ="alphalist_schedule"/>
+
+                                        </tree>
+                                    </field>
+                                </data>
+                            </page>
+                            <page string = "Minimum Wage Earner">
+                                <data>
+                                    <field name="alphalist_mwe_detail_id" string ="" create="false"  attrs="{'readonly':[('state', '!=', 'draft')]}" >
+                                        <tree create = "false" editable="bottom/top">
+                                            <field name ="sequence_no" invisible="1"/>
+                                            <field name ="employee_id" readonly="1"/>
+                                            <field name ="tin_no" readonly="1"/>
+                                            <field name ="region_assigned" readonly="1"/>
+
+                                            <field name ="total_compensation_income" readonly="1"/>
+                                            <field name ="basic_pay_perday"/>
+                                            <field name ="basic_pay_permonth"/>
+                                            <field name ="basic_pay_peryear"/>
+                                            <field name ="factor_used"/>
+                                            <field name ="non_tax_holiday_pay"/>
+                                            <field name ="non_tax_overtime_pay"/>
+
+                                            <field name ="non_tax_nightshiff_pay"/>
+                                            <field name ="non_tax_hazard_pay"/>
+                                            <field name ="non_tax_thirteenth_month"/>
+                                            <field name ="non_tax_other_benefits"/>
+                                            <field name ="non_tax_deminimis_pay"/>
+                                            <field name ="non_tax_gov_contrib" />
+                                            <field name ="non_tax_other_compensation" />
+                                            <field name ="non_tax_total" readonly="1"/>
+                                            <field name ="tax_thirteenth_month"/>
+                                            <field name ="tax_other_benefits"/>
+                                            <field name ="tax_other_compensation"/>
+                                            <field name ="tax_total" readonly="1" />
+                                            <field name ="overwithheld_tax" readonly="1" />
+                                            <field name ="amount_withheld_adjusted" readonly="1" />
+
+                                            <field name ="prev_total_compensation_income" readonly="1"/>
+                                            <field name ="prev_basic_pay_peryear" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="prev_non_tax_holiday_pay" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="prev_non_tax_overtime_pay" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="prev_non_tax_nightshiff_pay" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="prev_non_tax_hazard_pay" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="prev_non_tax_thirteenth_month" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="prev_non_tax_other_benefits" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="prev_non_tax_deminimis_pay" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="prev_non_tax_gov_contrib" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="prev_non_tax_other_compensation" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="prev_non_tax_total" readonly="1" />
+                                            <field name ="prev_tax_thirteenth_month" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="prev_tax_other_benefits" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="prev_tax_other_compensation" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="prev_tax_total" readonly="1"/>
+                                            <field name ="date_of_employment_from" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="date_of_employment_to" attrs="{'readonly':[('with_previous_employer', '!=', True)]}"/>
+                                            <field name ="total_taxable_comp_income" readonly="1"/>
+                                            <field name ="exemption_code" readonly="1"/>
+                                            <field name ="exemption_amount" readonly="1"/>
+                                            <field name ="paid_health_insurance"/>
+                                            <field name ="net_taxable_comp_income" readonly="1"/>
+                                            <field name ="tax_due" readonly="1"/>
+                                            <field name ="tax_withheld" readonly="1"/>
+                                            <field name ="prev_tax_withheld"/>
+                                            <field name ="paid_amount_december" readonly="1"/>
+                                            <field name ="overwithheld_tax" readonly="1"/>
+                                            <field name ="amount_withheld_adjusted" readonly="1"/>
+
+                                            <field name ="alphalist_schedule" readonly="1"/>
+                                            <field name ="with_previous_employer" invisible="1"/>
+
+
+                                        </tree>
+                                    </field>
+                                </data>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers" />
+                            <field name="message_ids" widget="mail_thread" />
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_payroll_alphalist_tree" model="ir.ui.view">
+            <field name="name">payroll.alphalist.main</field>
+            <field name="model">payroll.alphalist.main</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Alphalist Information">
+                    <field name="name"/>
+                    <field name="payroll_date_from"/>
+                    <field name="payroll_date_to"/>
+                    <field name="filename" readonly="1" invisible="1"/>
+                    <field name="alphalist_file" readonly="1" filename="filename"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_payroll_alphalist_filter" model="ir.ui.view">
+            <field name="name">Alphalist</field>
+            <field name="model">payroll.alphalist.main</field>
+            <field name="arch" type="xml">
+                <search string="Payroll">
+                    <field name="name"/>
+                    <field name="payroll_date_from"/>
+                    <field name="payroll_date_to"/>
+                    <field name="filename" readonly="1" invisible="1"/>
+                    <field name="alphalist_file" readonly="1" filename="filename"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_payroll_alphalist" model="ir.actions.act_window">
+            <field name="name">Alphalist</field>
+            <field name="res_model">payroll.alphalist.main</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_payroll_alphalist_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create Alphalist.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_payroll_alphalist" id="menu_payroll_alphalist" parent="hr_payroll.menu_hr_root_payroll" string = "Alphalist" sequence="60"/>
+    </data>
+</openerp>

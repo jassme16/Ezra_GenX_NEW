@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+
+
+<!--
+        <record id="view_hr_personel_with_remarks_report_graph" model="ir.ui.view">
+             <field name="name">hr.personnel.withremrks.report.graph</field>
+             <field name="model">hr.personnel.withremrks.report</field>
+             <field name="arch" type="xml">
+                 <graph string="Crew List Active on Board with Remarks" type="pivot">
+                     <field name="employee_number" type="row"/>
+                     <field name="employment_dept_code" type="col"/>
+                 </graph>
+             </field>
+        </record>
+
+
+        <record id="view_hr_personel_with_remarks_report_search" model="ir.ui.view">
+            <field name="name">hr.personnel.withremrks.report.search</field>
+            <field name="model">hr.personnel.withremrks.report</field>
+            <field name="arch" type="xml">
+                <search string="Crew List Active on Board with Remarks">
+                     <field name="employment_dept_code"/>
+                     <field name="employee_number" />
+                     <field name="ccl_number" />
+                     <field name="employment_rank" />
+                     <field name="last_name" />
+                     <field name="first_name" />
+                     <field name="birth_date" />
+                     <field name="employment_status" />
+                     <field name="date_servicefrom" />
+                     <field name="date_serviceto" />
+                     <field name="remarks"/>
+                     <field name="object_code"/>
+                    <group expand="0" string="Group By">
+                       <filter string="Vessel" context="{'group_by':'object_code'}"/>
+                       <separator/>
+                       <filter string="Ranks" context="{'group_by':'employment_rank'}"/>
+                       <separator/>
+                       <filter string="Ship Department  " context="{'group_by':'employment_dept_code'}"/>
+                        <separator/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_hr_personel_with_remarks_report_all" model="ir.actions.act_window">
+            <field name="name">Crew List Active on Board with Remarks</field>
+            <field name="res_model">hr.personnel.withremrks.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph</field>
+            <field name="context">{'group_by_no_leaf':1,'group_by':[]}</field>
+            <field name="search_view_id" ref="view_hr_personel_with_remarks_report_search"/>
+        </record>
+        <menuitem action="action_hr_personel_with_remarks_report_all" id="menu_hr_personel_with_remarks_report_all" parent="hr.menu_hr_reporting" sequence="50"/>
+-->
+
+
+        <record id="view_hr_personnel_withremrks_report_tree" model="ir.ui.view">
+            <field name="name">hr.personnel.withremrks.report.tree</field>
+            <field name="model">hr.personnel.withremrks.report</field>
+            <field name="arch" type="xml">
+                <tree string="" editable="top" create="false" edit="false" delete ="false">
+                    <field name="employment_dept_code" invisible="1"/>
+                     <field name="employee_number" />
+                     <field name="ccl_number" />
+                     <field name="employment_rank" />
+                     <field name="last_name" />
+                     <field name="first_name" />
+                     <field name="birth_date" />
+                     <field name="employment_status" />
+                     <field name="date_servicefrom" />
+                     <field name="date_serviceto" />
+                     <field name="remarks"/>
+                     <field name="object_code" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_personnel_withremrks_report_search" model="ir.ui.view">
+            <field name="name">hr.personnel.withremrks.report</field>
+            <field name="model">hr.personnel.withremrks.report</field>
+            <field name="arch" type="xml">
+                <search string="Crew List Active on Board with Remarks">
+                     <field name="employment_dept_code"/>
+                     <field name="employee_number" />
+                     <field name="ccl_number" />
+                     <field name="employment_rank" />
+                     <field name="last_name" />
+                     <field name="first_name" />
+                     <field name="birth_date" />
+                     <field name="employment_status" />
+                     <field name="date_servicefrom" />
+                     <field name="date_serviceto" />
+                     <field name="remarks"/>
+                     <field name="object_code"/>
+                    <group expand="0" string="Group By">
+                       <filter string="Vessel" context="{'group_by':'object_code'}"/>
+                       <separator/>
+                       <filter string="Ranks" context="{'group_by':'employment_rank'}"/>
+                       <separator/>
+                       <filter string="Ship Department  " context="{'group_by':'employment_dept_code'}"/>
+                        <separator/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_hr_personnel_withremrks_report_all" model="ir.actions.act_window">
+            <field name="name">Crew List Active on Board with Remarks</field>
+            <field name="res_model">hr.personnel.withremrks.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <!--<field name="context">{'group_by_no_leaf':1,'group_by':[]}</field>-->
+            <!--<field name="search_view_id" ref="view_hr_recruitment_report_search"/>-->
+        </record>
+
+        <menuitem action="action_hr_personnel_withremrks_report_all" id="menu_action_hr_personnel_withremrks_report_all_all" parent="hr.menu_hr_reporting" sequence="1"/>
+
+        <record id="view_hr_service_record_report_tree" model="ir.ui.view">
+            <field name="name">hr.service.record.report.tree</field>
+            <field name="model">hr.service.record.report</field>
+            <field name="arch" type="xml">
+                <tree string="" editable="top" create="false" edit="false" delete ="false">
+                     <field name="employee_number" />
+                     <field name="name" />
+                     <field name="employment_rank" />
+                     <field name="employment_ranktype" />
+                     <field name="employment_status" />
+                     <field name="service_length" />
+                     <field name="earned_incentive" />
+                     <field name="incentive_rate"/>
+                     <field name="year_3"/>
+                     <field name="year_5"/>
+                     <field name="year_7"/>
+                     <field name="year_10"/>
+                     <field name="year_15"/>
+                     <field name="year_20"/>
+                     <field name="year_25"/>
+                    <field name="service_incentive"/>
+                     <field name="object_code" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_service_record_report_search" model="ir.ui.view">
+            <field name="name">hr.service.record.report</field>
+            <field name="model">hr.service.record.report</field>
+            <field name="arch" type="xml">
+                <search string="Crew List Active on Board with Remarks">
+                     <field name="employment_dept_code"/>
+                     <field name="employee_number" />
+                     <field name="employment_rank" />
+                     <field name="employment_ranktype" />
+                     <field name="name"/>
+                     <field name="employment_status" />
+                     <field name="date_servicefrom" />
+                     <field name="date_serviceto" />
+                     <field name="object_code"/>
+                    <group expand="0" string="Group By">
+                       <filter string="Vessel" context="{'group_by':'object_code'}"/>
+                       <separator/>
+                       <filter string="Ranks" context="{'group_by':'employment_rank'}"/>
+                       <separator/>
+                       <filter string="Ship Department  " context="{'group_by':'employment_dept_code'}"/>
+                        <separator/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_hr_service_record_report_all" model="ir.actions.act_window">
+            <field name="name">Service Record per Department</field>
+            <field name="res_model">hr.service.record.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <!--<field name="context">{'group_by_no_leaf':1,'group_by':[]}</field>-->
+            <!--<field name="search_view_id" ref="view_hr_recruitment_report_search"/>-->
+        </record>
+
+        <menuitem action="action_hr_service_record_report_all" id="menu_action_hr_service_record_report_all" parent="hr.menu_hr_reporting" sequence="2"/>
+
+        <!-- Crewlist per Department -->
+        <record id="view_hr_crewlist_report_tree" model="ir.ui.view">
+            <field name="name">hr.crewlist.report.tree</field>
+            <field name="model">hr.crewlist.report</field>
+            <field name="arch" type="xml">
+                <tree string="" editable="top" create="false" edit="false" delete ="false">
+                     <field name="employee_number" />
+                     <field name="ccl_number" />
+                     <field name="employment_rank" />
+                     <field name="first_name" />
+                     <field name="last_name" />
+                     <field name="birth_date" />
+                     <field name="placeof_birth" />
+
+                    <field name="passport" />
+                    <field name="passport_date_issued" />
+                    <field name="passport_date_expiry" />
+
+                     <field name="date_depart" />
+                     <field name="date_servicefrom" />
+                     <field name="date_serviceto" />
+                    <field name="place_signon" />
+                    <field name="employment_dept_code" invisible="1"/>
+                     <field name="object_code" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_crewlist_report_search" model="ir.ui.view">
+            <field name="name">hr.crewlist.report</field>
+            <field name="model">hr.crewlist.report</field>
+            <field name="arch" type="xml">
+                <search string="Crewlist per Department Report">
+                    <field name="object_code"/>
+                     <field name="date_servicefrom" />
+                     <field name="date_serviceto" />
+                    <group expand="0" string="Group By">
+                        <filter string="Ship Department" context="{'group_by':'employment_dept_code'}"/>
+                        <separator/>
+                        <filter string="Vessel" context="{'group_by':'object_code'}"/>
+                        <separator/>
+                        <filter string="Ranks" context="{'group_by':'employment_rank'}"/>
+                        <separator/>
+                        <filter string="Sign On Date  " context="{'group_by':'date_servicefrom'}"/>
+                        <separator/>
+                        <filter string="Sign Off Date  " context="{'group_by':'date_serviceto'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_hr_crewlist_report_all" model="ir.actions.act_window">
+            <field name="name">Crewlist per Department </field>
+            <field name="res_model">hr.crewlist.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <!--<field name="context">{'group_by_no_leaf':1,'group_by':[]}</field>-->
+            <!--<field name="search_view_id" ref="view_hr_recruitment_report_search"/>-->
+        </record>
+
+        <menuitem action="action_hr_crewlist_report_all" id="menu_action_hr_crewlist_report_all" parent="hr.menu_hr_reporting" sequence="3"/>
+
+
+        <!-- SignON Date-->
+        <record id="view_hr_signon_report_tree" model="ir.ui.view">
+            <field name="name">hr.signonoff.report.tree</field>
+            <field name="model">hr.signonoff.report</field>
+            <field name="arch" type="xml">
+                <tree string="" editable="top" create="false" edit="false" delete ="false">
+                     <field name="employee_number" />
+                     <field name="ccl_number" />
+                     <field name="employment_rank" />
+                     <field name="first_name" />
+                     <field name="last_name" />
+                     <field name="birth_date" />
+                     <field name="employment_status" />
+                     <field name="date_depart" />
+                     <field name="date_servicefrom" />
+                     <field name="date_serviceto" />
+                     <field name="object_code" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_signon_report_search" model="ir.ui.view">
+            <field name="name">hr.signonoff.report</field>
+            <field name="model">hr.signonoff.report</field>
+            <field name="arch" type="xml">
+                <search string="Sign On Report">
+                    <field name="object_code"/>
+                     <field name="date_servicefrom" />
+                     <field name="date_serviceto" />
+                    <group expand="0" string="Group By">
+                       <filter string="Vessel" context="{'group_by':'object_code'}"/>
+                       <separator/>
+                       <filter string="Ranks" context="{'group_by':'employment_rank'}"/>
+                       <separator/>
+                       <filter string="Sign On Date  " context="{'group_by':'date_servicefrom'}"/>
+                       <separator/>
+                       <filter string="Sign Off Date  " context="{'group_by':'date_serviceto'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_hr_signon_report_all" model="ir.actions.act_window">
+            <field name="name">Sign On Report</field>
+            <field name="res_model">hr.signonoff.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <!--<field name="context">{'group_by_no_leaf':1,'group_by':[]}</field>-->
+            <!--<field name="search_view_id" ref="view_hr_recruitment_report_search"/>-->
+        </record>
+
+        <menuitem action="action_hr_signon_report_all" id="menu_action_hr_signon_report_all" parent="hr.menu_hr_reporting" sequence="4"/>
+
+
+        <!-- Disembarkation Report-->
+
+        <record id="view_hr_disembarkation_report_tree" model="ir.ui.view">
+            <field name="name">hr.disembarkation.report.tree</field>
+            <field name="model">hr.disembarkation.report</field>
+            <field name="arch" type="xml">
+                <tree string="" editable="top" create="false" edit="false" delete ="false">
+                     <field name="employee_number" />
+                     <field name="ccl_number" />
+                     <field name="first_name" />
+                     <field name="last_name" />
+                     <field name="employment_rank" />
+                     <field name="country_id" />
+                     <field name="gender" />
+
+                     <field name="placeof_birth" />
+                     <field name="passport" />
+                     <field name="passport_date_issued" />
+                     <field name="passport_date_expiry" />
+
+                     <field name="ssrib" />
+                     <field name="ssrib_date_issued" />
+                     <field name="ssrib_date_expiry" />
+
+                     <field name="date_depart" />
+                     <field name="date_depart" />
+                     <field name="date_servicefrom" />
+                     <field name="date_serviceto" />
+                     <field name="place_signoff" />
+                     <field name="object_code" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+       <record id="view_hr_disembarkation_report_search" model="ir.ui.view">
+            <field name="name">hr.disembarkation.report</field>
+            <field name="model">hr.disembarkation.report</field>
+            <field name="arch" type="xml">
+                <search string="Disembarkation Report">
+                    <field name="object_code"/>
+                     <field name="date_servicefrom" />
+                     <field name="date_serviceto" />
+                    <group expand="0" string="Group By">
+                       <filter string="Vessel" context="{'group_by':'object_code'}"/>
+                       <separator/>
+                       <filter string="Ranks" context="{'group_by':'employment_rank'}"/>
+                       <separator/>
+                       <filter string="Sign On Date  " context="{'group_by':'date_servicefrom'}"/>
+                       <separator/>
+                       <filter string="Sign Off Date  " context="{'group_by':'date_serviceto'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_hr_disembarkation_report_all" model="ir.actions.act_window">
+            <field name="name">Disembarkation Report</field>
+            <field name="res_model">hr.disembarkation.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <!--<field name="context">{'group_by_no_leaf':1,'group_by':[]}</field>-->
+            <!--<field name="search_view_id" ref="view_hr_recruitment_report_search"/>-->
+        </record>
+
+        <menuitem action="action_hr_disembarkation_report_all" id="menu_action_hr_disembarkation_report_all" parent="hr.menu_hr_reporting" sequence="5"/>
+
+
+        <!--Embarkation Report -->
+        <record id="view_hr_embarkation_report_tree" model="ir.ui.view">
+            <field name="name">hr.embarkation.report.tree</field>
+            <field name="model">hr.embarkation.report</field>
+            <field name="arch" type="xml">
+                <tree string="" editable="top" create="false" edit="false" delete ="false">
+                     <field name="employee_number" />
+                     <field name="ccl_number" />
+                     <field name="first_name" />
+                     <field name="last_name" />
+                     <field name="employment_rank" />
+                     <field name="country_id" />
+                     <field name="gender" />
+
+                     <field name="placeof_birth" />
+                     <field name="passport" />
+                     <field name="passport_date_issued" />
+                     <field name="passport_date_expiry" />
+
+                     <field name="ssrib" />
+                     <field name="ssrib_date_issued" />
+                     <field name="ssrib_date_expiry" />
+
+                     <field name="date_depart" />
+                     <field name="date_depart" />
+                     <field name="date_servicefrom" />
+                     <field name="date_serviceto" />
+                     <field name="place_signon" />
+                     <field name="object_code" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_embarkation_report_search" model="ir.ui.view">
+            <field name="name">hr.embarkation.report</field>
+            <field name="model">hr.embarkation.report</field>
+            <field name="arch" type="xml">
+                <search string="Embarkation Report">
+                    <field name="object_code"/>
+                     <field name="date_servicefrom" />
+                     <field name="date_serviceto" />
+                    <group expand="0" string="Group By">
+                       <filter string="Vessel" context="{'group_by':'object_code'}"/>
+                       <separator/>
+                       <filter string="Ranks" context="{'group_by':'employment_rank'}"/>
+                       <separator/>
+                       <filter string="Sign On Date  " context="{'group_by':'date_servicefrom'}"/>
+                       <separator/>
+                       <filter string="Sign Off Date  " context="{'group_by':'date_serviceto'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_hr_embarkation_report_all" model="ir.actions.act_window">
+            <field name="name">Embarkation Report</field>
+            <field name="res_model">hr.embarkation.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <!--<field name="context">{'group_by_no_leaf':1,'group_by':[]}</field>-->
+            <!--<field name="search_view_id" ref="view_hr_recruitment_report_search"/>-->
+        </record>
+
+        <menuitem action="action_hr_embarkation_report_all" id="menu_action_hr_embarkation_report_all" parent="hr.menu_hr_reporting" sequence="6"/>
+
+
+        <!--Beneficiary List-->
+        <record id="view_hr_beneficiary_report_tree" model="ir.ui.view">
+            <field name="name">hr.beneficiary.report.tree</field>
+            <field name="model">hr.beneficiary.report</field>
+            <field name="arch" type="xml">
+                <tree string="" editable="top" create="false" edit="false" delete ="false">
+                     <field name="employee_number" invisible="1"/>
+                     <field name="last_name" />
+                     <field name="first_name" />
+                     <field name="last_name" />
+                     <field name="middle_name" />
+                     <field name="address_1" />
+                     <field name="city" />
+                     <field name="country_id" />
+                     <field name="object_code" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_beneficiary_report_search" model="ir.ui.view">
+            <field name="name">hr.beneficiary.report</field>
+            <field name="model">hr.beneficiary.report</field>
+            <field name="arch" type="xml">
+                <search string="Beneficiary Report">
+                    <field name="object_code"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Vessel" context="{'group_by':'object_code'}"/>
+                        <separator/>
+                        <filter string="Employee Number" context="{'group_by':'employee_number'}"/>
+                        <separator/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_hr_beneficiary_report_all" model="ir.actions.act_window">
+            <field name="name">Beneficiary Report</field>
+            <field name="res_model">hr.beneficiary.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <!--<field name="context">{'group_by_no_leaf':1,'group_by':[]}</field>-->
+            <!--<field name="search_view_id" ref="view_hr_recruitment_report_search"/>-->
+        </record>
+
+        <menuitem action="action_hr_beneficiary_report_all" id="menu_action_hr_beneficiary_report_all" parent="hr.menu_hr_reporting" sequence="7"/>
+
+        <!--Allottee List-->
+        <record id="view_hr_allottee_report_tree" model="ir.ui.view">
+            <field name="name">hr.allottee.report.tree</field>
+            <field name="model">hr.allottee.report</field>
+            <field name="arch" type="xml">
+                <tree string="" editable="top" create="false" edit="false" delete ="false">
+                     <field name="employee_number" invisible="1"/>
+                     <field name="last_name" />
+                     <field name="first_name" />
+                     <field name="last_name" />
+                     <field name="middle_name" />
+                     <field name="address_1" />
+                     <field name="city" />
+                     <field name="country_id" />
+                     <field name="object_code" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_allottee_report_search" model="ir.ui.view">
+            <field name="name">hr.allottee.report</field>
+            <field name="model">hr.allottee.report</field>
+            <field name="arch" type="xml">
+                <search string="Allottee Report">
+                    <field name="object_code"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Vessel" context="{'group_by':'object_code'}"/>
+                        <separator/>
+                        <filter string="Employee Number" context="{'group_by':'employee_number'}"/>
+                        <separator/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_hr_allottee_report_all" model="ir.actions.act_window">
+            <field name="name">Allottee Report</field>
+            <field name="res_model">hr.allottee.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <!--<field name="context">{'group_by_no_leaf':1,'group_by':[]}</field>-->
+            <!--<field name="search_view_id" ref="view_hr_recruitment_report_search"/>-->
+        </record>
+
+        <menuitem action="action_hr_allottee_report_all" id="menu_action_hr_allottee_report_all" parent="hr.menu_hr_reporting" sequence="8"/>
+    </data>
+</openerp>

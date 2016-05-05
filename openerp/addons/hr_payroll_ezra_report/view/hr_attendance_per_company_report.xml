@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Report Menu -->
+        <record id="view_hr_attrendance_company_report_form" model="ir.ui.view">
+            <field name="name">hr.attendance.main.company.form</field>
+            <field name="model">hr.attendance.main.company</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <header>
+                        <button name="generateReportData" string="Generate Excel" class="oe_highlight" type="object"  />
+                    </header>
+                    <sheet>
+                        <group>
+                            <group string ="Report Parameter">
+                                <field name="company_id" />
+                                <field name="month_of" />
+                                <field name="month_quarter" />
+                                <field name="year" />
+                                <field name="attendance_status" />
+                            </group>
+                            <group string = "Excel File">
+                                <field name="filename" invisible="1"/>
+                                <field name="attendance_file" readonly="1" filename="filename" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hr_attrendance_company_report_tree" model="ir.ui.view">
+            <field name="name">hr.attendance.main.company.tree</field>
+            <field name="model">hr.attendance.main.company</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Generated Report">
+                    <field name="name"/>
+                    <field name="company_id" />
+                    <field name="filename" invisible="1"/>
+                    <field name="attendance_file" readonly="1" filename="filename" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_attrendance_company_report_filter" model="ir.ui.view">
+            <field name="name">Attendance per Company Report</field>
+            <field name="model">hr.attendance.main.company</field>
+            <field name="arch" type="xml">
+                <search string="Search">
+                    <field name="name"/>
+                    <field name="company_id" />
+                    <field name="filename" invisible="1"/>
+                    <field name="attendance_file" readonly="1" filename="filename" />
+                </search>
+             </field>
+        </record>
+
+        <record id="open_module_hr_attrendance_company_report" model="ir.actions.act_window">
+            <field name="name">Attendance per Company</field>
+            <field name="res_model">hr.attendance.main.company</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_attrendance_company_report_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click a Report.
+              </p>
+            </field>
+        </record>
+
+        <menuitem action="open_module_hr_attrendance_company_report" id="menu_hr_attrendance_company_report" parent="hr.menu_hr_reporting_timesheet" string = "Attendance per Company" sequence="56"/>
+    </data>
+</openerp>

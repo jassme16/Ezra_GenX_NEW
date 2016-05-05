@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+        <record id="view_personnel_form" model="ir.ui.view">
+            <field name="name">hr.personnel.form</field>
+            <field name="model">hr.personnel</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <sheet>
+                        <!-- <field name="image_medium" widget='image' class="oe_left oe_avatar"/> -->
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="full_name"/>
+                            </h1>
+                        </div>					
+					
+						<notebook>						
+							<page string="Information">
+								<group string = "Full name">
+									<field name="first_name"/>
+									<field name="middle_name"/>
+									<field name="last_name"/>
+								</group>												
+								<group string = "Birth">
+									<field name="placeof_birth"/>
+									<field name="pcn"/>
+								</group>				
+							</page>	
+							<page string = "Identification">
+								<group string ="Government">
+									<field name="tin_no"/>
+									<field name="sss_no"/>
+									<field name="hdmf_no"/>
+									<field name="philhealth_no"/>
+								</group>
+								<group string ="Company">
+									<field name="aa_reg_no"/>
+									<field name="booking_id"/>
+									<field name="ccl_number"/>
+									<field name="pcn"/>
+								</group>								
+								
+							</page>		
+							<page string = "Documents">
+								<group>
+									<field name="legacy_doc_1"/>
+									<field name="legacy_doc_2"/>
+									<field name="legacy_doc_3"/>
+								</group>															
+							</page>																
+							<page string ="Other Information">
+								<group>
+									<field name="self_alotte"/>
+									<field name="weight"/>
+									<field name="height"/>
+									<field name="bankacctno"/>
+									<field name="checklistID"/>
+								</group>	
+								<group>
+									<field name="service_length"/>
+									<field name="focllength"/>
+									<field name="incentive_length"/>
+									<field name="bankacctno"/>
+									<field name="checklistID"/>
+								</group>								
+							</page>							
+						</notebook>	
+
+						<notebook>
+							<page string ="Address">	
+								<group string = "Address">
+									<data>
+										<field name="employee_addresses" string ="">
+											<tree>
+												<field name="addresstype"/>
+												<field name="address_1"/>
+												<field name="address_2"/>
+												<field name="address_3"/>
+												<field name="city"/>
+												<field name="province"/>
+												<field name="country"/>
+												<field name="telephone_number"/>
+												<field name="mobile_number"/>
+												<field name="email_number"/>
+											</tree>
+										</field>
+									</data>
+								</group>
+							</page>							
+						</notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_personnel_tree" model="ir.ui.view">
+            <field name="name">hr.personnel</field>
+            <field name="model">hr.personnel</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Personnel">
+                    <field name="full_name"/>
+					<field name="placeof_birth"/>
+					<field name="pcn"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_personnel_filter" model="ir.ui.view">
+            <field name="name">Personnel</field>
+            <field name="model">hr.personnel</field>
+            <field name="arch" type="xml">
+                <search string="Address type">
+                    <field name="first_name" string="first_name"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_personnel" model="ir.actions.act_window">
+            <field name="name">Personnel</field>
+            <field name="res_model">hr.personnel</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_personnel_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Personnel.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_personnel" id="menu_hr_personnel_tree" parent="hr.menu_hr_main" sequence="18"/>	
+	</data>
+</openerp>

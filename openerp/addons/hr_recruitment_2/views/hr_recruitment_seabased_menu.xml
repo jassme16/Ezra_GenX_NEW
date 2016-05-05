@@ -1,0 +1,1023 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <!-- Address Type -->
+        <record id="view_addressType_form" model="ir.ui.view">
+            <field name="name">hr.addresstype.form</field>
+            <field name="model">hr.addresstype</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <sheet>
+                        <group col="4">
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_addressType_tree" model="ir.ui.view">
+            <field name="name">hr.addresstype</field>
+            <field name="model">hr.addresstype</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Type">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_addressType_filter" model="ir.ui.view">
+            <field name="name">Adress Type</field>
+            <field name="model">hr.addresstype</field>
+            <field name="arch" type="xml">
+                <search string="Address type">
+                    <field name="name" string="Address type"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_addressType" model="ir.actions.act_window">
+            <field name="name">Address Type</field>
+            <field name="res_model">hr.addresstype</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_addressType_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Address Type.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_addressType" id="menu_hr_addresstype_tree" parent="hr.menu_hr_configuration" sequence="6"/>
+
+        <!-- Education Type
+        <record id="view_eductype_form" model="ir.ui.view">
+            <field name="name">hr.eductype.form</field>
+            <field name="model">hr.educationtype</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <sheet>
+                        <group col="4">
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_eductype_tree" model="ir.ui.view">
+            <field name="name">hr.educationtype</field>
+            <field name="model">hr.educationtype</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Type">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_eductype_filter" model="ir.ui.view">
+            <field name="name">Education Type</field>
+            <field name="model">hr.educationtype</field>
+            <field name="arch" type="xml">
+                <search string="Address type">
+                    <field name="name" string="Address type"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_educationtype" model="ir.actions.act_window">
+            <field name="name">Education Type</field>
+            <field name="res_model">hr.educationtype</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_eductype_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Education Type.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_educationtype" id="menu_hr_educationtype_tree" parent="hr.menu_hr_configuration" sequence="7"/> -->
+
+        <!-- Family -->
+        <record id="view_hr_familyrelations_form" model="ir.ui.view">
+            <field name="name">hr.familyrelations.form</field>
+            <field name="model">hr.familyrelations</field>
+            <field name="arch" type="xml">
+                <form string="Family">
+                    <sheet>
+                        <group col="4">
+                            <field name="code"/>
+                            <field name="name"/>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_familyrelations_tree" model="ir.ui.view">
+            <field name="name">hr.familyrelations</field>
+            <field name="model">hr.familyrelations</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Type">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_familyrelations_filter" model="ir.ui.view">
+            <field name="name">Family Relations</field>
+            <field name="model">hr.familyrelations</field>
+            <field name="arch" type="xml">
+                <search string="Address type">
+                    <field name="name" string="Relationship"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_familyrelations" model="ir.actions.act_window">
+            <field name="name">Family Relations</field>
+            <field name="res_model">hr.familyrelations</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_familyrelations_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Family Type.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_familyrelations" id="menu_hr_familyrelations_tree" parent="hr.menu_hr_configuration" sequence="8"/>
+
+        <!-- Records/Visa -->
+        <record id="view_hr_documenttype_form" model="ir.ui.view">
+            <field name="name">hr.documenttype.form</field>
+            <field name="model">hr.documenttype</field>
+            <field name="arch" type="xml">
+                <form string="Family">
+                    <sheet>
+                        <group col="4">
+                            <field name="abbreviation"/>
+                            <field name="name"/>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_documenttype_tree" model="ir.ui.view">
+            <field name="name">hr.documenttype</field>
+            <field name="model">hr.documenttype</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Type">
+                    <field name="abbreviation"/>
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_documenttype_filter" model="ir.ui.view">
+            <field name="name">Documents</field>
+            <field name="model">hr.documenttype</field>
+            <field name="arch" type="xml">
+                <search string="Document type">
+                    <field name="name" string="Relationship"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_documenttype" model="ir.actions.act_window">
+            <field name="name">Document Type</field>
+            <field name="res_model">hr.documenttype</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_documenttype_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Document Type.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_documenttype" id="menu_hr_documenttype_tree" parent="hr.menu_hr_configuration" sequence="9"/>
+
+        <!-- Medical Record -->
+        <record id="view_hr_medicalrecord_form" model="ir.ui.view">
+            <field name="name">hr.medicalrecord.form</field>
+            <field name="model">hr.medicalrecord</field>
+            <field name="arch" type="xml">
+                <form string="Medical">
+                    <sheet>
+                        <group col="4">
+                            <field name="code"/>
+                            <field name="name"/>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_medicalrecord_tree" model="ir.ui.view">
+            <field name="name">hr.medicalrecord</field>
+            <field name="model">hr.medicalrecord</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Type">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_medicalrecord_filter" model="ir.ui.view">
+            <field name="name">Medical Type</field>
+            <field name="model">hr.medicalrecord</field>
+            <field name="arch" type="xml">
+                <search string="Medical Record type">
+                    <field name="name" string="Medical type"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_medicalrecord" model="ir.actions.act_window">
+            <field name="name">Medical Type</field>
+            <field name="res_model">hr.medicalrecord</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_medicalrecord_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Medical Type.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_medicalrecord" id="menu_hr_medicalrecord_tree" parent="hr.menu_hr_configuration" sequence="10"/>
+
+        <!-- Medical Clinic -->
+        <record id="view_hr_clinic_form" model="ir.ui.view">
+            <field name="name">hr.clinic.form</field>
+            <field name="model">hr.clinic</field>
+            <field name="arch" type="xml">
+                <form string="Clinic">
+                    <sheet>
+                        <group col="4">
+                            <field name="abbreviation"/>
+                            <field name="name" string="Clinic"/>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_clinic_tree" model="ir.ui.view">
+            <field name="name">hr.clinic</field>
+            <field name="model">hr.clinic</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Type">
+                    <field name="abbreviation"/>
+                    <field name="name" string="Clinic"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_clinic_filter" model="ir.ui.view">
+            <field name="name">Clinic</field>
+            <field name="model">hr.clinic</field>
+            <field name="arch" type="xml">
+                <search string="Clinic">
+                    <field name="abbreviation"/>
+                    <field name="name" string="Clinic"/>
+                    <field name="description"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_clinic" model="ir.actions.act_window">
+            <field name="name">Clinic</field>
+            <field name="res_model">hr.clinic</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_clinic_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Clinic Information.
+              </p>
+            </field>
+        </record>
+
+        <menuitem action="open_module_clinic" id="menu_hr_clinic_tree" parent="hr.menu_hr_configuration" sequence="10"/>
+        <!-- <menuitem id="menu_hr_license_tree" parent="hr.menu_hr_configuration" sequence="11"/>-->
+
+        <!-- License Parent -->
+        <menuitem id="menu_License" parent="hr.menu_hr_configuration" name="License" sequence="11"/>
+
+        <!-- License type -->
+        <record id="view_hr_licensetype_form" model="ir.ui.view">
+            <field name="name">hr.licensetype.form</field>
+            <field name="model">hr.licensetype</field>
+            <field name="arch" type="xml">
+                <form string="License type">
+                    <sheet>
+                        <group col="4">
+                            <field name="id_name" readonly="1"/>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_licensetype_tree" model="ir.ui.view">
+            <field name="name">hr.licensetype</field>
+            <field name="model">hr.licensetype</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="License type">
+                    <field name="id_name"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_licensetype_filter" model="ir.ui.view">
+            <field name="name">License Type</field>
+            <field name="model">hr.licensetype</field>
+            <field name="arch" type="xml">
+                <search string="License">
+                    <field name="name" string="class name"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_licensetype" model="ir.actions.act_window">
+            <field name="name">License Type</field>
+            <field name="res_model">hr.licensetype</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_licensetype_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a License type Information.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_licensetype" id="menu_hr_licensetype_tree" parent="menu_License" sequence="11"/>
+
+        <!-- License-->
+        <record id="view_hr_license_form" model="ir.ui.view">
+            <field name="name">hr.license.form</field>
+            <field name="model">hr.license</field>
+            <field name="arch" type="xml">
+                <form string="License">
+                    <sheet>
+                        <group col="4">
+                            <!--<field name="id_class_name"/>-->
+                            <field name="license_name"/>
+                            <field name="name"/>
+                            <field name="doc_description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_license_tree" model="ir.ui.view">
+            <field name="name">hr.license</field>
+            <field name="model">hr.license</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="License">
+                    <!--<field name="id_class_name"/>-->
+                    <field name="license_name"/>
+                    <field name="name"/>
+                    <field name="doc_description"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_license_filter" model="ir.ui.view">
+            <field name="name">License</field>
+            <field name="model">hr.license</field>
+            <field name="arch" type="xml">
+                <search string="License">
+                    <field name="license_name" string="class name"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_license" model="ir.actions.act_window">
+            <field name="name">License</field>
+            <field name="res_model">hr.license</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_license_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a License Information.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_license" id="menu_hr_license_tree" parent="menu_License" sequence="12"/>
+
+        <!-- Port Information-->
+        <record id="view_hr_port_form" model="ir.ui.view">
+            <field name="name">hr.port.form</field>
+            <field name="model">hr.port</field>
+            <field name="arch" type="xml">
+                <form string="Port">
+                    <sheet>
+                        <group col="4">
+                            <field name="code"/>
+                            <field name="name"/>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_port_tree" model="ir.ui.view">
+            <field name="name">hr.port</field>
+            <field name="model">hr.port</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="License">
+                    <!--<field name="id_class_name"/>-->
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_port_filter" model="ir.ui.view">
+            <field name="name">Port</field>
+            <field name="model">hr.port</field>
+            <field name="arch" type="xml">
+                <search string="Port">
+                    <field name="name" string="Port name"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_port" model="ir.actions.act_window">
+            <field name="name">Port</field>
+            <field name="res_model">hr.port</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_port_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Port Information.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_port" id="menu_hr_port_tree" parent="hr.menu_hr_configuration" sequence="13"/>
+
+        <!-- Companies-->
+        <record id="view_hr_companies_form" model="ir.ui.view">
+            <field name="name">hr.companies.form</field>
+            <field name="model">hr.companies</field>
+            <field name="arch" type="xml">
+                <form string="Companies">
+                    <sheet>
+                        <group col="4">
+                            <field name="code"/>
+                            <field name="name"/>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_companies_tree" model="ir.ui.view">
+            <field name="name">hr.companies</field>
+            <field name="model">hr.companies</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="License">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_companies_filter" model="ir.ui.view">
+            <field name="name">Company</field>
+            <field name="model">hr.companies</field>
+            <field name="arch" type="xml">
+                <search string="Company">
+                    <field name="name" string="Company name"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_companies" model="ir.actions.act_window">
+            <field name="name">Company</field>
+            <field name="res_model">hr.companies</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_companies_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Company Information.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_companies" id="menu_hr_companies_tree" parent="hr.menu_hr_configuration" sequence="14"/>
+
+        <!-- Vessels Parent-->
+        <menuitem id="menu_vesselcategory" parent="hr.menu_hr_configuration" name="Vessel" sequence="15"/>
+
+        <!-- Vessel Category-->
+        <record id="view_hr_vesselcategory_form" model="ir.ui.view">
+            <field name="name">hr.vesselcategory.form</field>
+            <field name="model">hr.vesselcategory</field>
+            <field name="arch" type="xml">
+                <form string="Category">
+                    <sheet>
+                        <group col="4">
+                            <field name="category"/>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_vesselcategory_tree" model="ir.ui.view">
+            <field name="name">hr.vesselcategory</field>
+            <field name="model">hr.vesselcategory</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Vessel Category">
+                    <field name="category"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_vesselcategory_filter" model="ir.ui.view">
+            <field name="name">Category</field>
+            <field name="model">hr.vesselcategory</field>
+            <field name="arch" type="xml">
+                <search string="Category">
+                    <field name="name" string="Category name"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_vesselcategory" model="ir.actions.act_window">
+            <field name="name">Category</field>
+            <field name="res_model">hr.vesselcategory</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_vesselcategory_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Vessel category Information.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_vesselcategory" id="menu_hr_vesselcategory_tree" parent="menu_vesselcategory" sequence="1"/>
+
+        <!-- Vessel-->
+        <record id="view_hr_vessel_form" model="ir.ui.view">
+            <field name="name">hr.vessel.form</field>
+            <field name="model">hr.vessel</field>
+            <field name="arch" type="xml">
+                <form string="Vessel name">
+                    <sheet>
+                        <group>
+                            <field name="code"/>
+                            <field name="name"/>
+                            <field name="company_code"/>
+                            <field name="vessel_category"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_vessel_tree" model="ir.ui.view">
+            <field name="name">hr.vessel</field>
+            <field name="model">hr.vessel</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Vessel Information">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="company_code"/>
+                    <field name="vessel_category"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_vessel_filter" model="ir.ui.view">
+            <field name="name">Vessel</field>
+            <field name="model">hr.vessel</field>
+            <field name="arch" type="xml">
+                <search string="Vessel Information">
+                    <field name="name" string="Vessel name"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_vessel" model="ir.actions.act_window">
+            <field name="name">Vessel Information</field>
+            <field name="res_model">hr.vessel</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_vessel_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Vessel name Information.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_vessel" id="menu_hr_vessel_tree" parent="menu_vesselcategory" sequence="2"/>
+
+        <!-- Department-->
+        <record id="view_hr_ship_department_form" model="ir.ui.view">
+            <field name="name">hr.ship.department.form</field>
+            <field name="model">hr.ship.department</field>
+            <field name="arch" type="xml">
+                <form string="Department">
+                    <sheet>
+                        <group col="4">
+                            <field name="ship_dept_code"/>
+                            <field name="name"/>
+                            <field name="department_ids" widget="many2many_tags" placeholder="Vessel Category" string = "Vessel Category"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_ship_department_tree" model="ir.ui.view">
+            <field name="name">hr.ship.department</field>
+            <field name="model">hr.ship.department</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Department">
+                    <field name="ship_dept_code"/>
+                    <field name="name"/>
+                    <field name="department_ids" widget="many2many_tags" placeholder="Vessel Category" string = "Vessel Category"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_ship_department_filter" model="ir.ui.view">
+            <field name="name">Department</field>
+            <field name="model">hr.ship.department</field>
+            <field name="arch" type="xml">
+                <search string="Vessel Information">
+                    <field name="name" string="Ship Department"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_ship_department" model="ir.actions.act_window">
+            <field name="name">Department Information</field>
+            <field name="res_model">hr.ship.department</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_ship_department_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Ship department Information.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_ship_department" id="menu_hr_ship_department_tree" parent="menu_vesselcategory" sequence="3"/>
+
+        <!-- Rank Parent-->
+        <menuitem id="menu_rank" parent="hr.menu_hr_configuration" name="Rank" sequence="16"/>
+
+        <!-- Rank Type-->
+        <record id="view_hr_ranktype_form" model="ir.ui.view">
+            <field name="name">hr.ranktype.form</field>
+            <field name="model">hr.ranktype</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <sheet>
+                        <group col="4">
+                            <field name="code"/>
+                            <field name="name"/>
+                            <field name="description"/>
+                            <field name="rate"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_ranktype_tree" model="ir.ui.view">
+            <field name="name">hr.ranktype</field>
+            <field name="model">hr.ranktype</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Rank Type">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="rate"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_ranktype_filter" model="ir.ui.view">
+            <field name="name">Type</field>
+            <field name="model">hr.ranktype</field>
+            <field name="arch" type="xml">
+                <search string="Type">
+                    <field name="name" string="Rank type name"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_ranktype" model="ir.actions.act_window">
+            <field name="name">Type</field>
+            <field name="res_model">hr.ranktype</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_ranktype_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a rank type Information.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_ranktype" id="menu_hr_ranktype_tree" parent="menu_rank" sequence="1"/>
+
+        <!-- Rank-->
+        <record id="view_hr_rank_form" model="ir.ui.view">
+            <field name="name">hr.rank.form</field>
+            <field name="model">hr.rank</field>
+            <field name="arch" type="xml">
+                <form string="Rank Information">
+                    <sheet>
+                        <group col="4">
+                            <field name="rank_identification"/>
+                            <field name="rank"/>
+                            <field name="name"/>
+                            <field name="rank_type"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_rank_tree" model="ir.ui.view">
+            <field name="name">hr.rank</field>
+            <field name="model">hr.rank</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Rank Information">
+                    <field name="rank_identification"/>
+                    <field name="rank"/>
+                    <field name="name"/>
+                    <field name="rank_type"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_rank_filter" model="ir.ui.view">
+            <field name="name">Rank</field>
+            <field name="model">hr.rank</field>
+            <field name="arch" type="xml">
+                <search string="Rank Information">
+                    <field name="name" string="Rank information"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_rank" model="ir.actions.act_window">
+            <field name="name">Rank Information</field>
+            <field name="res_model">hr.rank</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_rank_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a rank name Information.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_rank" id="menu_hr_rank_tree" parent="menu_rank" sequence="2"/>
+
+        <!-- Employment Status-->
+        <record id="view_hr_emp_status_form" model="ir.ui.view">
+            <field name="name">hr.employment.status.form</field>
+            <field name="model">hr.employment.status</field>
+            <field name="arch" type="xml">
+                <form string="Employment Status Information">
+                    <sheet>
+                        <group>
+                            <field name="status_id"/>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_emp_status_tree" model="ir.ui.view">
+            <field name="name">hr.employment.status</field>
+            <field name="model">hr.employment.status</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Employment Status Information">
+                    <field name="status_id"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_emp_status_filter" model="ir.ui.view">
+            <field name="name">Employment Status</field>
+            <field name="model">hr.employment.status</field>
+            <field name="arch" type="xml">
+                <search string="Status">
+                    <field name="status_id" string="ID"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_emp_status" model="ir.actions.act_window">
+            <field name="name">Employment Status</field>
+            <field name="res_model">hr.employment.status</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_emp_status_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Employment status information.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_emp_status" id="menu_hr_emp_status_tree" parent="hr.menu_hr_configuration" sequence="17"/>
+
+        <!-- Religion-->
+
+        <record id="view_hr_religion_form" model="ir.ui.view">
+            <field name="name">hr.religion.form</field>
+            <field name="model">hr.religion</field>
+            <field name="arch" type="xml">
+                <form string="Religion">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="religion_code"/>
+                                <field name="name"/>
+                            </group>
+                            <group></group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_religion_tree" model="ir.ui.view">
+            <field name="name">hr.religion</field>
+            <field name="model">hr.religion</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Religion">
+                    <field name="religion_code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_religion_filter" model="ir.ui.view">
+            <field name="name">Religion</field>
+            <field name="model">hr.religion</field>
+            <field name="arch" type="xml">
+                <search string="Check list name">
+                    <field name="religion_code"/>
+                    <field name="name"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_hr_religion_status" model="ir.actions.act_window">
+            <field name="name">Religion</field>
+            <field name="res_model">hr.religion</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_religion_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Religion
+              </p>
+            </field>
+        </record>
+
+        <menuitem action="open_hr_religion_status" id="menuhr_religion_tree" parent="hr.menu_hr_configuration" sequence="18"/>
+
+
+        <!-- Check list-->
+        <menuitem id="menu_Checklist" parent="hr.menu_hr_configuration" name="Checklist" sequence="19"/>
+
+        <!-- Checklist Type-->
+        <record id="view_hr_checklist_form" model="ir.ui.view">
+            <field name="name">hr.checklist.form</field>
+            <field name="model">hr.checklist</field>
+            <field name="arch" type="xml">
+                <form string="Check list type">
+                    <sheet>
+                        <group>
+                            <field name="checklist_code"/>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_checklist_tree" model="ir.ui.view">
+            <field name="name">hr.checklist</field>
+            <field name="model">hr.checklist</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Check list type">
+                    <field name="checklist_code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_checklist_filter" model="ir.ui.view">
+            <field name="name">Checklist</field>
+            <field name="model">hr.checklist</field>
+            <field name="arch" type="xml">
+                <search string="Check list name">
+                    <field name="checklist_code"/>
+                    <field name="name"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_hr_checklist_status" model="ir.actions.act_window">
+            <field name="name">Checklist</field>
+            <field name="res_model">hr.checklist</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_checklist_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Checklist
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_hr_checklist_status" id="menuhr_checklist_tree" parent="menu_Checklist" sequence="1"/>
+
+        <!-- Checklist Template-->
+
+
+
+
+        <!-- <record id="view_hr_checklist_template_form" model="ir.ui.view">
+            <field name="name">hr.checklist_template.form</field>
+            <field name="model">hr.checklist_template</field>
+            <field name="arch" type="xml">
+                <form string="Check list Template">
+                    <sheet>
+                        <data>
+                            <tree>
+
+                            <field name="name"/>
+                            <field name="checklist_temp_param_1"/>
+                            <field name="checklist_temp_param_1_with_value"/>
+
+                            <field name="checklist_temp_param_2"/>
+                            <field name="checklist_temp_param_2_with_value"/>
+
+                            <field name="checklist_temp_param_3"/>
+                            <field name="checklist_temp_param_3_with_value"/>
+                            </tree>
+
+                        </data>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_checklist_template_tree" model="ir.ui.view">
+            <field name="name">hr.checklist_template</field>
+            <field name="model">hr.checklist_template</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Check list Template">
+                    <field name="name"/>
+                    <field name="checklist_temp_param_1"/>
+                    <field name="checklist_temp_param_1_with_value"/>
+
+                    <field name="checklist_temp_param_2"/>
+                    <field name="checklist_temp_param_2_with_value"/>
+
+                    <field name="checklist_temp_param_3"/>
+                    <field name="checklist_temp_param_3_with_value"/>
+                </tree>
+            </field>
+        </record>-->
+
+        <record id="view_hr_checklist_template_tree" model="ir.ui.view">
+            <field name="name">hr.checklist_template.tree</field>
+            <field name="model">hr.checklist_template</field>
+            <field name="arch" type="xml">
+                <tree string="Variant Values" editable="top">
+                    <field name="csequence"/>
+                    <field name="name"/>
+                    <field name="checklist_temp_param_1"/>
+                    <field name="checklist_temp_param_1_with_value"/>
+
+                    <field name="checklist_temp_param_2"/>
+                    <field name="checklist_temp_param_2_with_value"/>
+
+                    <field name="checklist_temp_param_3"/>
+                    <field name="checklist_temp_param_3_with_value"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_checklist_template_filter" model="ir.ui.view">
+            <field name="name">Checklist</field>
+            <field name="model">hr.checklist_template</field>
+            <field name="arch" type="xml">
+                <search string="Check list Template name">
+                    <field name="name"/>
+                    <field name="checklist_temp_param_1"/>
+                    <field name="checklist_temp_param_1_with_value"/>
+
+                    <field name="checklist_temp_param_2"/>
+                    <field name="checklist_temp_param_2_with_value"/>
+
+                    <field name="checklist_temp_param_3"/>
+                    <field name="checklist_temp_param_3_with_value"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_hr_checklist_template_filter" model="ir.actions.act_window">
+            <field name="name">Checklist Template</field>
+            <field name="res_model">hr.checklist_template</field>
+            <field name="view_mode">tree</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_checklist_template_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Checklist template
+              </p>
+            </field>
+        </record>
+
+        <menuitem action="open_hr_checklist_template_filter" id="menuhr_view_hr_checklist_template_filter_tree" parent="menu_Checklist" sequence="1"/>
+
+    </data>
+</openerp>

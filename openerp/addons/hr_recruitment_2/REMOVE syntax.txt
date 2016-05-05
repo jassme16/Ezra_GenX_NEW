@@ -1,0 +1,116 @@
+
+
+    employeenumber = fields.Char('Employee Number', 100)
+    lastemployeenumber = fields.Char('Employee Number', 100)
+    firstname = fields.Char('First Name', 50)
+    lastname = fields.Char('Last Name', 50)
+    middlename = fields.Char('Middle Name', 50)
+    nickname = fields.Char('Nickname', 50)
+    cclnumber = fields.Char('CCL Number', 100)
+    pcn = fields.Char('PCN', 100)
+    date_of_birth = fields.Date('Date of Birth')
+    gender = fields.selection([('male', 'Male'), ('female', 'Female')], 'Gender')
+    civil_status = fields.selection(
+        [('single', 'Single'), ('married', 'Married'), ('widower', 'Widower'), ('divorced', 'Divorced')],
+        'Civil Status')
+    religion = fields.One2many('emp.seab.religion', 'id', 'Religion')
+    weight = fields.Char('Height', 20)
+    height = fields.Char('Height', 20)
+    place_of_birth = fields.Text('Place of Birth', 150)
+    selfalottee = fields.Boolean('Self Allottee?', default=True)
+    country_id = fields.many2one('res.country', 'Nationality')
+
+
+class EmploymentStatus(models.Model):
+    _name = 'emp.seab.empstat'
+    name = fields.Char('Status', 20)
+
+
+class EmployeeReligion(models.Model):
+    _name = 'emp.seab.religion'
+    name = fields.Char('Religion', 50)
+    descripton = fields.Text('Description', 150)
+
+
+class EmployeeInf(models.Model):
+
+    _name ='emp.seabased'
+    _description = "Seafarer's Employee Information"
+    employe_number = fields.Char('Employee number', 100)
+    last_employee_number = fields.Char('Last employee number', 100)
+    first_name = fields.Char('First name')
+    last_name = fields.Char('Last name', 50)
+    middle_name = fields.Char('Middle name', 50)
+    nickname =  fields.Char('Nickname', 50)
+    ccl_number = fields.Char('CCL Number', 100)
+    pcn= fields.Char('PCN', 100)
+    date_of_birth = fields.Date('Date of Birth')
+    gender = fields.selection([('male', 'Male'), ('female', 'Female')], 'Gender')
+    civil_status = fields.selection([('single', 'Single'), ('married', 'Married'), ('widower', 'Widower'), ('divorced', 'Divorced')], 'Civil Status')
+    religion = fields.One2many('hr.emp.seab.religion', 'id','Religion')
+    weight = fields.Char('Height', 20)
+    height = fields.Char('Height', 20)
+    place_of_birth = fields.Text('Place of Birth',150)
+    self_alottee = fields.Boolean('Self Allottee?',default = True)
+    country_id = fields.many2one('res.country', 'Nationality')
+
+class EmployeeReligion(models.Model):
+
+    _name = 'emp.seab.religion'
+    name = fields.Char('Religion')
+
+
+class EmpseaBased(models.Model):
+    _name = 'emp.seabased'
+    name = fields.Char('Seaman')
+
+
+### in HREmployeeExtend
+    """
+    @api.model
+    def create(self, vals):
+        raise Warning(self.id)
+        new_record = super(HrEmployeeExtend, self).create(vals)
+        checklistTemplates = self.env['hr.checklist_template'].search([])
+        employeeChecklist = self.env['hr.employee_checklist']
+
+        temp_1 = 0
+        temp_2 = 0
+        temp_3 = 0
+
+        for checklistTemplate in checklistTemplates:
+
+            if len(checklistTemplate.checklist_temp_param_1) > 0:
+                temp_1 = int(checklistTemplate.checklist_temp_param_1[0])
+            else:
+                temp_1 = None
+
+            if len(checklistTemplate.checklist_temp_param_2) > 0:
+                temp_2 = int(checklistTemplate.checklist_temp_param_2[0])
+            else:
+                temp_2 = None
+
+            if len(checklistTemplate.checklist_temp_param_3) > 0:
+                temp_3 = int(checklistTemplate.checklist_temp_param_3[0])
+            else:
+                temp_3 = None
+
+
+            employeeChecklist.create({
+                'employee_id': new_record.id,
+                'checklist_template_id': (checklistTemplate.id),
+                'param_name_1': temp_1,
+                'param_name_1_value': '',
+                'param_name_1_check': False,
+                'param_name_2': temp_2,
+                'param_name_2_value': '',
+                'param_name_2_check': False,
+                'param_name_3': temp_3,
+                'param_name_3_value': '',
+                'param_name_3_check': False,
+                'param_name_1_value_visible':  checklistTemplate.checklist_temp_param_1_with_value,
+                'param_name_2_value_visible':  checklistTemplate.checklist_temp_param_2_with_value,
+                'param_name_3_value_visible':  checklistTemplate.checklist_temp_param_3_with_value
+            })
+        return new_record
+    """

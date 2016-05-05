@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Bank Payroll -->
+        <record id="view_hr_payroll_bank_form" model="ir.ui.view">
+            <field name="name">payroll.bank.template.form</field>
+            <field name="model">payroll.bank.template</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <header>
+                        <button name="generateBank" string="Generate Bank Payroll" class="oe_highlight" type="object"  attrs="{'invisible':[('state', '!=', 'draft')]}" />
+                        <button name="postApproved" string="Approved" type="object" attrs="{'invisible':[('state', '!=', 'draft')]}" confirm = "Are you sure to Approved this Bank payroll?"/>
+                        <button name="post" string="Paid" class="oe_highlight"  type="object"  attrs="{'invisible':[('state', '!=', 'approved')]}" confirm = "Are you sure to finalize this payroll?"/>
+                        <button name="postDraft" string="Re-Check"  type="object" class="oe_highlight"  attrs="{'invisible':[('state', '!=', 'approved')]}" confirm = "Are you sure to edit this generated Bank Payroll?"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,approved,post" statusbar_colors='{"approved":"blue","post":"red"}'/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group string = "Bank Payroll">
+                                <field name="name" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                                <field name="payroll_period"  domain = "['|',('state', '=', 'approved'),('state', '=', 'post')]" options="{'no_create': True}" attrs="{'readonly':[('state', '!=', 'draft')]}" invisible="1"/>
+                            </group>
+                            <group string ="Payroll Period">
+                                <field name="payroll_month_of" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                                <field name="payroll_month_quarter" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                                <field name="payroll_year" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                            </group>
+                        </group>
+                        <group col="4" string ="Bank Payroll Additional Information">
+                            <field name="employee_name" attrs="{'readonly':[('state', '!=', 'draft')]}" invisible="1"/>
+                            <field name="filename" readonly="1" invisible="1"/>
+                            <field name="payroll_file" readonly="1" filename="filename" string ="Download Report"/>
+                        </group>
+                        <notebook>
+                            <page string = "Employee's Payroll With Account Number">
+                                <data>
+                                    <field name="payroll_bank_main_id" string ="" readonly="1">
+                                        <tree create = "false" editable="bottom/top" >
+                                            <field name ="account_number" readonly="1" />
+                                            <field name ="name" readonly="1"/>
+                                            <field name ="amount" readonly="1" widget="monetary"/>
+                                        </tree>
+                                    </field>
+                                    <group class="oe_subtotal_footer oe_right" >
+                                        <field name="total_amount"  class="oe_subtotal_footer_separator" readonly="1" invisible="1"/>
+                                    </group>
+                                    <div class="oe_clear">
+                                    </div>
+                                </data>
+                            </page>
+                            <page string = "Employee's Payroll Without Account Number">
+                                <data>
+                                    <field name="payroll_bank_main_check_id" string ="" readonly="1">
+                                        <tree create = "false" editable="bottom/top" >
+                                            <field name ="name" readonly="1"/>
+                                            <field name ="amount" readonly="1" />
+                                        </tree>
+                                    </field>
+                                    <!--
+                                    <group class="oe_subtotal_footer oe_right" >
+                                        <field name="total_amount"  class="oe_subtotal_footer_separator" readonly="1" invisible="1"/>
+                                    </group>
+                                    -->
+                                    <div class="oe_clear">
+                                    </div>
+                                </data>
+                            </page>
+
+                        </notebook>
+                        <group class="oe_subtotal_footer oe_right" >
+                            <field name="total_amount_debit"  readonly="1" />
+                            <field name="total_amount_check"   readonly="1" />
+                            <field name="total_amount"  class="oe_subtotal_footer_separator" readonly="1"/>
+                        </group>
+                        <div class="oe_clear">
+                        </div>
+                    </sheet>
+                    <sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers" />
+                            <field name="message_ids" widget="mail_thread" />
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_payroll_bank_tree" model="ir.ui.view">
+            <field name="name">payroll.bank.template</field>
+            <field name="model">payroll.bank.template</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Bank Payroll Information">
+                    <field name="name"/>
+                    <field name="payroll_month_of"/>
+                    <field name="payroll_month_quarter"/>
+                    <field name="payroll_year"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_payroll_bank_filter" model="ir.ui.view">
+            <field name="name">Bank Payroll</field>
+            <field name="model">payroll.bank.template</field>
+            <field name="arch" type="xml">
+                <search string="Payroll">
+                    <field name="name"/>
+                    <field name="payroll_month_of"/>
+                    <field name="payroll_month_quarter"/>
+                    <field name="payroll_year"/>
+                    <field name="state"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_hr_payroll_bank" model="ir.actions.act_window">
+            <field name="name">Bank Payroll</field>
+            <field name="res_model">payroll.bank.template</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_payroll_bank_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create Bank Payroll.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_hr_payroll_bank" id="menu_hr_payroll_bank" parent="hr_payroll.menu_hr_root_payroll" string = "Bank Payroll" sequence="51"/>
+    </data>
+</openerp>
+

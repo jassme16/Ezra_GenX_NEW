@@ -1,0 +1,139 @@
+                
+                    
+        
+
+        for attendance in attendances:
+            for employee_attendance_info in attendance.employee_ids:
+                #Check if Employee is a Reliever
+                if  employee_attendance_info.is_reliever == False:
+                    # Check if Employee Already Exists
+                    payroll_employee = payroll_detail.search([('payroll_detail_id', '=', self.id),
+                                                              ('employee_id','=',employee_attendance_info.employee_id.id)])
+                    if len(payroll_employee) == 0:
+                        employee_name = employee_attendance_info.employee_id.name
+                        empployee_info_id = employee_attendance_info.employee_id.id
+
+                        if employee_attendance_info.is_reliever == True:
+                            employee_name = employee_attendance_info.employee_reliever.name
+                            empployee_info_id = employee_attendance_info.employee_reliever.id
+
+                        payroll_detail.create(
+                            {
+                                'payroll_detail_id': self.id,
+                                'name': self.name + ' ' + employee_name + ' ' + str(self.id),
+                                'employee_id': empployee_info_id,
+                                'employee_project_assign': self.payroll_attendance.assign_projects.id,
+                                'is_reliever': employee_attendance_info.is_reliever,
+                                'basic_pay_perday': employee_attendance_info.regular_days_work,
+                                'basic_pay_perday_rate': 0,
+                                'basic_pay_amount': 0,
+                                'reg_otpay_perhour': employee_attendance_info.regular_overtime,
+                                'reg_otpay_amount': 0,
+                                'reg_nightdiff_perhour': employee_attendance_info.night_differential,
+                                'reg_nightdiffy_amount': 0,
+                                'reg_straightduty_perhour': employee_attendance_info.straight_duty,
+                                'reg_straightduty_amount': 0,
+                                'cola_rate_perday': 0,
+                                'cola_amount': 0,
+                                'reg_hol_pay_perday': employee_attendance_info.legal_holiday_day,
+                                'reg_hol_pay_amount': 0,
+                                'reg_hol_work_pay_perhour': employee_attendance_info.holiday_day_work,
+                                'reg_hol_work_pay_amount': 0,
+                                'reg_hol_otpay_perhour': employee_attendance_info.holiday_overtime,
+                                'reg_hol_otpay_amount': 0,
+                                'reg_spechol_perhour': employee_attendance_info.special_day_work,
+                                'reg_spechol_amount': 0,
+                                'reg_spechol_otpay_perhour': employee_attendance_info.special_overtime,
+                                'reg_spechol_otpay_amount': 0,
+                                'other_incentive': 0,
+                                'tardiness': employee_attendance_info.tardiness,
+                                'tardiness_permin_rate': 0,
+                                'tardiness_amount': 0,
+                                'undertime': employee_attendance_info.undertime,
+                                'tardiness_pay_permin_rate': 0,
+                                'undertime_amount': 0,
+                                'gross_salary': 0,
+                                'sss_premium': 0,
+                                'sss_loan': 0,
+                                'hdmf_premium': 0,
+                                'hdmf_salary_loan': 0,
+                                'hdmf_calamity_loan': 0,
+                                'hmo_premium': 0,
+                                'other_deductions': 0,
+                                'deductions': 0,
+                                'net_pay': 0,
+                                'basic_pay_leaves_perhour': employee_attendance_info.leaves,
+                                'basic_pay_leaves_amount': 0,
+                                'basic_pay_restday_perhour': employee_attendance_info.rest_day_work,
+                                'basic_pay_restday_amount': 0,
+                                'basic_pay_restday_ot_perhour': employee_attendance_info.restday_overtime,
+                                'basic_pay_restday_ot_amount': 0,
+                                'month_half_period': self.payroll_month_quarter ,
+                                'month_name_period': self.payroll_month_of ,
+                                'year_payroll_period': constants.YEAR_NOW,
+                            })
+                else:
+                    payroll_employee = payroll_detail.search([('payroll_detail_id', '=', self.id),
+                                                              ('employee_id','=',employee_attendance_info.employee_reliever.id)])
+
+                    if len(payroll_employee) == 0:
+                        employee_name = employee_attendance_info.employee_reliever.name
+                        empployee_info_id = employee_attendance_info.employee_reliever.id
+
+                        payroll_detail.create(
+                            {
+                                'payroll_detail_id': self.id,
+                                'name': self.name + ' ' + employee_name + ' ' + str(self.id),
+                                'employee_id': empployee_info_id,
+                                'employee_project_assign': self.payroll_attendance.assign_projects.id,
+                                'is_reliever': employee_attendance_info.is_reliever,
+                                'basic_pay_perday': employee_attendance_info.regular_days_work,
+                                'basic_pay_perday_rate': 0,
+                                'basic_pay_amount': 0,
+                                'reg_otpay_perhour': employee_attendance_info.regular_overtime,
+                                'reg_otpay_amount': 0,
+                                'reg_nightdiff_perhour': employee_attendance_info.night_differential,
+                                'reg_nightdiffy_amount': 0,
+                                'reg_straightduty_perhour': employee_attendance_info.straight_duty,
+                                'reg_straightduty_amount': 0,
+                                'cola_rate_perday': 0,
+                                'cola_amount': 0,
+                                'reg_hol_pay_perday': employee_attendance_info.legal_holiday_day,
+                                'reg_hol_pay_amount': 0,
+                                'reg_hol_work_pay_perhour': employee_attendance_info.holiday_day_work,
+                                'reg_hol_work_pay_amount': 0,
+                                'reg_hol_otpay_perhour': employee_attendance_info.holiday_overtime,
+                                'reg_hol_otpay_amount': 0,
+                                'reg_spechol_perhour': employee_attendance_info.special_day_work,
+                                'reg_spechol_amount': 0,
+                                'reg_spechol_otpay_perhour': employee_attendance_info.special_overtime,
+                                'reg_spechol_otpay_amount': 0,
+                                'other_incentive': 0,
+                                'tardiness': employee_attendance_info.tardiness,
+                                'tardiness_permin_rate': 0,
+                                'tardiness_amount': 0,
+                                'undertime': employee_attendance_info.undertime,
+                                'tardiness_pay_permin_rate': 0,
+                                'undertime_amount': 0,
+                                'gross_salary': 0,
+                                'sss_premium': 0,
+                                'sss_loan': 0,
+                                'hdmf_premium': 0,
+                                'hdmf_salary_loan': 0,
+                                'hdmf_calamity_loan': 0,
+                                'hmo_premium': 0,
+                                'other_deductions': 0,
+                                'deductions': 0,
+                                'net_pay': 0,
+                                'basic_pay_leaves_perhour': employee_attendance_info.leaves,
+                                'basic_pay_leaves_amount': 0,
+                                'basic_pay_restday_perhour': employee_attendance_info.rest_day_work,
+                                'basic_pay_restday_amount': 0,
+                                'basic_pay_restday_ot_perhour': employee_attendance_info.restday_overtime,
+                                'basic_pay_restday_ot_amount': 0,
+                                'month_half_period': self.payroll_month_quarter ,
+                                'month_name_period': self.payroll_month_of ,
+                                'year_payroll_period': constants.YEAR_NOW,
+                            })
+
+PAyroll Computation

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Client Batch Report Billing -->
+        <record id="view_billing_report_form" model="ir.ui.view">
+            <field name="name">billing.batch.report.form</field>
+            <field name="model">billing.batch.report</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="customer_id" />
+                                <field name="customer_branches_id" domain = "[('main_detail_id', '=', customer_id)]" />
+                                <field name="job_id"/>
+                                <field name="billing_month_of"/>
+                                <field name="billing_month_quarter"/>
+                                <field name="report_type"/>
+                                <field name="report_format"/>
+                                <field name="billing_file" readonly="1" filename="filename"/>
+                            </group>
+                        </group>
+                        <footer>
+                            <button name="generateReport2" string="Generate Report" class="oe_highlight" type="object" />
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_billing_report_tree" model="ir.ui.view">
+            <field name="name">billing.batch.report</field>
+            <field name="model">billing.batch.report</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Batch Billing Report Information">
+                    <field name="customer_id" />
+                    <field name="customer_branches_id" />
+                    <field name="job_id"/>
+                    <field name="billing_month_of"/>
+                    <field name="billing_month_quarter"/>
+                    <field name="report_format"/>
+                    <field name="billing_file" readonly="1" filename="filename"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_billing_report_filter" model="ir.ui.view">
+            <field name="name">Batch Billing Report</field>
+            <field name="model">billing.batch.report</field>
+            <field name="arch" type="xml">
+                <search string="Payroll">
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                    <field name="job_id"/>
+                    <field name="attendance_id"/>
+                </search>
+             </field>
+        </record>
+
+        <record id="open_module_billing_report" model="ir.actions.act_window">
+            <field name="name">Batch Billing Report</field>
+            <field name="res_model">billing.batch.report</field>
+            <field name="view_type">form</field>
+            <!--<field name="search_view_id" ref="view_billing_report_filter"/>-->
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create Batch Billing Report.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_billing_report" id="menu_billing_report" parent="account.menu_finance_receivables" string = "Batch Billing Report" sequence="1"/>
+
+    </data>
+</openerp>

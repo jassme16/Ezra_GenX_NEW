@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+            <!-- Holiday -->
+            <record id="view_hr_holiday_ezra_tree" model="ir.ui.view">
+                <field name="name">hr.holiday.form</field>
+                <field name="model">hr.holiday</field>
+                <field name="field_parent">child_ids</field>
+                <field name="arch" type="xml">
+                    <tree string="Legal Holiday" create = "true" editable = "bottom">
+                        <field name="name"/>
+                        <field name="holiday_month"/>
+                        <field name="holiday_day"/>
+                        <field name="holiday_year"/>
+                        <field name="is_only_for_this_year"/>
+                        <field name="holiday_date" readonly="1"/>
+
+
+                    </tree>
+                </field>
+            </record>
+            <record id="view_hr_holiday_ezra_filter" model="ir.ui.view">
+                <field name="name">Legal Holidays</field>
+                <field name="model">hr.holiday</field>
+                <field name="arch" type="xml">
+                    <search string="Work Days Type">
+                        <field name="name"/>
+                        <field name="holiday_month"/>
+                        <field name="holiday_day"/>
+                        <field name="holiday_year"/>
+                        <field name="is_only_for_this_year"/>
+                        <field name="holiday_date" readonly="1"/>
+                    </search>
+                 </field>
+            </record>
+            <record id="open_module_hr_holiday_ezra" model="ir.actions.act_window">
+                <field name="name">Legal Holidays</field>
+                <field name="res_model">hr.holiday</field>
+                <field name="view_type">form</field>
+                <field name="search_view_id" ref="view_hr_holiday_ezra_filter"/>
+                <field name="help" type="html">
+                  <p class="oe_view_nocontent_create">
+                    Click to Create a Holiday
+                  </p>
+                </field>
+            </record>
+            <menuitem action="open_module_hr_holiday_ezra" id="menu_hr_holiday_ezra" parent="hr_attendance.menu_hr_time_tracking" sequence="1"/>
+    </data>
+</openerp>
+

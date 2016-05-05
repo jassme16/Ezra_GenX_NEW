@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_billing_batch_manager,billing.batch.manager,hr_payroll_ezra_billing.model_billing_batch,base.group_hr_manager,1,1,1,1
+access_billing_detail_manager,billing.detail.manager,hr_payroll_ezra_billing.model_billing_detail,base.group_hr_manager,1,1,1,1
+access_billing_main_manager,billing.main.manager,hr_payroll_ezra_billing.model_billing_main,base.group_hr_manager,1,1,1,1
+access_billing_batch_user,billing.batch.hr_user,hr_payroll_ezra_billing.model_billing_batch,base.group_hr_user,1,1,1,1
+access_billing_detail_user,billing.detail.hr_user,hr_payroll_ezra_billing.model_billing_detail,base.group_hr_user,1,1,1,1
+access_billing_main_user,billing.main.hr_user,hr_payroll_ezra_billing.model_billing_main,base.group_hr_user,1,1,1,1

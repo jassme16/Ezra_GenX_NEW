@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_payroll_incentive_13thmonth_manager,payroll.incentive.13thmonth.manager,hr_payroll_13thmonth_pay.model_payroll_incentive_13thmonth,base.group_hr_manager,1,1,1,1
+access_payroll_incentive_13thmonth_detail_manager,payroll.incentive.13thmonth.detail.manager,hr_payroll_13thmonth_pay.model_payroll_incentive_13thmonth_detail,base.group_hr_manager,1,1,1,1
+access_payroll_incentive_13thmonth_user,payroll.incentive.13thmonth.hr_user,hr_payroll_13thmonth_pay.model_payroll_incentive_13thmonth,base.group_hr_user,1,1,1,1
+access_payroll_incentive_13thmonth_detail_user,payroll.incentive.13thmonth.detail.hr_user,hr_payroll_13thmonth_pay.model_payroll_incentive_13thmonth_detail,base.group_hr_user,1,1,1,1

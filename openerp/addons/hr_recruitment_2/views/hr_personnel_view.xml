@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="view_personnel_form" model="ir.ui.view">
+            <field name="name">hr.personnel.form</field>
+            <field name="model">hr.personnel</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <sheet>
+                        <page string ="Information">
+                            <group string = "Fullname">
+                                <field name="first_name"/>
+                                <field name="middle_name"/>
+                                <field name="last_name"/>
+                            </group>
+                            <group string = "Identification">
+                                <field name="ccl_number"/>
+                                <field name="pcn"/>
+                            </group>
+                        </page>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_personnel_tree" model="ir.ui.view">
+            <field name="name">hr.personnel</field>
+            <field name="model">hr.personnel</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Personnel">
+                    <field name="first_name"/>
+                    <field name="middle_name"/>
+                    <field name="last_name"/>
+                    <field name="ccl_number"/>
+                    <field name="pcn"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_personnel_filter" model="ir.ui.view">
+            <field name="name">Personnel</field>
+            <field name="model">hr.personnel</field>
+            <field name="arch" type="xml">
+                <search string="Personnel">
+                    <field name="first_name" string="First name"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_personnel" model="ir.actions.act_window">
+            <field name="name">Address Type</field>
+            <field name="res_model">hr.personnel</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_personnel_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Personnel.
+              </p>
+            </field>
+        </record>
+        <!--<menuitem action="open_module_personnel" id="menu_hr_personnel_tree" parent="hr.menu_hr_main" sequence="6"/>-->
+    </data>
+</openerp>

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="assets_backend" name="hr ezra assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/hr_payroll_ezra/static/src/css/ezra.css"/>
+                <script type="text/javascript" src="/hr_payroll_ezra/static/src/js/ezra.js"></script>
+            </xpath>
+        </template>
+        <!-- Client's Batch Billing -->
+        <record id="view_billing_batch_info_form" model="ir.ui.view">
+            <field name="name">billing.batch.form</field>
+            <field name="model">billing.batch</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <header>
+                        <button name="generateBatchBilling" string="Generate Batch Client's Billing" class="oe_highlight" type="object"/>
+                    </header>
+                    <sheet  >
+                        <group>
+                            <group>
+                                <field name="name" />
+                                <field name="attendance_id" domain = "[('attendance_status', '=', 'post')]" widget="selection" />
+                            </group>
+                        </group>
+                    </sheet>
+                    <sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers" />
+                            <field name="message_ids" widget="mail_thread" />
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_billing_batch_info_tree" model="ir.ui.view">
+            <field name="name">billing.batch</field>
+            <field name="model">billing.batch</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Client's Billing Information">
+                        <field name="name" />
+                        <field name="attendance_id" />
+                </tree>
+            </field>
+        </record>
+        <record id="view_billing_batch_info_filter" model="ir.ui.view">
+            <field name="name">Batch Client's Billing</field>
+            <field name="model">billing.batch</field>
+            <field name="arch" type="xml">
+                <search string="Payroll">
+                    <field name="name" />
+                    <field name="attendance_id" />
+                </search>
+             </field>
+        </record>
+        <record id="open_module_billing_batch_info" model="ir.actions.act_window">
+            <field name="name">Batch Client's Billing</field>
+            <field name="res_model">billing.batch</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_billing_batch_info_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create Batch Client's Billing.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_billing_batch_info" id="menu_billing_batch_info" parent="account.menu_finance_receivables" string = "Client's Billing" sequence="0"/>
+
+        <!-- Client's Billing -->
+        <record id="view_billing_info_form" model="ir.ui.view">
+            <field name="name">billing.main.form</field>
+            <field name="model">billing.main</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <header>
+                        <!--<button name="generateEmployeeBilling" string="Generate Client's Billing" class="oe_highlight" type="object"  attrs="{'invisible':[('state', '!=', 'draft'),('bill_detail_id_count', '=' ,0)]}"/>
+                        <button name="generateEmployeeBilling" string="Re-Generate Client's Billing" class="oe_highlight" type="object"  attrs="{'invisible':[('state', '!=', 'draft'),('bill_detail_id_count', '>' ,0)]}" confirm = "Are you sure to rollback all the transaction?" />-->
+                        <button name="generateEmployeeBilling" string="Generate Client's Billing" class="oe_highlight" type="object"  attrs="{'invisible':[('state', '!=', 'draft')]}" confirm = "Are you sure to rollback all the transaction?" />
+                        <button name="recomputeBilling" string="Re-Compute Client's Billing" class="oe_highlight" type="object"  attrs="{'invisible':[('state', '!=', 'draft'),('bill_detail_id_count', '>' ,0)]}" invisible="1"/>
+                        <button name="postApproved" string="Approved" type="object" attrs="{'invisible':[('state', '!=', 'draft')]}" confirm = "Are you sure to Approved this Client's Billing?"/>
+                        <button name="post" string="Paid" class="oe_highlight"  type="object"  attrs="{'invisible':[('state', '!=', 'approved')]}" confirm = "Are you sure to finalize this payroll?"/>
+                        <button name="postDraft" string="Re-Check"  type="object" class="oe_highlight"  attrs="{'invisible':[('state', '!=', 'approved')]}" confirm = "Are you sure to edit this generated Client's Billing?"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,approved,post" statusbar_colors='{"approved":"blue","post":"red"}'/>
+                        <field name="bill_detail_id_count" invisible="1"/>
+                    </header>
+                    <sheet  class ="oe_form_sheet_width_3">
+                        <group>
+                            <group>
+                                <field name="name" attrs="{'readonly':[('state', '!=', 'draft')]}" style = "width:500px"/>
+                                <field name="customer_id" widget="selection" domain = "[('customer', '=', True)]" attrs="{'readonly':[('state', '!=', 'draft')]}" style = "width:500px"/>
+                                <field name="job_id" widget="selection" attrs="{'readonly':[('state', '!=', 'draft')]}" style = "width:500px"/>
+                                <field name="attendance_id" domain = "[('attendance_status', '=', 'post')]" options="{'no_create': True}" attrs="{'readonly':[('state', '!=', 'draft')]}" style = "width:500px"/>
+
+                                <field name="has_13thmonthpay" attrs="{'readonly':[('state', '!=', 'draft')]}" style = "width:500px" invisible="1"/>
+                                <field name="report_format"  style = "width:400px"/>
+                                <field name="billing_file" readonly="1" filename="filename" style = "width:500px"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string = "Detailed Billing Information">
+                                <field name="bill_detail_id" string ="" widget="one2many_list" colspan="4" nolabel="1">
+                                    <tree edit = "true" editable="bottom/top" colors="red:has_a_reliever==True;blue:is_reliever==True">
+                                        <field name ="id" readonly="1" invisible="1"/>
+                                        <field name ="sequence" readonly="1"/>
+                                        <field name ="employee_id" attrs="{'readonly':[('record_status', '!=', 1)]}"/>
+                                        <field name ="employee_reliever_id" attrs="{'readonly':[('record_status', '!=', 1)]}" />
+                                        <field name ="has_a_reliever" invisible="1"/>
+                                        <field name ="is_reliever" invisible="1"/>
+                                        <button name = "%(hr_payroll_ezra_billing.action_billing_reliever_01)d"
+                                                string ="Add Reliever"
+                                                type = "action"
+                                                invisible = "1"
+                                                context = "{'default_employee': employee_id, 'search_default_employee': employee_id,
+                                                            'default_billing_detail_id': id}"/>
+                                        <!--attrs="{'invisible':[('is_reliever', '=', True)]}" -->
+
+                                        <field name ="details_less_day"  attrs="{'readonly':[('record_status', '!=', 1)]}"/>
+                                        <field name ="details_tardiness_ut" attrs="{'readonly':[('record_status', '!=', 1)]}"/>
+                                        <field name ="details_straight_duty" attrs="{'readonly':[('record_status', '!=', 1)]}"/>
+                                        <field name ="details_night_diff" attrs="{'readonly':[('record_status', '!=', 1)]}" />
+                                        <field name ="details_overtime_reqular" attrs="{'readonly':[('record_status', '!=', 1)]}"/>
+                                        <field name ="details_restday" attrs="{'readonly':[('record_status', '!=', 1)]}"/>
+                                        <field name ="details_overtime_restday" attrs="{'readonly':[('record_status', '!=', 1)]}"/>
+                                        <field name ="details_special_holiday" attrs="{'readonly':[('record_status', '!=', 1)]}"/>
+                                        <field name ="details_overtime_special_holiday" attrs="{'readonly':[('record_status', '!=', 1)]}"/>
+                                        <field name ="details_legal_holiday" attrs="{'readonly':[('record_status', '!=', 1)]}" />
+                                        <field name ="details_overtime_legal_holiday" attrs="{'readonly':[('record_status', '!=', 1)]}"/>
+                                        <field name ="amount_contract" readonly="1" />
+                                        <field name ="amount_less_day" readonly="1" />
+                                        <field name ="amount_tardiness_ut" readonly="1" />
+                                        <field name ="amount_night_diff" readonly="1" />
+                                        <field name ="amount_straight_duty" readonly="1" />
+                                        <field name ="amount_overtime_reqular" readonly="1" />
+                                        <field name ="amount_restday" readonly="1" />
+                                        <field name ="amount_overtime_restday" readonly="1" />
+                                        <field name ="amount_special_holiday" readonly="1" />
+                                        <field name ="amount_overtime_special_holiday" readonly="1" />
+                                        <field name ="amount_legal_holiday" readonly="1" />
+                                        <field name ="amount_overtime_legal_holiday" readonly="1" />
+                                        <field name ="amount_thirteenth_month" readonly="1" />
+                                        <field name ="amount_incentive_leaves" readonly="1" />
+                                        <field name ="amount_allowance" readonly="1" />
+                                        <field name ="amount_overheadcost" readonly="1" />
+                                        <field name ="amount_govt_inc" readonly="1" />
+                                        <field name ="amount_supplies" readonly="1" />
+                                        <field name ="amount_uniform_allowance" readonly="1"/>
+                                        <field name ="amount_equipment" readonly="1"/>
+                                        <field name ="amount_total" readonly="1" />
+                                        <field name ="record_status" invisible="1" />
+                                        <field name ="report_type" invisible="1" />
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right" >
+                                    <field name="subtotal_amount" readonly="1"/>
+                                    <field name="supplies_amount"  class="oe_subtotal_footer_separator" readonly="1" attrs="{'invisible':[('report_format', '=', 2)]}" />
+                                    <field name="subtotal_amount2" readonly="1" attrs="{'invisible':[('report_format', '=', 2)]}"/>
+                                    <field name="vat_amount" readonly="1" attrs="{'invisible':[('report_format', '=', 2)]}"/>
+                                    <field name="grandtotal_amount"  class="oe_subtotal_footer_separator" readonly="1"/>
+                                </group>
+                                <div class="oe_clear">
+                                    <label for="comment"/>
+                                </div>
+                                <field name="remarks" class="oe_inline" placeholder="Additional notes..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers" />
+                            <field name="message_ids" widget="mail_thread" />
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_billing_info_tree" model="ir.ui.view">
+            <field name="name">billing.main</field>
+            <field name="model">billing.main</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Client's Billing Information"
+                      colors="red:state=='post';green:state=='approved'">
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                    <field name="job_id"/>
+                    <field name="attendance_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_billing_info_filter" model="ir.ui.view">
+            <field name="name">Client's Billing</field>
+            <field name="model">billing.main</field>
+            <field name="arch" type="xml">
+                <search string="Payroll">
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                    <field name="job_id"/>
+                    <field name="attendance_id"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_billing_info" model="ir.actions.act_window">
+            <field name="name">Client's Billing</field>
+            <field name="res_model">billing.main</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_billing_info_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create Client's Billing.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_billing_info" id="menu_billing_info" parent="account.menu_finance_receivables" string = "Client's Billing" sequence="1"/>
+    </data>
+</openerp>
+

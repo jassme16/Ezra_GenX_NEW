@@ -1,0 +1,1201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="hr ezra assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/hr_payroll_ezra/static/src/css/ezra.css"/>
+                <script type="text/javascript" src="/hr_payroll_ezra/static/src/js/ezra.js"></script>
+                <script type="text/javascript" src="/hr_payroll_ezra/static/src/js/attendance.js"></script>
+            </xpath>
+        </template>
+
+
+        <!-- Payroll Incentives -->
+         <record id="view_payroll_incentives" model="ir.ui.view">
+            <field name="name">payroll.detail.incentives.form</field>
+            <field name="model">payroll.detail.incentives</field>
+            <field name="arch" type="xml">
+            <tree string="Incentives" create = "false" edit="true" editable = "bottom">
+                <field name="payroll_detail_id" readonly="1"/>
+                <field name="name"/>
+                <field name="amount"/>
+            </tree>
+            </field>
+        </record>
+
+        <record id="action_payroll_incentives" model="ir.actions.act_window">
+            <field name="name">Incentive Breakdown</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">payroll.detail.incentives</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree</field>
+            <field name="target">new</field>
+            <field name="nodestroy">True</field>
+        </record>
+
+        <!-- Employee -->
+        <record id="hr_employee_view_form3" model="ir.ui.view">
+            <field name="name">hr.employee.view.form3</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@string ='Citizenship &amp; Other Info']" position ="replace">
+                    <group string="Citizenship &amp; Other Info">
+                        <field name="employee_number"  readonly ="1"/>
+                        <field name="first_name"/>
+                        <field name="last_name" />
+                        <field name="middle_name" />
+                        <field name="country_id" options='{"no_open": True, "no_create": True}' invisible="1"/>
+                        <field name="identification_id" groups="base.group_hr_user"/>
+                        <field name="passport_id" groups="base.group_hr_user" invisible="1"/>
+                        <field name="bankacctno" invisible="1"/>
+                        <field name="bank_account_id" invisible = "1"/>
+                        <field name="otherid" groups="base.group_hr_user" invisible="1"/>
+                        <field name="date_hired" groups="base.group_hr_user"/>
+                        <field name="date_resigned" groups="base.group_hr_user"/>
+                    </group>
+                </xpath>
+
+                <xpath expr="//page[@string ='Personal Information']/group/group[@string ='Contact Information']" position ="after">
+                    <group string="Government Contribution ID">
+                        <field name="sss_no"/>
+                        <field name="hdmf_no"/>
+                        <field name="philhealth_no"/>
+                        <field name="tin_no"/>
+                    </group>
+                </xpath>
+
+                <xpath  expr="//group[@string ='Position']" position="replace">
+                    <group string="Project Assign">
+                        <field name="department_id" on_change="onchange_department_id(department_id)" invisible="1"/>
+                        <field name="parent_id" invisible="1"/>
+                        <field name="coach_id" invisible="1"/>
+                        <field name="manager" invisible="1"/>
+                        <field name="assignto" string ="Company"/>
+                        <field name="assignto_branch_2" options="{'no_create': True, 'no_edit': True}"  domain = "[('main_detail_id', '=', assignto)]"/>
+                        <field name="assignto_region" options="{'no_create_edit': True}"/>
+                        <field name="assignto_workingdays"/>
+                        <field name="job_id"/>
+                    </group>
+                </xpath>
+
+
+                 <!--Add page: Loans-->
+                <xpath expr="//page[@string='Personal Information']" position="after">
+                   <page string="Loans" groups="base.group_hr_user">
+                       <group>
+                            <group string="SSS Premium" invisible = "1">
+                                <field name="sss_premium_monthly_amortization"/>
+                                <field name="sss_premium_remaining_months"/>
+                           </group>
+                           <group string="SSS Loans">
+                                <field name="sss_loans_monthly_amortization"/>
+                                <field name="sss_loans_remaining_months"/>
+                                <field name="sss_loans_start_Month" style = "width:200px"/>
+                                <field name="sss_loans_start_year" style = "width:200px"/>
+
+                           </group>
+                           <group string="Pag-ibig Premium" invisible = "1">
+                                 <field name="pagibig_premium_monthly_amortization"/>
+                                <field name="pagibig_premium_remaining_months"/>
+                           </group>
+                           <group string="Pag-ibig Salary Loans">
+                                <field name="pagibig_salaryloan_monthly_amortization"/>
+                                <field name="pagibig_salaryloan_remaining_months"/>
+                                <field name="pagibig_salaryloan_start_Month" style = "width:200px"/>
+                                <field name="pagibig_salaryloan_start_year" style = "width:200px"/>
+                           </group>
+                           <group string="Pag-ibig Calamity Loans">
+                                <field name="pagibig_calamityloan_monthly_amortization"/>
+                                <field name="pagibig_calamityloan_remaining_months"/>
+                                <field name="pagibig_calamityloan_start_Month" style = "width:200px"/>
+                                <field name="pagibig_calamityloan_start_year" style = "width:200px"/>
+                           </group>
+                       </group>
+                   </page>
+                </xpath>
+                <!--
+                <xpath expr="//group[@name='active_group']" position="replace">
+                    <group string="Leaves">
+                        <label for="remaining_leave"/>
+                        <div>
+                            <field name="remaining_leave" class="oe_inline"/> days
+                        </div>
+                    </group>
+                </xpath>
+                <xpath expr="//group[@name='active_group']" position="after">
+
+                    <group string="13th Month">
+                        <field name="thirteenth_month_amount" attrs="{'readonly':[('active', '=', 1)]}"/>
+                        <field name="thirteenth_month_date_paid" attrs="{'readonly':[('active', '=', 1)]}"/>
+                    </group>
+                </xpath>
+                -->
+
+
+                <xpath expr="//page[@string='HR Settings']" position="replace">
+                    <page string="HR Settings" groups="base.group_hr_user">
+                        <group>
+                            <group string="Leaves">
+                                <label for="remaining_leave"/>
+                                <div>
+                                    <field name="remaining_leave" class="oe_inline"/> days
+                                </div>
+                            </group>
+                            <group string="13th Month">
+                                <field name="thirteenth_month_amount" attrs="{'readonly':[('active', '!=', 0)]}"/>
+                                <field name="thirteenth_month_date_paid" attrs="{'readonly':[('active', '!=', 0)]}"/>
+                            </group>
+                            <group string="Active" name="active_group">
+                                <field name="active"/>
+                            </group>
+                            <group string="Contract" invisible="1">
+                                <field name="medic_exam" string="Medical Exam"/>
+                                <field name="vehicle"/>
+                                <field name="vehicle_distance"/>
+                            </group>
+                            <group string="Timesheets" invisible="1">
+                                <field name="product_id" domain="[('type','=','service')]"/>
+                                <field name="journal_id"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                <!--
+                <xpath expr="//group[@name='active_group']" position="replace">
+                    <group>
+                        <group string="Active" name="active_group">
+                            <field name="active"/>
+                        </group>
+                        <group string="Leaves">
+                            <label for="remaining_leaves"/>
+                            <div>
+                                <field name="remaining_leaves" class="oe_inline"/> days
+                            </div>
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//page[@string='HR Settings']" position="replace">
+                    <page string="HR Settings" groups="base.group_hr_user">
+                        <group>
+                            <group string="Active" name="active_group">
+                                <field name="active"/>
+                            </group>
+                        </group>
+                        <group string="Leaves">
+                            <label for="remaining_leaves"/>
+                            <div>
+                                <field name="remaining_leaves" class="oe_inline"/> days
+                            </div>
+                        </group>
+                    </page>
+                </xpath>
+
+                <field name ="user_id" position ="after" >
+                    <field name="assignto"/>
+                </field>
+                -->
+            </field>
+        </record>
+<!--
+        <record id="hr_employee_view_form4" model="ir.ui.view">
+            <field name="name">hr.employee.view.form4</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@string='Personal Information']" position="after">
+                    <page string ="Loans" groups="base.group_hr_user">
+                        <group>
+                            <group string ="SSS Premium">
+                                <field name ="sss_premium_monthly_amortization"/>
+                                <field name ="sss_premium_remaining_months"/>
+                            </group>
+                            <group string ="SSS Loans">
+                                <field name ="sss_loans_monthly_amortization"/>
+                                <field name ="sss_loans_remaining_months"/>
+                            </group>
+                            <group string ="Pag­ibig Premium">
+                                <field name ="pagibig_premium_monthly_amortization"/>
+                                <field name ="pagibig_premium_remaining_months"/>
+                            </group>
+                            <group string ="Pag­ibig Salary Loans">
+                                <field name="pagibig_salaryloan_monthly_amortization"/>
+                                <field name="pagibig_salaryloan_remaining_months"/>
+                            </group>
+                            <group string="Pag­ibig Calamity Loans">
+                                <field name="pagibig_calamityloan_monthly_amortization"/>
+                                <field name="pagibig_calamityloan_remaining_months"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+ -->
+        <!-- Contract -->
+        <record id="hr_contract_view_form2" model="ir.ui.view">
+            <field name="name">hr.hr.contract.view.form2</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@string = 'Information']" position="replace">
+                    <page string="Information" name="information">
+                        <group>
+                            <group name="salary_and_advantages" string="Salary and Advantages">
+                                <field name="regions"/>
+                                <field name="wage" string ="Basic Pay"/>
+                                <field name="daily_rate"/>
+                                <field name="hourly_rate"/>
+                                <field name="amount_allowance"/>
+                                <field name="cola_amount"/>
+                                <field name="advantages" nolabel="1" placeholder="Advantages..." colspan="2"/>
+                            </group>
+                            <group name="duration_group" string="Duration">
+                                <label for="date_start" string="Duration"/>
+                                <div>
+                                    <field name="date_start" class="oe_inline"/> - <field name="date_end" class="oe_inline"/>
+                                </div>
+                                <field name="working_hours" invisible="1"/>
+                                <field name="schedule_pay"/>
+                                <field name="weeks_in_years"/>
+                                <field name="workdays_in_weeks"/>
+                            </group>
+                        </group>
+                        <separator string="Notes"/>
+                        <field name="notes"/>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Tax Table -->
+        <record id="view_hr_taxtable_tree" model="ir.ui.view">
+            <field name="name">hr.payroll.taxtable.form</field>
+            <field name="model">hr.payroll.taxtable</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Tax Table" create = "true" editable = "bottom">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="line_number"/>
+                    <field name="exemption_status"/>
+                    <field name="payment_schedule"/>
+                    <field name="dependents"/>
+                    <field name="exemption_amount"/>
+                    <field name="salary_range_from"/>
+                    <field name="salary_range_to"/>
+                    <field name="tax"/>
+                    <field name="rate_in_excess"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_taxtable_filter" model="ir.ui.view">
+            <field name="name">Tax Table</field>
+            <field name="model">hr.payroll.taxtable</field>
+            <field name="arch" type="xml">
+                <search string="Work Days Type">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="line_number"/>
+                    <field name="exemption_status"/>
+                    <field name="payment_schedule"/>
+                    <field name="dependents"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_hr_taxtable" model="ir.actions.act_window">
+            <field name="name">Tax Table</field>
+            <field name="res_model">hr.payroll.taxtable</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_taxtable_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create a Tax Table
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_hr_taxtable" id="menu_hr_taxtable" parent="hr_payroll_ezra.menu_hr_payroll_configuration" sequence="0"/>
+
+        <!-- Contribution Deductions -->
+        <record id="view_gov_deduction_tree" model="ir.ui.view">
+            <field name="name">payroll.sss.deductions.form</field>
+            <field name="model">payroll.sss.deductions</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Government Deduction" create = "true" editable = "bottom">
+                    <field name="code"/>
+                    <field name="name" invisible="1"/>
+                    <field name="main_customer_id" options="{'no_create': True, 'no_edit': True}"/>
+                    <field name="region_id" options="{'no_create': True, 'no_edit': True}"/>
+                    <field name="branches_id"  options="{'no_create': True, 'no_edit': True}"  domain = "[('main_detail_id', '=', main_customer_id)]"/>
+                    <field name="number_of_days"/>
+                    <field name="position_id"/>
+                    <field name="sss_ee"/>
+                    <field name="sss_er"/>
+                    <field name="sss_ec"/>
+                    <field name="phic_employee_monthly_salary"/>
+                    <field name="phic_ee"/>
+                    <field name="phic_er"/>
+                    <field name="pagibig_ee"/>
+                    <field name="pagibig_er"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_gov_deduction_filter" model="ir.ui.view">
+            <field name="name">Government Deduction</field>
+            <field name="model">payroll.sss.deductions</field>
+            <field name="arch" type="xml">
+                <search string="Work Days Type">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="main_customer_id"/>
+                    <field name="region_id"/>
+                    <field name="branches_id"/>
+                    <field name="number_of_days"/>
+                    <field name="position_id"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_gov_deduction" model="ir.actions.act_window">
+            <field name="name">Government Deduction</field>
+            <field name="res_model">payroll.sss.deductions</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_gov_deduction_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create a Government Deduction per Assigned Clients
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_gov_deduction" id="menu_gov_deduction" parent="hr_payroll_ezra.menu_hr_payroll_configuration" sequence="1"/>
+
+
+        <!---SSS
+        <record id="view_hr_sss_contrib_form" model="ir.ui.view">
+            <field name="name">hr.payroll.ssscontrib.form</field>
+            <field name="model">hr.payroll.ssscontrib</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <sheet>
+                        <group col="4">
+                            <field name="bracket"/>
+                            <field name="name"/>
+                            <field name="range_from"/>
+                            <field name="range_to"/>
+                            <field name="employers_contribution"/>
+                            <field name="employee_contribution"/>
+                            <field name="employee_compensation"/>
+                            <field name="total_contribution"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_sss_contrib_tree" model="ir.ui.view">
+            <field name="name">hr.payroll.ssscontrib</field>
+            <field name="model">hr.payroll.ssscontrib</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Type">
+                    <field name="bracket"/>
+                    <field name="name"/>
+                    <field name="range_from"/>
+                    <field name="range_to"/>
+                    <field name="employers_contribution"/>
+                    <field name="employee_contribution"/>
+                    <field name="employee_compensation"/>
+                    <field name="total_contribution"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_sss_contrib_filter" model="ir.ui.view">
+            <field name="name">SSS Contribution Table</field>
+            <field name="model">hr.payroll.ssscontrib</field>
+            <field name="arch" type="xml">
+                <search string="SSS Contribution">
+                    <field name="bracket"/>
+                    <field name="name"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_hr_sss_contrib" model="ir.actions.act_window">
+            <field name="name">SSS Contribution Table</field>
+            <field name="res_model">hr.payroll.ssscontrib</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_sss_contrib_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create a SSS Contribution
+              </p>
+            </field>
+        </record>
+
+        <menuitem action="open_module_hr_sss_contrib" id="menu_hr_sss_contrib" parent="hr_payroll_ezra.menu_hr_payroll_configuration" sequence="3"/>
+
+        Pag-ibig HDMF
+        <record id="view_hr_hdmf_contrib_form" model="ir.ui.view">
+            <field name="name">hr.payroll.hdmf.form</field>
+            <field name="model">hr.payroll.hdmf</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <sheet>
+                        <group col="4">
+                            <field name="bracket"/>
+                            <field name="name"/>
+                            <field name="monthly_compensation"/>
+                            <field name="range_from"/>
+                            <field name="range_to"/>
+                            <field name="employers_contribution"/>
+                            <field name="employee_contribution"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_hdmf_contrib_tree" model="ir.ui.view">
+            <field name="name">hr.payroll.hdmf</field>
+            <field name="model">hr.payroll.hdmf</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Type">
+                    <field name="bracket"/>
+                    <field name="name"/>
+                    <field name="monthly_compensation"/>
+                    <field name="range_from"/>
+                    <field name="range_to"/>
+                    <field name="employers_contribution"/>
+                    <field name="employee_contribution"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_hdmf_contrib_filter" model="ir.ui.view">
+            <field name="name">HDMF Contribution Table</field>
+            <field name="model">hr.payroll.hdmf</field>
+            <field name="arch" type="xml">
+                <search string="SSS Contribution">
+                    <field name="bracket"/>
+                    <field name="name"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_hr_hdmf_contrib" model="ir.actions.act_window">
+            <field name="name">HDMF Contribution Table</field>
+            <field name="res_model">hr.payroll.hdmf</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_hdmf_contrib_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create a HDMF Contribution
+              </p>
+            </field>
+        </record>
+
+        <menuitem action="open_module_hr_hdmf_contrib" id="menu_hr_hdmf_contrib" parent="hr_payroll_ezra.menu_hr_payroll_configuration" sequence="3"/>
+
+        Philhealth
+        <record id="view_hr_hmo_contrib_form" model="ir.ui.view">
+            <field name="name">hr.payroll.hmo.form</field>
+            <field name="model">hr.payroll.hmo</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <sheet>
+                        <group col="4">
+                            <field name="bracket"/>
+                            <field name="name"/>
+                            <field name="range_from"/>
+                            <field name="range_to"/>
+                            <field name="employers_contribution"/>
+                            <field name="employee_contribution"/>
+                            <field name="total_contribution"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_hmo_contrib_tree" model="ir.ui.view">
+            <field name="name">hr.payroll.hmo</field>
+            <field name="model">hr.payroll.hmo</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Type">
+                    <field name="bracket"/>
+                    <field name="name"/>
+                    <field name="range_from"/>
+                    <field name="range_to"/>
+                    <field name="employers_contribution"/>
+                    <field name="employee_contribution"/>
+                    <field name="total_contribution"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_hmo_contrib_filter" model="ir.ui.view">
+            <field name="name">Philhealth Contribution Table</field>
+            <field name="model">hr.payroll.hmo</field>
+            <field name="arch" type="xml">
+                <search string="SSS Contribution">
+                    <field name="bracket"/>
+                    <field name="name"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_hr_hmo_contrib" model="ir.actions.act_window">
+            <field name="name">Philhealth Contribution Table</field>
+            <field name="res_model">hr.payroll.hmo</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_hmo_contrib_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create a Philhealth Contribution
+              </p>
+            </field>
+        </record>
+
+        <menuitem action="open_module_hr_hmo_contrib" id="menu_hr_hmo_contrib" parent="hr_payroll_ezra.menu_hr_payroll_configuration" sequence="3"/>
+        -->
+        <!-- Work Type -->
+        <record id="view_hr_worktype_tree" model="ir.ui.view">
+            <field name="name">hr.workdaystype.form</field>
+            <field name="model">hr.workdaystype</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Type" create = "true" editable = "bottom">
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_worktype_filter" model="ir.ui.view">
+            <field name="name">Work Days Type</field>
+            <field name="model">hr.workdaystype</field>
+            <field name="arch" type="xml">
+                <search string="Work Days Type">
+                    <field name="code"/>
+                    <field name="name"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_hr_worktype" model="ir.actions.act_window">
+            <field name="name">Work Days Type</field>
+            <field name="res_model">hr.workdaystype</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_worktype_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create a Work Days Type
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_hr_worktype" id="menu_hr_worktype_contrib" parent="hr_payroll_ezra.menu_hr_payroll_configuration" sequence="4"/>
+
+        <!-- Work Hour Type -->
+        <record id="view_hr_workhourtype_tree" model="ir.ui.view">
+            <field name="name">hr.workhourtype.form</field>
+            <field name="model">hr.workhourtype</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Type" create = "true" editable = "bottom">
+                    <field name="code"/>
+                    <field name="work_daytype_id"/>
+                    <field name="name"/>
+                    <field name="rate"/>
+                    <field name="rate_in_decimal"/>
+                    <field name="is_taxable"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_workhourtype_filter" model="ir.ui.view">
+            <field name="name">Work Hour Type</field>
+            <field name="model">hr.workhourtype</field>
+            <field name="arch" type="xml">
+                <search string="Work Hour Type">
+                    <field name="code"/>
+                    <field name="work_daytype_id"/>
+                    <field name="name"/>
+                    <field name="rate"/>
+                    <field name="rate_in_decimal" readonly="1"/>
+                    <field name="is_taxable"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_hr_workhourtype" model="ir.actions.act_window">
+            <field name="name">Work Hour Type</field>
+            <field name="res_model">hr.workhourtype</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_workhourtype_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create a Work Hour Type
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_hr_workhourtype" id="menu_hr_workhourtype" parent="hr_payroll_ezra.menu_hr_payroll_configuration" sequence="5"/>
+
+        <!-- Incentives -->
+        <record id="view_hr_incentive_tree" model="ir.ui.view">
+            <field name="name">hr.incentives.form</field>
+            <field name="model">hr.incentives</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Type" create = "true" editable = "bottom">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="type" invisible="1"/>
+                    <field name="amount"/>
+                    <field name="rate"  invisible="1"/>
+                    <field name="is_taxable"  invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_incentive_filter" model="ir.ui.view">
+            <field name="name">Incentive</field>
+            <field name="model">hr.incentives</field>
+            <field name="arch" type="xml">
+                <search string="Work Hour Type">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="type" invisible="1"/>
+                    <field name="amount"/>
+                    <field name="rate"  invisible="1"/>
+                    <field name="is_taxable"  invisible="1"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_hr_incentive" model="ir.actions.act_window">
+            <field name="name">Incentives</field>
+            <field name="res_model">hr.incentives</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_incentive_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create an Incentives
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_hr_incentive" id="menu_hr_incentive" parent="hr_payroll_ezra.menu_hr_payroll_incentive_deductions" sequence="1"/>
+
+        <!-- Deductions -->
+        <record id="view_hr_deduction_tree" model="ir.ui.view">
+            <field name="name">hr.deductions.form</field>
+            <field name="model">hr.deductions</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Type" create = "true" editable = "bottom">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="type" invisible="1"/>
+                    <field name="amount"/>
+                    <field name="rate" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_deduction_filter" model="ir.ui.view">
+            <field name="name">Deductions</field>
+            <field name="model">hr.deductions</field>
+            <field name="arch" type="xml">
+                <search string="Work Hour Type">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="type" invisible="1"/>
+                    <field name="amount"/>
+                    <field name="rate" invisible="1"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_hr_deduction" model="ir.actions.act_window">
+            <field name="name">Deductions</field>
+            <field name="res_model">hr.deductions</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_deduction_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create an deductions
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_hr_deduction" id="menu_hr_deduction" parent="hr_payroll_ezra.menu_hr_payroll_incentive_deductions" sequence="2"/>
+
+
+
+        <!-- Payroll Computation -->
+        <record id="view_hr_payroll_main_form" model="ir.ui.view">
+            <field name="name">hr.payroll.main.form</field>
+            <field name="model">hr.payroll.main</field>
+            <field name="arch" type="xml">
+                <form string="Type">
+                    <header> <!--style = "width:2995px"-->
+
+                        <button name="computePayroll" string="Compute Employee's Payroll" class="oe_highlight" type="object"  attrs="{'invisible':[('state', '!=', 'draft')]}" />
+                        <button name="generateExcelFile2" string="Generate Report" class="oe_highlight" type="object"/>
+                        <!--<button name="computePayroll" string="Re-Populate Employee's Payroll" class="oe_highlight" type="object"  attrs="{'invisible':[('payroll_main_id', '=',[(6, False, [])])]}" />
+                        <button name="recomputePayroll" string="Re-Compute Payroll" class="oe_highlight" type="object"  attrs="{'invisible':[('state', '!=', 'draft'),('payroll_main_id', '!=',[(6, False, [])])]}" /> -->
+                        <button name="postApproved" string="Approved" type="object" attrs="{'invisible':[('state', '!=', 'draft')]}" confirm = "Are you sure to Approved this Computed Payroll?"/>
+                        <!--<button name="readyforBillizng" string="Ready for Billing" class="oe_highlight"  type="object"  attrs="{'invisible':[('state', '!=', 'approved')]}" confirm = "Are you sure to Bill this Payroll?" invisible="1"/>-->
+                        <button name="reCheck" string="Re-Check"  type="object" class="oe_highlight"  attrs="{'invisible':[('state', '!=', 'approved')]}" confirm = "Are you sure to edit this Computed Payroll?"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,approved" statusbar_colors='{"approved":"red"}'/>
+                    </header>
+                    <sheet invisible = "1">
+                        <group>
+                            <group>
+                                <field name="name" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                                <field name="payroll_attendance"  options="{'no_create': True}" domain = "[('attendance_status', '=', 'approved')]"  attrs="{'readonly':[('state', '!=', 'draft')]}" />
+                                <field name="payroll_file" readonly="1" filename="filename" style = "width:500px"/>
+                            </group>
+                            <group>
+                            </group>
+                        </group>
+                        <group col="4" string ="Payroll Additional Information">
+                            <field name="payroll_month_of" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                            <field name="payroll_month_quarter" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                            <field name="payroll_releasedate" attrs="{'readonly':[('state', '!=', 'draft')]}"/>
+                        </group>
+                    </sheet>
+
+                    <sheet class ="oe_form_sheet_width_2">
+                        <group>
+                            <group>
+                                <field name="name" attrs="{'readonly':[('state', '!=', 'draft')]}" style = "width:500px"/>
+                                <field name="payroll_attendance" domain = "[('attendance_status', '=', 'post')]" attrs="{'readonly':[('state', '!=', 'draft')]}" options="{'no_create': True}" style = "width:500px"/>
+                                <field name="payroll_file" readonly="1" filename="filename" style = "width:500px"/>
+                            </group>
+                        </group>
+                        <group col="4" string ="Payroll Additional Information">
+                            <group>
+                                <field name="payroll_month_of" attrs="{'readonly':[('state', '!=', 'draft')]}" style = "width:500px"/>
+                                <field name="payroll_month_quarter" attrs="{'readonly':[('state', '!=', 'draft')]}" style = "width:500px"/>
+                                <field name="payroll_releasedate" attrs="{'readonly':[('state', '!=', 'draft')]}" style = "width:500px"/>
+                                <field name="total_payroll_count" readonly="1" style = "width:500px" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string ="Employee's Payroll">
+                                <data>
+                                    <field name="payroll_main_id" string ="" attrs="{'readonly':[('state', '!=', 'draft')]}" >
+                                        <tree create = "false" editable="bottom/top" version="7.0" class="widthcolumn">
+                                            <field name ="id"  readonly="0" invisible="1"/>
+                                            <field name ="my_id"  readonly="0" invisible="1"/>
+
+                                            <field name ="name" readonly="1" invisible="1"/>
+                                            <field name ="employee_id" readonly="1" />
+                                            <field name ="basic_pay_perday" readonly="1"/>
+                                            <field name ="basic_pay_perday_rate" string ="Basic Pay(rate)" readonly="1"/>
+                                            <field name ="basic_pay_amount" readonly="1"/>
+
+
+                                            <field name ="tardiness" readonly="1"/>
+                                            <field name ="tardiness_permin_rate" readonly="1"/>
+                                            <field name ="tardiness_amount" readonly="1"/>
+                                            <field name ="undertime" invisible="1"/>
+                                            <field name ="tardiness_pay_permin_rate" readonly="1" invisible="1"/>
+                                            <field name ="undertime_amount" readonly="1" invisible="1"/>
+                                            <!-- HERE HAS widget="float_time"-->
+                                            <field name ="basic_pay_leaves_perday"  readonly="1"/>
+                                            <field name ="basic_pay_leaves_amount" string = "Incentive Leave/s Amount" readonly="1"/>
+
+                                            <field name ="reg_straightduty_perhour" />
+                                            <field name ="reg_straightduty_amount" readonly="1"/>
+
+                                            <field name ="reg_nightdiff_perhour" />
+                                            <field name ="reg_nightdiffy_amount" readonly="1"/>
+
+                                            <field name ="reg_otpay_perhour"  />
+                                            <field name ="reg_otpay_amount" readonly="1"/>
+
+                                            <field name ="basic_pay_restday_perhour"/>
+                                            <field name ="basic_pay_restday_amount" readonly="1"/>
+                                            <field name ="basic_pay_restday_ot_perhour"/>
+                                            <field name ="basic_pay_restday_ot_amount" readonly="1"/>
+
+                                            <field name ="reg_hol_pay_perday"/>
+                                            <field name ="reg_hol_pay_amount" readonly="1"/>
+                                            <field name ="reg_hol_work_pay_perhour" />
+                                            <field name ="reg_hol_work_pay_amount" readonly="1"/>
+                                            <field name ="reg_hol_otpay_perhour"  />
+                                            <field name ="reg_hol_otpay_amount" readonly="1"/>
+
+                                            <field name ="reg_spechol_perhour" />
+                                            <field name ="reg_spechol_amount" readonly="1"/>
+                                            <field name ="reg_spechol_otpay_perhour"  />
+                                            <field name ="reg_spechol_otpay_amount" readonly="1"/>
+
+                                            <field name ="cola_rate_perday"/>
+                                            <field name ="cola_amount" readonly="1"/>
+
+                                            <field name ="allowance_rate_perday"/>
+                                            <field name ="allowance_amount" readonly="1"/>
+
+                                            <field name ="other_incentive" readonly="1"/>
+                                            <field name="incentive_id"  widget="one2many_list" string ="Breakdown" invisible="1">
+
+                                                <tree create = "false" edit="true" editable="bottom/top" string = "Click">
+                                                    <field name ="name"  readonly="1" invisible="0"/>
+                                                    <field name ="amount" />
+                                                </tree>
+                                            </field>
+
+                                            <button name = "getIncentiveBreakdown"
+                                                string ="Breakdown"
+                                                type = "object" class="oe_edit_only"/>
+
+                                            <button name = "%(action_payroll_incentives)d"
+                                                string ="Incentive"
+                                                type = "action"
+                                                context = "{'default_payroll_detail_id': my_id}"
+                                                invisible="1"/>
+                                            <button name = "%(action_incentive_wiz_breakdown)d"
+                                                string ="Breakdown"
+                                                type = "action"
+                                                context = "{'default_payroll_detail_id': my_id,
+                                                            'default_other_type': 1}"
+                                                invisible="1"/>
+                                            <field name ="gross_salary" readonly="1" widget="grosspaycolor" class ="oe_field_column_header_gross_salary"/>
+                                            <field name ="sss_premium" readonly="1"/>
+                                            <field name ="sss_loan" readonly="1"/>
+                                            <field name ="hdmf_premium" readonly="1"/>
+                                            <field name ="hdmf_salary_loan" readonly="1"/>
+                                            <field name ="hdmf_calamity_loan" readonly="1"/>
+                                            <field name ="hmo_premium" readonly="1"/>
+                                            <field name ="computed_tax" />
+                                            <field name ="other_deductions" readonly="1" />
+                                            <button name = "getDeductionBreakdown"
+                                                string ="Breakdown"
+                                                type = "object"/>
+                                            <field name ="deductions" readonly="1" widget="deduction"/>
+                                            <field name ="net_pay" readonly="1"/>
+                                        </tree>
+                                    </field>
+                                </data>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <sheet>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers" />
+                            <field name="message_ids" widget="mail_thread" />
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_hr_payroll_main_tree" model="ir.ui.view">
+            <field name="name">hr.payroll.main</field>
+            <field name="model">hr.payroll.main</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Payroll Information" colors="red:state=='post';green:state=='approved'">
+                    <field name="name"/>
+                    <field name="payroll_attendance"/>
+                    <field name="payroll_month_of"/>
+                    <field name="payroll_month_quarter"/>
+                    <field name="payroll_releasedate"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_payroll_main_filter" model="ir.ui.view">
+            <field name="name">Payroll</field>
+            <field name="model">hr.payroll.main</field>
+            <field name="arch" type="xml">
+                <search string="Payroll">
+                    <filter name="status_payroll" string="Draft" domain="[('state','=','draft')]" help="Draft Status"/>
+                    <filter name="status_payroll_02" string="Approved" domain="[('state','=','approved')]" help="Approved Status"/>
+                    <field name="name"/>
+                    <field name="payroll_attendance"/>
+                    <field name="payroll_month_of"/>
+                    <field name="payroll_month_quarter"/>
+                    <field name="payroll_releasedate"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_hr_payroll_main" model="ir.actions.act_window">
+            <field name="name">Payroll</field>
+            <field name="res_model">hr.payroll.main</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_hr_payroll_main_filter"/>
+            <field name="context">{"search_default_status_payroll":True}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create Payroll for employees.
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_hr_payroll_main" id="menu_hr_payroll_main" parent="hr_payroll.menu_hr_root_payroll" string = "Payroll" sequence="50"
+                groups="base.group_hr_user,base.group_hr_manager"/>
+
+        <!-- Payroll Detail -->
+        <record id="view_hr_payroll_detail_emp_form" model="ir.ui.view">
+            <field name="name">hr.payroll.detail.form</field>
+            <field name="model">hr.payroll.detail</field>
+            <field name="arch" type="xml">
+                <form string="Type" create ="false" edit ="false">
+                    <sheet>
+                        <field name="name"/>
+                        <field name="employee_id"/>
+                        <field name="gross_salary"/>
+                        <field name="deductions"/>
+                        <field name="net_pay"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hr_payroll_detail_emp_tree" model="ir.ui.view">
+            <field name="name">hr.payroll.detail.tree</field>
+            <field name="model">hr.payroll.detail</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Payroll Information" create = "false" edit ="false">
+                    <field name ="id"  readonly="0" invisible="1"/>
+                    <field name ="my_id"  readonly="0" invisible="1"/>
+                    <field name ="name" readonly="1" invisible="1"/>
+                    <field name ="employee_id" readonly="1" />
+                    <field name ="month_half_period" readonly="1"/>
+                    <field name ="month_name_period" readonly="1" />
+                    <field name ="year_payroll_period" readonly="1" />
+                    <field name ="year_payroll_period" readonly="1" />
+                    <field name ="basic_pay_perday" readonly="1"/>
+                    <field name ="basic_pay_perday_rate" string ="Basic Pay(rate)" readonly="1"/>
+                    <field name ="basic_pay_amount" readonly="1"/>
+                    <field name ="tardiness" readonly="1"/>
+                    <field name ="tardiness_permin_rate" readonly="1"/>
+                    <field name ="tardiness_amount" readonly="1"/>
+                    <field name ="undertime" invisible="1"/>
+                    <field name ="tardiness_pay_permin_rate" readonly="1" invisible="1"/>
+                    <field name ="undertime_amount" readonly="1" invisible="1"/>
+                    <field name ="basic_pay_leaves_perhour"  invisible="1"/>
+                    <field name ="basic_pay_leaves_amount" string = "Incentive Leave/s Amount" readonly="1"/>
+                    <field name ="reg_straightduty_perhour" readonly="1"/>
+                    <field name ="reg_straightduty_amount" readonly="1"/>
+                    <field name ="reg_nightdiff_perhour" readonly="1"/>
+                    <field name ="reg_nightdiffy_amount" readonly="1"/>
+                    <field name ="reg_otpay_perhour"  readonly="1"/>
+                    <field name ="reg_otpay_amount" readonly="1"/>
+                    <field name ="basic_pay_restday_perhour" readonly="1"/>
+                    <field name ="basic_pay_restday_amount" readonly="1"/>
+                    <field name ="basic_pay_restday_ot_perhour" readonly="1"/>
+                    <field name ="basic_pay_restday_ot_amount" readonly="1"/>
+                    <field name ="reg_hol_pay_perday" readonly="1"/>
+                    <field name ="reg_hol_pay_amount" readonly="1"/>
+                    <field name ="reg_hol_work_pay_perhour" readonly="1"/>
+                    <field name ="reg_hol_work_pay_amount" readonly="1"/>
+                    <field name ="reg_hol_otpay_perhour"  readonly="1"/>
+                    <field name ="reg_hol_otpay_amount" readonly="1"/>
+                    <field name ="reg_spechol_perhour" readonly="1"/>
+                    <field name ="reg_spechol_amount" readonly="1"/>
+                    <field name ="reg_spechol_otpay_perhour" readonly="1" />
+                    <field name ="reg_spechol_otpay_amount" readonly="1"/>
+                    <field name ="cola_rate_perday" readonly="1"/>
+                    <field name ="cola_amount" readonly="1"/>
+                    <field name ="other_incentive" readonly="1"/>
+                    <field name ="gross_salary" readonly="1" widget="grosspaycolor" class ="oe_field_column_header_gross_salary"/>
+                    <field name ="sss_premium" readonly="1"/>
+                    <field name ="sss_loan" readonly="1"/>
+                    <field name ="hdmf_premium" readonly="1"/>
+                    <field name ="hdmf_salary_loan" readonly="1"/>
+                    <field name ="hdmf_calamity_loan" readonly="1"/>
+                    <field name ="hmo_premium" readonly="1"/>
+                    <field name ="computed_tax" readonly="1"/>
+                    <field name ="other_deductions" readonly="1" />
+                    <field name ="deductions" readonly="1" widget="deduction"/>
+                    <field name ="net_pay" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hr_payroll_detail_emp_filter" model="ir.ui.view">
+            <field name="name">Payroll</field>
+            <field name="model">hr.payroll.detail</field>
+            <field name="arch" type="xml">
+                <search string="Employee Detail">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="gross_salary"/>
+                    <field name="deductions"/>
+                    <field name="net_pay"/>
+                </search>
+             </field>
+
+        </record>
+
+
+        <record id="open_module_hr_payroll_detail_emp" model="ir.actions.act_window">
+            <field name="name">Payroll</field>
+            <field name="res_model">hr.payroll.detail</field>
+            <field name="search_view_id" ref="view_hr_payroll_detail_emp_filter"/>
+            <field name="view_type">form</field>
+            <field name="context">{'search_default_employee_id': [active_id], 'default_employee_id': active_id}</field>
+        </record>
+
+
+        <!-- Employee View -->
+        <record id="payroll_ezra_hr_employee_view_form4" model="ir.ui.view">
+            <field name="name">payroll.ezra.hr.employee.view.form4</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_payroll.payroll_hr_employee_view_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//div[@name='button_box']" position="replace">
+                        <div class="oe_right oe_button_box" name="button_box">
+
+                            <button name="%(hr_contract.act_hr_employee_2_hr_contract)d"
+                                class="oe_stat_button"
+                                icon="fa-book"
+                                type="action"
+                                groups="base.group_hr_manager">
+                                <field name="contracts_count" widget="statinfo" string="Contracts"/>
+                            </button>
+
+                            <button name="%(hr_payroll_ezra.open_module_hr_attendance_emp2)d"
+                                class="oe_stat_button"
+                                icon="fa-clock-o"
+                                type="action"
+                                groups="base.group_hr_manager">
+                                <field name="timesheet_count" widget="statinfo" string="Attendance"/>
+                            </button>
+
+                            <button name="%(open_module_hr_payroll_detail_emp)d"
+                                class="oe_stat_button"
+                                icon="fa-money"
+                                type="action"
+                                groups="base.group_hr_user">
+                                <field name="payslip_count" widget="statinfo" string="Payslips"/>
+                            </button>
+                        </div>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="view_employee_filter_extend" model="ir.ui.view">
+            <field name="name">Employees.Filter.Extend</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search[@string='Employees']" position="replace">
+                    <search string="Employees">
+                        <field name="name" string="Employees" filter_domain="['|',('work_email','ilike',self),('name','ilike',self)]"/>
+                        <field name="assignto" string = "Company Assign"/>
+                        <field name="assignto_branch_2"/>
+                        <field name="assignto_region"/>
+                        <field name="assignto_workingdays"/>
+                        <field name="job_id"/>
+                        <group expand="0" string="Group By">
+                            <filter string="Company" icon="terp-go-home" domain="[]" context="{'group_by':'assignto'}"/>
+                            <filter string="Branch" icon="terp-go-home" domain="[]" context="{'group_by':'assignto_branch_2'}"/>
+                            <filter string="Region" icon="terp-go-home" domain="[]" context="{'group_by':'assignto_region'}"/>
+                            <filter string="Working Days" icon="terp-go-home" domain="[]" context="{'group_by':'assignto_workingdays'}"/>
+                            <filter string="Job" icon="terp-gtk-select-all" domain="[]" context="{'group_by':'job_id'}"/>
+                        </group>
+                    </search>
+                </xpath>
+             </field>
+         </record>
+
+        <record id="view_employee_tree_2" model="ir.ui.view">
+            <field name="name">hr.employee.tree.extend</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_tree"/>
+            <field eval="20" name="priority"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree[@string='Employees']" position="replace">
+                    <tree string="Employees">
+                        <field name="name"/>
+                        <field name="assignto" string = "Company Assign"/>
+                        <field name="assignto_branch_2"/>
+                        <field name="assignto_region"/>
+                        <field name="assignto_workingdays"/>
+                        <field name="job_id"/>
+                        <field name="work_phone" invisible="1"/>
+                        <field name="work_email" invisible="1"/>
+                        <field name="company_id" groups="base.group_multi_company" invisible="1"/>
+                        <field name="department_id" invisible="1"/>
+                        <field name="coach_id" invisible="1"/>
+                        <field name="parent_id" invisible="1"/>
+                    </tree>
+                </xpath>
+            </field>
+        </record>
+
+
+        <!-- Regions -->
+        <record id="view_regions_tree" model="ir.ui.view">
+            <field name="name">hr.regions.form</field>
+            <field name="model">hr.regions</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Regions" create = "true" editable = "bottom">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="cola_amount"/>
+                    <field name="island_group"/>
+                    <field name="regional_centers"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_regions_filter" model="ir.ui.view">
+            <field name="name">Regions</field>
+            <field name="model">hr.regions</field>
+            <field name="arch" type="xml">
+                <search string="Regions">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="cola_amount"/>
+                    <field name="island_group"/>
+                    <field name="regional_centers"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_regions" model="ir.actions.act_window">
+            <field name="name">Regions</field>
+            <field name="res_model">hr.regions</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_regions_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create a Regions
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_regions" id="menu_regions" parent="hr.menu_hr_configuration" sequence="63"/>
+
+        <!-- Salary Parameter per Region->Province -->
+        <record id="view_regions_salary_tree" model="ir.ui.view">
+            <field name="name">hr.regions.salary.form</field>
+            <field name="model">hr.regions.salary</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree string="Salary/COLA" create = "true" editable = "bottom">
+                    <field name="name"/>
+                    <field name="regions"/>
+                    <field name="province"/>
+                    <field name="daily_rate_amount"/>
+                    <field name="cola_amount"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_regions_salary_filter" model="ir.ui.view">
+            <field name="name">Salary/COLA</field>
+            <field name="model">hr.regions.salary</field>
+            <field name="arch" type="xml">
+                <search string="Regions">
+                    <field name="name"/>
+                    <field name="regions"/>
+                    <field name="province"/>
+                    <field name="daily_rate_amount"/>
+                    <field name="cola_amount"/>
+                </search>
+             </field>
+        </record>
+        <record id="open_module_regions_salary" model="ir.actions.act_window">
+            <field name="name">Salary/COLA</field>
+            <field name="res_model">hr.regions.salary</field>
+            <field name="view_type">form</field>
+            <field name="search_view_id" ref="view_regions_salary_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to Create a Salary/Cola Per Region and Provinces
+              </p>
+            </field>
+        </record>
+        <menuitem action="open_module_regions_salary" id="menu_regions_salary" parent="hr.menu_hr_configuration" sequence="64"/>
+    </data>
+</openerp>
